@@ -8,7 +8,7 @@
 
   Views designed fallowing Material Design and UX guidelines, use of new Constraint & classic layouts, Data binding / Butter Knife where suitable.
 
-  Backend providing REST API handled by Retrofit with local off-line backup in native sqlite database accessed with StorIO both handled by RXJava (no ORM this time to see performance difference). Additionally some mechanism to handle situation when backend is down with no local data backup.
+  Backend providing REST API handled by Retrofit with local off-line backup in native sqlite database accessed with StorIO/SQLBrite, all managed by RXJava (no ORM this time to see performance difference/learn new things). Additionally some mechanism to handle situation when backend is down with no local data backup.
 
   Implement Dependency Injection project pattern with Dagger and Reactive programming with RXJava2. 
   Some classes implemented in Kotlin, to learn new Language.
