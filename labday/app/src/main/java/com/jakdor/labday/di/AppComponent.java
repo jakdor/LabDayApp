@@ -8,7 +8,7 @@ import dagger.BindsInstance;
 import dagger.Component;
 
 /**
- * Dagger setup interface
+ * Dagger main Android component setup interface
  */
 @Singleton
 @Component(modules = {

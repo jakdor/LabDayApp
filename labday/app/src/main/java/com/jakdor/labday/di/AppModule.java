@@ -2,7 +2,9 @@ package com.jakdor.labday.di;
 
 import android.content.Context;
 import com.jakdor.labday.App;
-import com.jakdor.labday.common.NetworkManager;
+
+import com.jakdor.labday.common.repository.NetworkManager;
+import com.jakdor.labday.common.repository.ProjectRepository;
 
 import javax.inject.Singleton;
 
@@ -22,7 +24,7 @@ public class AppModule {
 
     @Singleton
     @Provides
-    NetworkManager provideNetworkManager(){
-        return new NetworkManager();
+    ProjectRepository provideProjectRepository(){
+        return new ProjectRepository(new NetworkManager());
     }
 }

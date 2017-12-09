@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.jakdor.labday.common.NetworkManager;
+import com.jakdor.labday.common.repository.ProjectRepository;
 
 import javax.inject.Inject;
 
@@ -15,7 +15,7 @@ import dagger.android.AndroidInjection;
 public class MainActivity extends AppCompatActivity {
 
     @Inject
-    NetworkManager networkManager;
+    ProjectRepository projectRepository;
 
     @BindView(R.id.testTextView)
     TextView testTextView;
@@ -32,6 +32,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        testTextView.setText(networkManager.daggerHelloWorld());
+        testTextView.setText(projectRepository.daggerHelloWorld());
     }
 }
