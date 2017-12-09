@@ -1,9 +1,10 @@
-package com.jakdor.labday;
+package com.jakdor.labday.view.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.jakdor.labday.R;
 import com.jakdor.labday.common.repository.ProjectRepository;
 
 import javax.inject.Inject;

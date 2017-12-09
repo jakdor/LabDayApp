@@ -3,7 +3,7 @@ package com.jakdor.labday;
 import android.app.Activity;
 import android.app.Application;
 
-import com.jakdor.labday.di.DaggerAppComponent;
+import com.jakdor.labday.di.AppInjector;
 
 import javax.inject.Inject;
 
@@ -22,13 +22,7 @@ public class App extends Application implements HasActivityInjector {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        DaggerAppComponent
-                .builder()
-                .application(this)
-                .build()
-                .inject(this);
-
+        AppInjector.init(this);
     }
 
     @Override
