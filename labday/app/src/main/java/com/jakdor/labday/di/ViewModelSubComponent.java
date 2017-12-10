@@ -1,5 +1,6 @@
 package com.jakdor.labday.di;
 
+import com.jakdor.labday.viewmodel.BaseViewModel;
 import com.jakdor.labday.viewmodel.MainViewModel;
 
 import dagger.Subcomponent;

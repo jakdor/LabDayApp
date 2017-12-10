@@ -1,7 +1,10 @@
 package com.jakdor.labday.common.repository;
 
+import android.arch.lifecycle.LiveData;
+
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.rx.RxResponse;
+import com.jakdor.labday.rx.RxSchedulersFacade;
 import com.jakdor.labday.rx.RxStatus;
 
 import java.util.List;
@@ -11,9 +14,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Main app data repository handler - manages data sources
@@ -22,10 +23,15 @@ import io.reactivex.schedulers.Schedulers;
 public class ProjectRepository {
 
     private NetworkManager networkManager;
+    private RxSchedulersFacade rxSchedulersFacade;
+
+    private RxResponse data;
+    private repositoryStates repositoryState = repositoryStates.INIT;
 
     @Inject
-    public ProjectRepository(NetworkManager networkManager){
+    public ProjectRepository(NetworkManager networkManager, RxSchedulersFacade rxSchedulersFacade){
         this.networkManager = networkManager;
+        this.rxSchedulersFacade = rxSchedulersFacade;
     }
 
     /**
@@ -33,7 +39,7 @@ public class ProjectRepository {
      * @return {Single<RxResponse<List<AppData>>>} appData wrapped with {@link RxResponse}
      */
     public Observable<RxResponse<List<AppData>>> getAppData(){
-        return request(networkManager.getAppData());
+        return apiRequest(networkManager.getAppData());
     }
 
     /**
@@ -43,10 +49,10 @@ public class ProjectRepository {
      * @param <T> template to handle various API calls
      * @return Outer observable
      */
-    public <T> Observable<RxResponse<T>> request(final Observable<T> apiCall) {
+    public <T> Observable<RxResponse<T>> apiRequest(final Observable<T> apiCall) {
         return Observable.create(e -> {
-            apiCall.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            apiCall.subscribeOn(rxSchedulersFacade.io())
+                    .observeOn(rxSchedulersFacade.ui())
                     .subscribe(new Observer<T>() {
                         @Override
                         public void onSubscribe(Disposable d) {
@@ -54,6 +60,8 @@ public class ProjectRepository {
 
                         @Override
                         public void onNext(T data) {
+                            ProjectRepository.this.data = new RxResponse<>(RxStatus.SUCCESS, data, null);
+                            ProjectRepository.this.repositoryState = repositoryStates.READY;
                             e.onNext(new RxResponse<>(RxStatus.SUCCESS, data, null));
                         }
 
@@ -72,5 +80,19 @@ public class ProjectRepository {
 
     public String daggerHelloWorld(){
         return "HelloStabo" + "\n" + networkManager.embeddedDaggerTest();
+    }
+
+    public RxResponse getData() {
+        return data;
+    }
+
+    public repositoryStates getRepositoryState() {
+        return repositoryState;
+    }
+
+    public enum repositoryStates{
+        READY,
+        INIT,
+        ERROR
     }
 }

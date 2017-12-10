@@ -16,6 +16,7 @@ import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.databinding.FragmentMainBinding;
 import com.jakdor.labday.di.InjectableFragment;
 import com.jakdor.labday.rx.RxResponse;
+import com.jakdor.labday.viewmodel.BaseViewModel;
 import com.jakdor.labday.viewmodel.MainViewModel;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
     private MainViewModel viewModel;
 
     @Inject
+
     ViewModelProvider.Factory viewModelFactory;
 
     @Nullable
@@ -60,7 +62,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
     }
 
     public void observeAppData(){
-        viewModel.getResponse().observe(this, rxResponse -> processResponse(rxResponse));
+        viewModel.getResponse().observe(this, this::processResponse);
     }
 
     private void processResponse(RxResponse<List<AppData>> response) {
