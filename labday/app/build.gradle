@@ -8,6 +8,8 @@ project.ext {
     supportLibsVersion = "26.1.0"
     butterKnifeVersion = "8.8.1"
     daggerVersion = "2.13"
+    retrofitVersion = "2.3.0"
+    okHttpVersion = "3.9.1"
 }
 
 android {
@@ -64,6 +66,11 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
     implementation "com.google.dagger:dagger:$project.daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
+
+    //retrofit + okHttp
+    implementation "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
+    implementation "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
 
     //testing
     testImplementation 'junit:junit:4.12'
