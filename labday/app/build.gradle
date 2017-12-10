@@ -10,6 +10,8 @@ project.ext {
     daggerVersion = "2.13"
     retrofitVersion = "2.3.0"
     okHttpVersion = "3.9.1"
+    rxJavaVersion = "2.1.7"
+    rxAndroidVersion = "2.0.1"
 }
 
 android {
@@ -70,7 +72,12 @@ dependencies {
     //retrofit + okHttp
     implementation "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
     implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$project.retrofitVersion"
     implementation "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
+
+    // rxJava
+    implementation "io.reactivex.rxjava2:rxjava:$project.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroidVersion"
 
     //testing
     testImplementation 'junit:junit:4.12'

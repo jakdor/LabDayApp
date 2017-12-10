@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * GitHub test API response model
  */
-public class Project {
+public class AppData {
     public long id;
     public String name;
     public String full_name;
@@ -34,10 +34,10 @@ public class Project {
     public int watchers;
     public String default_branch;
 
-    public Project() {
+    public AppData() {
     }
 
-    public Project(String name) {
+    public AppData(String name) {
         this.name = name;
     }
 }
