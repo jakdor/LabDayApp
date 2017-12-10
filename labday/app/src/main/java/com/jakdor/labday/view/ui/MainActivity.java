@@ -1,25 +1,22 @@
 package com.jakdor.labday.view.ui;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 import com.jakdor.labday.R;
-import com.jakdor.labday.common.repository.ProjectRepository;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
     @Inject
-    ProjectRepository projectRepository;
-
-    @BindView(R.id.testTextView)
-    TextView testTextView;
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +25,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        if(savedInstanceState == null) {
+            MainFragment mainFragment = new MainFragment();
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack("mainFragment")
+                    .replace(R.id.fragmentLayout,
+                            mainFragment, null).commit();
+        }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        testTextView.setText(projectRepository.daggerHelloWorld());
+    public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
     }
 }

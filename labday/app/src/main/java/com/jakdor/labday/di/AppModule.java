@@ -1,10 +1,12 @@
 package com.jakdor.labday.di;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
+
 import com.jakdor.labday.App;
 
 import com.jakdor.labday.common.repository.NetworkManager;
-import com.jakdor.labday.common.repository.ProjectRepository;
+import com.jakdor.labday.viewmodel.ViewModelFactory;
 
 import javax.inject.Singleton;
 
@@ -14,9 +16,8 @@ import dagger.Provides;
 /**
  * App-wide dependency injection point
  */
-@Module
+@Module(subcomponents = ViewModelSubComponent.class)
 public class AppModule {
-
     @Provides
     Context provideContext(App app){
         return app.getApplicationContext();
@@ -24,7 +25,14 @@ public class AppModule {
 
     @Singleton
     @Provides
-    ProjectRepository provideProjectRepository(){
-        return new ProjectRepository(new NetworkManager());
+    ViewModelProvider.Factory provideViewModelFactory(ViewModelSubComponent.Builder viewModelBuilder){
+        return new ViewModelFactory(viewModelBuilder.build());
+    }
+
+    //todo refactor
+    @Singleton
+    @Provides
+    NetworkManager getNetworkManager(){
+        return new NetworkManager();
     }
 }

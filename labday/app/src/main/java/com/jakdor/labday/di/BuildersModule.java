@@ -6,11 +6,11 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 /**
- * app wide dependencies injection point
+ * app-wide Android dependencies injection point
  */
 @Module
 public abstract class BuildersModule {
 
-    @ContributesAndroidInjector
-    abstract MainActivity bindMainActivity();
+    @ContributesAndroidInjector(modules = MainActivityFragmentBuilderModule.class)
+    abstract MainActivity contributeMainActivity();
 }

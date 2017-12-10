@@ -1,6 +1,7 @@
 package com.jakdor.labday.di;
 
 import android.app.Activity;
+import android.app.Application;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -26,7 +27,7 @@ public class AppInjector {
                 .build()
                 .inject(app);
 
-        app.registerActivityLifecycleCallbacks(new App.ActivityLifecycleCallbacks(){
+        app.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks(){
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
                 handleActivity(activity);

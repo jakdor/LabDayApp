@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 project.ext {
+    arch = "1.0.3"
+    archExt = "1.0.0"
     supportLibsVersion = "26.1.0"
     butterKnifeVersion = "8.8.1"
     daggerVersion = "2.13"
@@ -25,6 +27,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -37,6 +42,11 @@ dependencies {
 
     //support libs
     implementation "com.android.support:appcompat-v7:$project.supportLibsVersion"
+
+    //android architecture
+    annotationProcessor "android.arch.lifecycle:compiler:$project.archExt"
+    implementation "android.arch.lifecycle:extensions:$project.archExt"
+    implementation "android.arch.lifecycle:runtime:$project.arch"
 
     //ButterKnife
     annotationProcessor "com.jakewharton:butterknife-compiler:$project.butterKnifeVersion"

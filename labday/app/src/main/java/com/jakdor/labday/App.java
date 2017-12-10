@@ -7,7 +7,6 @@ import com.jakdor.labday.di.AppInjector;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 
@@ -26,7 +25,7 @@ public class App extends Application implements HasActivityInjector {
     }
 
     @Override
-    public AndroidInjector<Activity> activityInjector() {
+    public DispatchingAndroidInjector<Activity> activityInjector() {
         return dispatchingAndroidInjector;
     }
 }

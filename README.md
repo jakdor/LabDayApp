@@ -4,13 +4,15 @@
   ## Technology goals
   Use as many professionally used frameworks, libraries and project patterns as saintly possible.
 
-  Proper test coverage with all types of tests(unit, integration, GUI unit tests, automated integration GUI tests). + documentation
+  MVVM with repository project architecture.
+
+  Proper test coverage with all types of tests(unit, integration, GUI unit tests, automated integration GUI tests) + documentation.
 
   Views designed fallowing Material Design and UX guidelines, use of new Constraint & classic layouts, Data binding / Butter Knife where suitable.
 
-  Backend providing REST API handled by Retrofit with local off-line backup in native sqlite database accessed with StorIO/SQLBrite, all managed by RXJava (no ORM this time to see performance difference/learn new things). Additionally some mechanism to handle situation when backend is down with no local data backup.
+  Backend providing REST API handled by Retrofit with local off-line backup in native sqlite database accessed with StorIO/SQLBrite, all managed by RXJava and LiveData (no ORM this time to see performance difference/learn new things). Additionally some mechanism to handle situation when backend is down with no local data backup.
 
-  Implement Dependency Injection project pattern with Dagger and Reactive programming with RXJava2. 
+  Implement Dependency Injection project pattern with Dagger2 and Reactive programming with RXJava2/LiveData. 
   Some classes implemented in Kotlin, to learn new Language.
 
   ## Technology stack
@@ -29,6 +31,7 @@
   | :--: | :---: |
   | Retrofit2 | 2.3.0 |
   | OkHttp | 3.9.1 |
+  | Dagger2 | 2.13 |
   | Glide | 4.3.1 |
   | ButterKnife | 8.8.1 |
   | ... | |
