@@ -13,11 +13,48 @@ import io.reactivex.Observable;
  */
 public class NetworkManager {
 
+    private RetrofitBuilder retrofitBuilder;
     private LabService labService;
+    private LabService loginLabService;
 
     @Inject
     public NetworkManager(RetrofitBuilder retrofitBuilder){
-        labService = retrofitBuilder.getRetrofit(LabService.MOCK_API_URL).create(LabService.class);
+        this.retrofitBuilder = retrofitBuilder;
+    }
+
+    /**
+     * no authorization config
+     * @param apiUrl API base url
+     */
+    public void configAuth(String apiUrl){
+        if(labService == null) {
+            labService = retrofitBuilder.createService(apiUrl, LabService.class);
+        }
+    }
+
+    /**
+     * token authorization config
+     * @param apiUrl API base url
+     * @param token access token
+     */
+    public void configAuth(String apiUrl, String token){
+        if(labService == null) {
+            labService = retrofitBuilder.createService(apiUrl,
+                    LabService.class, token);
+        }
+    }
+
+    /**
+     * login&password authorization config
+     * @param apiUrl API base url
+     * @param login one-time login
+     * @param password one-time password
+     */
+    public void configAuth(String apiUrl, String login, String password){
+        if(loginLabService == null) {
+            loginLabService = retrofitBuilder.createService(apiUrl,
+                    LabService.class, login, password);
+        }
     }
 
     /**

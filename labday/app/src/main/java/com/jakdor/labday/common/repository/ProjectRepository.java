@@ -3,6 +3,7 @@ package com.jakdor.labday.common.repository;
 import android.util.Log;
 
 import com.jakdor.labday.common.model.AppData;
+import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxSchedulersFacade;
 import com.jakdor.labday.rx.RxStatus;
@@ -36,9 +37,10 @@ public class ProjectRepository {
 
     /**
      * Gets appData from api call or from local db;
-     * @return {Single<RxResponse<List<AppData>>>} appData wrapped with {@link RxResponse}
+     * @return {Single<RxResponse<AppData>>} appData wrapped with {@link RxResponse}
      */
     public Observable<RxResponse<AppData>> getAppData(){
+        networkManager.configAuth(LabService.MOCK_API_URL, "dummyToken");
         return apiRequest(networkManager.getAppData());
     }
 
@@ -85,7 +87,7 @@ public class ProjectRepository {
     }
 
     public RxResponse getData() {
-        Log.i(CLASS_TAG, "Data available locally");
+        Log.i(CLASS_TAG, "repository data available locally");
         return data;
     }
 
