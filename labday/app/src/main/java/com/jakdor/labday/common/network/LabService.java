@@ -2,19 +2,16 @@ package com.jakdor.labday.common.network;
 
 import com.jakdor.labday.common.model.AppData;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 
 /**
  * Retrofit API endpoints
  */
 public interface LabService {
-    //architecture test with GitHub API
-    String API_URL = "https://api.github.com/";
+    //mock api address
+    String MOCK_API_URL = "https://1ec1fcc6-6966-422c-8a1e-409c926f4f3e.mock.pstmn.io/";
 
-    @GET("users/{user}/repos")
-    Observable<List<AppData>> getProjectList(@Path("user") String user);
+    @GET("api/app_data")
+    Observable<AppData> getAppData();
 }

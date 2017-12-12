@@ -10,8 +10,6 @@ import com.jakdor.labday.common.repository.ProjectRepository;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxSchedulersFacade;
 
-import java.util.List;
-
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -25,7 +23,7 @@ public abstract class BaseViewModel extends AndroidViewModel {
     private CompositeDisposable disposable = new CompositeDisposable();
 
     private final MutableLiveData<Boolean> loadingStatus = new MutableLiveData<>();
-    private final MutableLiveData<RxResponse<List<AppData>>> appData = new MutableLiveData<>();
+    private final MutableLiveData<RxResponse<AppData>> appData = new MutableLiveData<>();
 
     public BaseViewModel(@NonNull ProjectRepository projectRepository,
                          @NonNull Application application,
@@ -58,7 +56,7 @@ public abstract class BaseViewModel extends AndroidViewModel {
         }
     }
 
-    public MutableLiveData<RxResponse<List<AppData>>> getResponse() {
+    public MutableLiveData<RxResponse<AppData>> getResponse() {
         return appData;
     }
 

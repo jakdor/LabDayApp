@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitBuilder {
     private Retrofit retrofit = null;
 
-    public Retrofit getRetrofit(){
+    public Retrofit getRetrofit(String url){
         if(retrofit == null){
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
                     .readTimeout(5, TimeUnit.SECONDS)
@@ -23,7 +23,7 @@ public class RetrofitBuilder {
 
             retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
-                    .baseUrl(LabService.API_URL)
+                    .baseUrl(url)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

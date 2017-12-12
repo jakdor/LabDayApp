@@ -1,43 +1,82 @@
+
 package com.jakdor.labday.common.model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 /**
- * GitHub test API response model
+ * Bundled API response
  */
-public class AppData {
-    public long id;
-    public String name;
-    public String full_name;
-    public String html_url;
-    public String description;
-    public String url;
-    public Date created_at;
-    public Date updated_at;
-    public Date pushed_at;
-    public String git_url;
-    public String ssh_url;
-    public String clone_url;
-    public String svn_url;
-    public String homepage;
-    public int stargazers_count;
-    public int watchers_count;
-    public String language;
-    public boolean has_issues;
-    public boolean has_downloads;
-    public boolean has_wiki;
-    public boolean has_pages;
-    public int forks_count;
-    public int open_issues_count;
-    public int forks;
-    public int open_issues;
-    public int watchers;
-    public String default_branch;
+public class AppData implements Serializable
+{
 
+    @SerializedName("events")
+    @Expose
+    private List<Event> events = null;
+    @SerializedName("map_others")
+    @Expose
+    private List<MapOther> mapOthers = null;
+    @SerializedName("paths")
+    @Expose
+    private List<Path> paths = null;
+    @SerializedName("timetables")
+    @Expose
+    private List<Timetable> timetables = null;
+    private final static long serialVersionUID = 8816216271836209839L;
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
     public AppData() {
     }
 
-    public AppData(String name) {
-        this.name = name;
+    /**
+     * @param paths List of {@link Path}
+     * @param events  List of {@link Event}
+     * @param mapOthers List of {@link MapOther}
+     * @param timetables List of {@link Timetable}
+     */
+    public AppData(List<Event> events, List<MapOther> mapOthers, List<Path> paths, List<Timetable> timetables) {
+        super();
+        this.events = events;
+        this.mapOthers = mapOthers;
+        this.paths = paths;
+        this.timetables = timetables;
     }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<MapOther> getMapOthers() {
+        return mapOthers;
+    }
+
+    public void setMapOthers(List<MapOther> mapOthers) {
+        this.mapOthers = mapOthers;
+    }
+
+    public List<Path> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(List<Path> paths) {
+        this.paths = paths;
+    }
+
+    public List<Timetable> getTimetables() {
+        return timetables;
+    }
+
+    public void setTimetables(List<Timetable> timetables) {
+        this.timetables = timetables;
+    }
+
 }

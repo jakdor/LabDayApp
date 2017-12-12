@@ -1,13 +1,11 @@
 package com.jakdor.labday.common.repository;
 
-import android.arch.lifecycle.LiveData;
+import android.util.Log;
 
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxSchedulersFacade;
 import com.jakdor.labday.rx.RxStatus;
-
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -21,6 +19,8 @@ import io.reactivex.disposables.Disposable;
  */
 @Singleton
 public class ProjectRepository {
+
+    private final String CLASS_TAG = "ProjectRepository";
 
     private NetworkManager networkManager;
     private RxSchedulersFacade rxSchedulersFacade;
@@ -38,7 +38,7 @@ public class ProjectRepository {
      * Gets appData from api call or from local db;
      * @return {Single<RxResponse<List<AppData>>>} appData wrapped with {@link RxResponse}
      */
-    public Observable<RxResponse<List<AppData>>> getAppData(){
+    public Observable<RxResponse<AppData>> getAppData(){
         return apiRequest(networkManager.getAppData());
     }
 
@@ -62,11 +62,13 @@ public class ProjectRepository {
                         public void onNext(T data) {
                             ProjectRepository.this.data = new RxResponse<>(RxStatus.SUCCESS, data, null);
                             ProjectRepository.this.repositoryState = repositoryStates.READY;
+                            Log.i(CLASS_TAG, "API request success");
                             e.onNext(new RxResponse<>(RxStatus.SUCCESS, data, null));
                         }
 
                         @Override
                         public void onError(Throwable throwable) {
+                            Log.e(CLASS_TAG, "API request failed, " + throwable.toString());
                             e.onNext(new RxResponse<>(RxStatus.ERROR, null, throwable));
                         }
 
@@ -83,6 +85,7 @@ public class ProjectRepository {
     }
 
     public RxResponse getData() {
+        Log.i(CLASS_TAG, "Data available locally");
         return data;
     }
 

@@ -64,10 +64,10 @@ public class MainFragment extends Fragment implements InjectableFragment {
         viewModel.getResponse().observe(this, this::processResponse);
     }
 
-    private void processResponse(RxResponse<List<AppData>> response) {
+    private void processResponse(RxResponse<AppData> response) {
         switch (response.status) {
             case SUCCESS:
-                binding.setHelloWorld(response.data.get(0).full_name);
+                binding.setHelloWorld(response.data.getEvents().get(0).getInfo());
                 break;
 
             case ERROR:
