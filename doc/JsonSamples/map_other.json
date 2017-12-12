@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "type": 1,
+        "name": "Bar Bazylia",
+	"info": "some info and stuff",
+	"img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
+	"latitude": "51.1307075",
+	"longitude": "17.052731"
+    },
+    {
+        "id": 2,
+        "type": 1,
+        "name": "SKS",
+	"info": "some info and stuff",
+	"img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
+	"latitude": "51.1507075",
+	"longitude": "17.012731"
+    },
+    {
+        "id": 3,
+        "type": 2,
+        "name": "some other place type",
+	"info": "some info and stuff",
+	"img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
+	"latitude": "51.4507075",
+	"longitude": "17.112731"
+    },
+]

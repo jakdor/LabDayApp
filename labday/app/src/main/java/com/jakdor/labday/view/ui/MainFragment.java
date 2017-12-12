@@ -16,7 +16,6 @@ import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.databinding.FragmentMainBinding;
 import com.jakdor.labday.di.InjectableFragment;
 import com.jakdor.labday.rx.RxResponse;
-import com.jakdor.labday.viewmodel.BaseViewModel;
 import com.jakdor.labday.viewmodel.MainViewModel;
 
 import java.util.List;

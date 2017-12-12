@@ -12,8 +12,6 @@ import com.jakdor.labday.rx.RxSchedulersFacade;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
