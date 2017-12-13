@@ -24,7 +24,10 @@ public class AppData implements Serializable
     @SerializedName("timetables")
     @Expose
     private List<Timetable> timetables = null;
-    private final static long serialVersionUID = 8816216271836209839L;
+    @SerializedName("speakers:")
+    @Expose
+    private List<Speaker> speakers = null;
+    private final static long serialVersionUID = 9098698317824998873L;
 
     /**
      * No args constructor for use in serialization
@@ -38,13 +41,16 @@ public class AppData implements Serializable
      * @param events  List of {@link Event}
      * @param mapOthers List of {@link MapOther}
      * @param timetables List of {@link Timetable}
+     * @param speakers List of {@link Speaker}
      */
-    public AppData(List<Event> events, List<MapOther> mapOthers, List<Path> paths, List<Timetable> timetables) {
+    public AppData(List<Event> events, List<MapOther> mapOthers, List<Path> paths,
+                   List<Timetable> timetables, List<Speaker> speakers) {
         super();
         this.events = events;
         this.mapOthers = mapOthers;
         this.paths = paths;
         this.timetables = timetables;
+        this.speakers = speakers;
     }
 
     public List<Event> getEvents() {
@@ -77,6 +83,14 @@ public class AppData implements Serializable
 
     public void setTimetables(List<Timetable> timetables) {
         this.timetables = timetables;
+    }
+
+    public List<Speaker> getSpeakers() {
+        return speakers;
+    }
+
+    public void setSpeakers(List<Speaker> speakers) {
+        this.speakers = speakers;
     }
 
 }

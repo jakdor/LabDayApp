@@ -32,34 +32,22 @@ public class Event implements Serializable
     @SerializedName("topic")
     @Expose
     private String topic;
-    @SerializedName("speaker_name")
+    @SerializedName("speaker_id")
     @Expose
-    private String speakerName;
-    @SerializedName("speaker_info")
-    @Expose
-    private String speakerInfo;
-    @SerializedName("speaker_img")
-    @Expose
-    private String speakerImg;
+    private Integer speakerId;
     @SerializedName("dor1_img")
     @Expose
     private String dor1Img;
     @SerializedName("dor2_img")
     @Expose
     private String dor2Img;
-    @SerializedName("time_start")
-    @Expose
-    private Integer timeStart;
-    @SerializedName("time_end")
-    @Expose
-    private Integer timeEnd;
     @SerializedName("latitude")
     @Expose
     private String latitude;
     @SerializedName("longitude")
     @Expose
     private String longitude;
-    private final static long serialVersionUID = -7797136571328555190L;
+    private final static long serialVersionUID = -9219322149753535630L;
 
     /**
      * No args constructor for use in serialization
@@ -70,23 +58,21 @@ public class Event implements Serializable
 
     /**
      * @param topic event topic
-     * @param speakerImg speaker image
      * @param img main event image url
      * @param dor1Img front dor image url
      * @param dor2Img additional dor image url
      * @param info event info
      * @param id event id
-     * @param timeEnd event end time in sec form unix epoch
-     * @param timeStart event start time in sec from unix epoch
-     * @param speakerInfo speaker info
+     * @param speakerId {@link Speaker} id
      * @param address human readable address
      * @param name event name
      * @param longitude event address longitude
      * @param latitude event address latitude
-     * @param speakerName speaker name & surname
      * @param room event room number
      */
-    public Event(Integer id, String name, String img, String address, String room, String info, String topic, String speakerName, String speakerInfo, String speakerImg, String dor1Img, String dor2Img, Integer timeStart, Integer timeEnd, String latitude, String longitude) {
+    public Event(Integer id, String name, String img, String address, String room,
+                 String info, String topic, Integer speakerId, String dor1Img,
+                 String dor2Img, String latitude, String longitude) {
         super();
         this.id = id;
         this.name = name;
@@ -95,13 +81,9 @@ public class Event implements Serializable
         this.room = room;
         this.info = info;
         this.topic = topic;
-        this.speakerName = speakerName;
-        this.speakerInfo = speakerInfo;
-        this.speakerImg = speakerImg;
+        this.speakerId = speakerId;
         this.dor1Img = dor1Img;
         this.dor2Img = dor2Img;
-        this.timeStart = timeStart;
-        this.timeEnd = timeEnd;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -162,28 +144,12 @@ public class Event implements Serializable
         this.topic = topic;
     }
 
-    public String getSpeakerName() {
-        return speakerName;
+    public Integer getSpeakerId() {
+        return speakerId;
     }
 
-    public void setSpeakerName(String speakerName) {
-        this.speakerName = speakerName;
-    }
-
-    public String getSpeakerInfo() {
-        return speakerInfo;
-    }
-
-    public void setSpeakerInfo(String speakerInfo) {
-        this.speakerInfo = speakerInfo;
-    }
-
-    public String getSpeakerImg() {
-        return speakerImg;
-    }
-
-    public void setSpeakerImg(String speakerImg) {
-        this.speakerImg = speakerImg;
+    public void setSpeakerId(Integer speakerId) {
+        this.speakerId = speakerId;
     }
 
     public String getDor1Img() {
@@ -200,22 +166,6 @@ public class Event implements Serializable
 
     public void setDor2Img(String dor2Img) {
         this.dor2Img = dor2Img;
-    }
-
-    public Integer getTimeStart() {
-        return timeStart;
-    }
-
-    public void setTimeStart(Integer timeStart) {
-        this.timeStart = timeStart;
-    }
-
-    public Integer getTimeEnd() {
-        return timeEnd;
-    }
-
-    public void setTimeEnd(Integer timeEnd) {
-        this.timeEnd = timeEnd;
     }
 
     public String getLatitude() {

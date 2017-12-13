@@ -7,6 +7,7 @@ API endpoints:
 /api/last_update -> (no token required) returns last date of db modification in seconds from unix epoch 
 
 /api/paths -> returns path names + marked logged user path
-/api/timetable -> returns events ids + paths ids
+/api/timetable -> returns events ids, paths ids, time
 /api/events -> returns events info
+/api/speakers -> returns speaker info
 /api/map_other -> returns other places info not connected to events

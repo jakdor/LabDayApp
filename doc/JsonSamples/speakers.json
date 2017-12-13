@@ -1,0 +1,14 @@
+[
+    {
+	"id": 1,	
+	"speaker_name": "Name Surname",
+	"speaker_info": "short speaker info",
+	"speaker_img": "https://www.wykop.pl/cdn/c3201142/comment_LfNZtBbrA6zGMC5a8ocADPcOXUcVbPIj.jpg"
+    },
+    {
+	"id": 2,	
+	"speaker_name": "Jakub Dorda",
+	"speaker_info": "short speaker info",
+	"speaker_img": "https://www.wykop.pl/cdn/c3201142/comment_LfNZtBbrA6zGMC5a8ocADPcOXUcVbPIj.jpg"
+    }
+]
