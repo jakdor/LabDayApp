@@ -2,10 +2,13 @@ package com.jakdor.labday.common.network;
 
 import android.text.TextUtils;
 
+import com.jakdor.labday.BuildConfig;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,6 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitBuilder {
 
     private Retrofit retrofit;
+
+    private HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
 
     private Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -34,6 +39,7 @@ public class RetrofitBuilder {
      * @return retrofit instance
      */
     public <S> S createService(String apiUrl, Class<S> serviceClass) {
+        addLogger();
         retrofitBuilder.baseUrl(apiUrl).client(okHttpClient.build());
         retrofit = retrofitBuilder.build();
         return retrofit.create(serviceClass);
@@ -49,16 +55,12 @@ public class RetrofitBuilder {
      * @return retrofit instance
      */
     public <S> S createService(String apiUrl, Class<S> serviceClass, String username, String password) {
-        if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
-            String authToken = Credentials.basic(username, password);
-            return createService(apiUrl, serviceClass, authToken);
-        }
-
-        return createService(apiUrl, serviceClass);
+        String authToken = Credentials.basic(username, password);
+        return createService(apiUrl, serviceClass, authToken);
     }
 
     /**
-     * Token encoded in base64 authorization header - token provided after successful login with
+     * Token authorization header - token provided after successful login with
      * one-time login & password
      * @param apiUrl base API url
      * @param serviceClass retrofit config interface
@@ -68,15 +70,28 @@ public class RetrofitBuilder {
      */
     public <S> S createService(String apiUrl, Class<S> serviceClass, final String authToken) {
         if (!TextUtils.isEmpty(authToken)) {
-            AuthenticationInterceptor interceptor = new AuthenticationInterceptor(authToken);
+            AuthenticationInterceptor authInterceptor = new AuthenticationInterceptor(authToken);
 
-            if (!okHttpClient.interceptors().contains(interceptor)) {
-                okHttpClient.addInterceptor(interceptor);
+            if (!okHttpClient.interceptors().contains(authInterceptor)) {
+                okHttpClient.addInterceptor(authInterceptor);
+                addLogger();
                 retrofitBuilder.baseUrl(apiUrl).client(okHttpClient.build());
                 retrofit = retrofitBuilder.build();
             }
         }
 
         return retrofit.create(serviceClass);
+    }
+
+    /**
+     * Adds logger interceptor to okHttp config
+     */
+    private void addLogger(){
+        if(BuildConfig.DEBUG) {
+            if (!okHttpClient.interceptors().contains(httpLoggingInterceptor)) {
+                httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+                okHttpClient.addInterceptor(httpLoggingInterceptor);
+            }
+        }
     }
 }
