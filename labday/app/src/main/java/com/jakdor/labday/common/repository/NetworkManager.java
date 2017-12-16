@@ -65,6 +65,20 @@ public class NetworkManager {
         return labService.getAppData();
     }
 
+    /**
+     * @return {@link LabService} instance for checking in tests
+     */
+    public LabService getLabService() {
+        return labService;
+    }
+
+    /**
+     * @return {@link LabService} instance with authorization header for checking in tests
+     */
+    public LabService getLoginLabService() {
+        return loginLabService;
+    }
+
     public String embeddedDaggerTest(){
         return "hello embeddedStabo";
     }

@@ -3,6 +3,7 @@ package com.jakdor.labday.di;
 import android.app.Application;
 
 import com.jakdor.labday.App;
+import com.jakdor.labday.common.repository.NetworkManager;
 
 import javax.inject.Singleton;
 
@@ -29,4 +30,6 @@ public interface AppComponent {
     }
 
     void inject(App app);
+
+    NetworkManager networkManager();
 }

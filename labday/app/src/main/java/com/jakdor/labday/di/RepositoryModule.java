@@ -16,13 +16,13 @@ public class RepositoryModule {
 
     @Singleton
     @Provides
-    NetworkManager getNetworkManager(){
+    public NetworkManager getNetworkManager(){
         return new NetworkManager(getRetrofitBuilder());
     }
 
     @Singleton
     @Provides
-    RetrofitBuilder getRetrofitBuilder(){
+    public RetrofitBuilder getRetrofitBuilder(){
         return new RetrofitBuilder();
     }
 }

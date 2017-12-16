@@ -83,6 +83,12 @@ dependencies {
     //testing
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.13.0'
+    androidTestImplementation 'org.mockito:mockito-android:2.13.0'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    testImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.2'
+    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.2'
+    testImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.2'
+    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.2'
 }
