@@ -1,7 +1,5 @@
 package com.jakdor.labday.common.network;
 
-import android.text.TextUtils;
-
 import com.jakdor.labday.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
@@ -21,6 +19,7 @@ public class RetrofitBuilder {
     private Retrofit retrofit;
 
     private HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+    private AuthenticationInterceptor authInterceptor = new AuthenticationInterceptor();
 
     private Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -69,14 +68,16 @@ public class RetrofitBuilder {
      * @return retrofit instance
      */
     public <S> S createService(String apiUrl, Class<S> serviceClass, final String authToken) {
-        if (!TextUtils.isEmpty(authToken)) {
-            AuthenticationInterceptor authInterceptor = new AuthenticationInterceptor(authToken);
+        if (authToken != null) {
+            if(!authToken.isEmpty()) {
+                authInterceptor.setAuthToken(authToken);
 
-            if (!okHttpClient.interceptors().contains(authInterceptor)) {
-                okHttpClient.addInterceptor(authInterceptor);
-                addLogger();
-                retrofitBuilder.baseUrl(apiUrl).client(okHttpClient.build());
-                retrofit = retrofitBuilder.build();
+                if (!okHttpClient.interceptors().contains(authInterceptor)) {
+                    okHttpClient.addInterceptor(authInterceptor);
+                    addLogger();
+                    retrofitBuilder.baseUrl(apiUrl).client(okHttpClient.build());
+                    retrofit = retrofitBuilder.build();
+                }
             }
         }
 

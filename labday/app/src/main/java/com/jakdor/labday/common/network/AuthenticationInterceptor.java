@@ -10,10 +10,6 @@ public class AuthenticationInterceptor implements Interceptor {
 
     private String authToken;
 
-    AuthenticationInterceptor(String token) {
-        this.authToken = token;
-    }
-
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request original = chain.request();
@@ -23,5 +19,9 @@ public class AuthenticationInterceptor implements Interceptor {
 
         Request request = builder.build();
         return chain.proceed(request);
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 }
