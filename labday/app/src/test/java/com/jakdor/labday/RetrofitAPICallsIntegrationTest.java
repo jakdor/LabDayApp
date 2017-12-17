@@ -5,11 +5,16 @@ import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import io.reactivex.observers.TestObserver;
 
 public class RetrofitAPICallsIntegrationTest {
+
+    @Rule
+    public ExpectedException thrown= ExpectedException.none();
 
     RetrofitBuilder retrofitBuilder;
 
@@ -31,7 +36,7 @@ public class RetrofitAPICallsIntegrationTest {
 
         testObserver.assertSubscribed();
         testObserver.assertNoErrors();
-        testObserver.assertValueCount(1);
+        testObserver.assertValueCount(1); //todo compere response to expected json
         testObserver.onComplete();
     }
 

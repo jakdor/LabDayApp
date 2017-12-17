@@ -12,6 +12,9 @@ project.ext {
     okHttpVersion = "3.9.1"
     rxJavaVersion = "2.1.7"
     rxAndroidVersion = "2.0.1"
+
+    mockitoVersion = "2.13.0"
+    daggerMockVersion = "0.8.2"
 }
 
 android {
@@ -82,13 +85,13 @@ dependencies {
 
     //testing
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.13.0'
-    androidTestImplementation 'org.mockito:mockito-android:2.13.0'
+    testImplementation "org.mockito:mockito-core:$project.mockitoVersion"
+    androidTestImplementation "org.mockito:mockito-android:$project.mockitoVersion"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    testImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.2'
-    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.2'
-    testImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.2'
-    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.2'
+    testImplementation "com.github.fabioCollini.daggermock:daggermock:$project.daggerMockVersion"
+    androidTestImplementation "com.github.fabioCollini.daggermock:daggermock:$project.daggerMockVersion"
+    testImplementation "com.github.fabioCollini.daggermock:daggermock-kotlin:$project.daggerMockVersion"
+    androidTestImplementation "com.github.fabioCollini.daggermock:daggermock-kotlin:$project.daggerMockVersion"
 }

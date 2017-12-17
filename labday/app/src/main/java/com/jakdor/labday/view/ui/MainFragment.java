@@ -34,7 +34,6 @@ public class MainFragment extends Fragment implements InjectableFragment {
     private MainViewModel viewModel;
 
     @Inject
-
     ViewModelProvider.Factory viewModelFactory;
 
     @Nullable

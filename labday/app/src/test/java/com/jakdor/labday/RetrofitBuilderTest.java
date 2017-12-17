@@ -7,6 +7,7 @@ import com.jakdor.labday.common.network.RetrofitBuilder;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -29,6 +30,9 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.when;
 
 public class RetrofitBuilderTest {
+
+    @Rule
+    public ExpectedException thrown= ExpectedException.none();
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
