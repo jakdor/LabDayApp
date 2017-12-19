@@ -93,4 +93,29 @@ public class AppData implements Serializable
         this.speakers = speakers;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AppData appData = (AppData) o;
+
+        if (events != null ? !events.equals(appData.events) : appData.events != null) return false;
+        if (mapOthers != null ? !mapOthers.equals(appData.mapOthers) : appData.mapOthers != null)
+            return false;
+        if (paths != null ? !paths.equals(appData.paths) : appData.paths != null) return false;
+        if (timetables != null ? !timetables.equals(appData.timetables) : appData.timetables != null)
+            return false;
+        return speakers != null ? speakers.equals(appData.speakers) : appData.speakers == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = events != null ? events.hashCode() : 0;
+        result = 31 * result + (mapOthers != null ? mapOthers.hashCode() : 0);
+        result = 31 * result + (paths != null ? paths.hashCode() : 0);
+        result = 31 * result + (timetables != null ? timetables.hashCode() : 0);
+        result = 31 * result + (speakers != null ? speakers.hashCode() : 0);
+        return result;
+    }
 }
