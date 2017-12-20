@@ -1,6 +1,7 @@
 package com.jakdor.labday.di;
 
 import com.jakdor.labday.view.ui.MainFragment;
+import com.jakdor.labday.view.ui.SplashFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -12,4 +13,7 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class MainActivityFragmentBuilderModule {
     @ContributesAndroidInjector
     abstract MainFragment contributeMainFragment();
+
+    @ContributesAndroidInjector
+    abstract SplashFragment contributeSplashFragment();
 }

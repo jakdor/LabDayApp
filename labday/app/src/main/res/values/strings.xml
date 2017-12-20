@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LabDay</string>
+    <string name="logoDescription">logo</string>
+    <string name="double_back_info">Naciśnij ponownie by wyjść</string>
 </resources>

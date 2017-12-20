@@ -1,14 +1,15 @@
 package com.jakdor.labday.view.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.jakdor.labday.R;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -18,27 +19,51 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
+    boolean doubleBackToExit = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ButterKnife.bind(this);
-
         if(savedInstanceState == null) {
-            MainFragment mainFragment = new MainFragment();
+            SplashFragment splashFragment = new SplashFragment();
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .addToBackStack("mainFragment")
-                    .replace(R.id.fragmentLayout,
-                            mainFragment, null).commit();
+                    .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
+                    .addToBackStack(null)
+                    .add(R.id.fragmentLayout, splashFragment)
+                    .commit();
         }
     }
 
     @Override
     public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
         return dispatchingAndroidInjector;
+    }
+
+    /**
+     * discard back press if MainFragment, double tap to app exit
+     */
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentLayout);
+        if(fragment instanceof MainFragment){
+            if(doubleBackToExit) {
+                finish();
+                return;
+            }
+
+            doubleBackToExit = true;
+            Toast.makeText(this, getString(R.string.double_back_info), Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(() -> doubleBackToExit = false, 2000);
+
+            return;
+        }
+
+        super.onBackPressed();
     }
 }

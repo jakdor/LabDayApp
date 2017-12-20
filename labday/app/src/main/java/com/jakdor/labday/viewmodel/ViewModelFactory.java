@@ -30,6 +30,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         creators = new ArrayMap<>();
 
         creators.put(MainViewModel.class, viewModelSubComponent::mainViewModel);
+        creators.put(SplashViewModel.class, viewModelSubComponent::splashViewModel);
     }
 
     /**
