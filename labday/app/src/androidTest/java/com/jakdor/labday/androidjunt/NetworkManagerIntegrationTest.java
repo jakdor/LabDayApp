@@ -1,4 +1,4 @@
-package com.jakdor.labday;
+package com.jakdor.labday.androidjunt;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -18,7 +18,7 @@ import org.junit.rules.ExpectedException;
 import io.appflate.restmock.RESTMockServer;
 import io.reactivex.observers.TestObserver;
 
-import static com.jakdor.labday.TestUtils.readAssetFile;
+import static com.jakdor.labday.androidjunt.TestUtils.readAssetFile;
 
 /**
  * {@link NetworkManager} integration tests on local REST API mock

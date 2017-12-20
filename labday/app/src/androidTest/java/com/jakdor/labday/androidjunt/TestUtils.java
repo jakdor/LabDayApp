@@ -1,4 +1,4 @@
-package com.jakdor.labday;
+package com.jakdor.labday.androidjunt;
 
 import android.content.Context;
 

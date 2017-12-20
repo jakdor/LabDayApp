@@ -1,7 +1,6 @@
-package com.jakdor.labday;
+package com.jakdor.labday.androidjunt;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.jakdor.labday.common.model.AppData;
@@ -21,7 +20,7 @@ import io.appflate.restmock.RESTMockServer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.jakdor.labday.TestUtils.readAssetFile;
+import static com.jakdor.labday.androidjunt.TestUtils.readAssetFile;
 
 /**
  * {@link ProjectRepository} integration tests on local REST API mock
@@ -83,12 +82,5 @@ public class ProjectRepositoryIntegrationTest {
 
                     disposable.dispose();
                 }));
-
-        try{
-            Thread.sleep(500); //todo refactor if possible
-        }
-        catch (Exception e){
-            Log.e("Test", e.toString());
-        }
     }
 }

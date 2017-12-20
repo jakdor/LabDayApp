@@ -1,4 +1,4 @@
-package com.jakdor.labday;
+package com.jakdor.labday.androidjunt;
 
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
