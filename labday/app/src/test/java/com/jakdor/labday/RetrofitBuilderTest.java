@@ -43,7 +43,7 @@ public class RetrofitBuilderTest {
     @InjectMocks
     RetrofitBuilder retrofitBuilder;
 
-    private final String dummyApiUrl = LabService.MOCK_API_URL; //todo replace with local API mock framework
+    private final String dummyApiUrl = LabService.MOCK_API_URL;
     private final String dummyToken = "givbhsjdokfj";
     private final String message = "duno lol";
 
@@ -83,6 +83,7 @@ public class RetrofitBuilderTest {
         labService.getAppData().subscribe(testObserver);
 
         testObserver.assertSubscribed();
+        testObserver.onComplete();
 
         InOrder order = inOrder(authenticationInterceptor);
         order.verify(authenticationInterceptor, calls(1)).setAuthToken(dummyToken);

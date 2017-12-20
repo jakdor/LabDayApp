@@ -117,4 +117,32 @@ public class MapOther implements Serializable
         this.longitude = longitude;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MapOther mapOther = (MapOther) o;
+
+        if (id != null ? !id.equals(mapOther.id) : mapOther.id != null) return false;
+        if (type != null ? !type.equals(mapOther.type) : mapOther.type != null) return false;
+        if (name != null ? !name.equals(mapOther.name) : mapOther.name != null) return false;
+        if (info != null ? !info.equals(mapOther.info) : mapOther.info != null) return false;
+        if (img != null ? !img.equals(mapOther.img) : mapOther.img != null) return false;
+        if (latitude != null ? !latitude.equals(mapOther.latitude) : mapOther.latitude != null)
+            return false;
+        return longitude != null ? longitude.equals(mapOther.longitude) : mapOther.longitude == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (info != null ? info.hashCode() : 0);
+        result = 31 * result + (img != null ? img.hashCode() : 0);
+        result = 31 * result + (latitude != null ? latitude.hashCode() : 0);
+        result = 31 * result + (longitude != null ? longitude.hashCode() : 0);
+        return result;
+    }
 }

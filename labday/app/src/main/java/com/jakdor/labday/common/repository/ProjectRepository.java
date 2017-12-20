@@ -39,8 +39,8 @@ public class ProjectRepository {
      * Gets appData from api call or from local db;
      * @return {Single<RxResponse<AppData>>} appData wrapped with {@link RxResponse}
      */
-    public Observable<RxResponse<AppData>> getAppData(){
-        networkManager.configAuth(LabService.MOCK_API_URL, "dummyToken");
+    public Observable<RxResponse<AppData>> getAppData(String apiUrl){
+        networkManager.configAuth(apiUrl, "dummyToken");
         return apiRequest(networkManager.getAppData());
     }
 
@@ -52,7 +52,7 @@ public class ProjectRepository {
      * @return Outer observable
      */
     public <T> Observable<RxResponse<T>> apiRequest(final Observable<T> apiCall) {
-        return Observable.create(e -> {
+        return Observable.create(e ->
             apiCall.subscribeOn(rxSchedulersFacade.io())
                     .observeOn(rxSchedulersFacade.ui())
                     .subscribe(new Observer<T>() {
@@ -78,8 +78,8 @@ public class ProjectRepository {
                         public void onComplete() {
                             e.onComplete();
                         }
-                    });
-        });
+                    })
+        );
     }
 
     public String daggerHelloWorld(){

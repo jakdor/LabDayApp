@@ -91,4 +91,30 @@ public class Timetable implements Serializable
         this.timeEnd = timeEnd;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Timetable timetable = (Timetable) o;
+
+        if (id != null ? !id.equals(timetable.id) : timetable.id != null) return false;
+        if (pathId != null ? !pathId.equals(timetable.pathId) : timetable.pathId != null)
+            return false;
+        if (eventId != null ? !eventId.equals(timetable.eventId) : timetable.eventId != null)
+            return false;
+        if (timeStart != null ? !timeStart.equals(timetable.timeStart) : timetable.timeStart != null)
+            return false;
+        return timeEnd != null ? timeEnd.equals(timetable.timeEnd) : timetable.timeEnd == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (pathId != null ? pathId.hashCode() : 0);
+        result = 31 * result + (eventId != null ? eventId.hashCode() : 0);
+        result = 31 * result + (timeStart != null ? timeStart.hashCode() : 0);
+        result = 31 * result + (timeEnd != null ? timeEnd.hashCode() : 0);
+        return result;
+    }
 }

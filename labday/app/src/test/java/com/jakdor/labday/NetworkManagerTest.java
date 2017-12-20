@@ -39,7 +39,7 @@ public class NetworkManagerTest {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create());
 
-    private final String dummyApiUrl = LabService.MOCK_API_URL; //todo replace with local API mock framework
+    private final String dummyApiUrl = LabService.MOCK_API_URL;
     private final String dummyToken = "dummyToken";
     private final String dummyLogin = "user";
     private final String dummyPassword = "password";

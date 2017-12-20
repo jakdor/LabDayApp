@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.jakdor.labday.common.model.AppData;
+import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.repository.ProjectRepository;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxSchedulersFacade;
@@ -47,7 +48,7 @@ public abstract class BaseViewModel extends AndroidViewModel {
             appData.setValue(projectRepository.getData());
         }
         else {
-            disposable.add(projectRepository.getAppData()
+            disposable.add(projectRepository.getAppData(LabService.MOCK_API_URL)
                     .subscribeOn(rxSchedulersFacade.io())
                     .observeOn(rxSchedulersFacade.ui())
                     .doOnSubscribe(disposable1 -> loadingStatus.setValue(true))

@@ -1,7 +1,10 @@
 package com.jakdor.labday;
 
+import android.support.annotation.NonNull;
+
 import com.jakdor.labday.common.network.AuthenticationInterceptor;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,6 +40,9 @@ public class AuthenticationInterceptorTest {
         authenticationInterceptor.setAuthToken(dummyToken);
     }
 
+    /**
+     * Test authentication header setup
+     */
     @Test
     public void interceptTest() throws Exception {
         Interceptor.Chain chain = new Interceptor.Chain() {
@@ -46,7 +52,7 @@ public class AuthenticationInterceptorTest {
             }
 
             @Override
-            public Response proceed(Request request) throws IOException {
+            public Response proceed(@NonNull Request request) throws IOException {
                 return new Response.Builder().request(request).protocol(Protocol.HTTP_2).code(200)
                         .headers(request.headers()).message(message).build();
             }
@@ -68,7 +74,7 @@ public class AuthenticationInterceptorTest {
             }
 
             @Override
-            public Interceptor.Chain withConnectTimeout(int timeout, TimeUnit unit) {
+            public Interceptor.Chain withConnectTimeout(int timeout, @NonNull TimeUnit unit) {
                 return null;
             }
 
@@ -78,7 +84,7 @@ public class AuthenticationInterceptorTest {
             }
 
             @Override
-            public Interceptor.Chain withReadTimeout(int timeout, TimeUnit unit) {
+            public Interceptor.Chain withReadTimeout(int timeout, @NonNull TimeUnit unit) {
                 return null;
             }
 
@@ -88,7 +94,7 @@ public class AuthenticationInterceptorTest {
             }
 
             @Override
-            public Interceptor.Chain withWriteTimeout(int timeout, TimeUnit unit) {
+            public Interceptor.Chain withWriteTimeout(int timeout, @NotNull TimeUnit unit) {
                 return null;
             }
         };

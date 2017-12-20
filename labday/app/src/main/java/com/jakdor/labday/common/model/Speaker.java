@@ -75,4 +75,27 @@ public class Speaker implements Serializable
         this.speakerImg = speakerImg;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Speaker speaker = (Speaker) o;
+
+        if (id != null ? !id.equals(speaker.id) : speaker.id != null) return false;
+        if (speakerName != null ? !speakerName.equals(speaker.speakerName) : speaker.speakerName != null)
+            return false;
+        if (speakerInfo != null ? !speakerInfo.equals(speaker.speakerInfo) : speaker.speakerInfo != null)
+            return false;
+        return speakerImg != null ? speakerImg.equals(speaker.speakerImg) : speaker.speakerImg == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (speakerName != null ? speakerName.hashCode() : 0);
+        result = 31 * result + (speakerInfo != null ? speakerInfo.hashCode() : 0);
+        result = 31 * result + (speakerImg != null ? speakerImg.hashCode() : 0);
+        return result;
+    }
 }

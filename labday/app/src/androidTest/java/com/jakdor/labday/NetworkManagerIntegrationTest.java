@@ -11,19 +11,14 @@ import com.jakdor.labday.common.repository.NetworkManager;
 import junit.framework.Assert;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import io.appflate.restmock.RESTMockServer;
 import io.reactivex.observers.TestObserver;
 
-import static io.appflate.restmock.utils.RequestMatchers.pathContains;
+import static com.jakdor.labday.TestUtils.readAssetFile;
 
 /**
  * {@link NetworkManager} integration tests on local REST API mock
@@ -31,7 +26,7 @@ import static io.appflate.restmock.utils.RequestMatchers.pathContains;
 public class NetworkManagerIntegrationTest {
 
     @Rule
-    public ExpectedException thrown= ExpectedException.none();
+    public ExpectedException thrown = ExpectedException.none();
 
     private Context testContext;
 
@@ -41,12 +36,6 @@ public class NetworkManagerIntegrationTest {
     private final String dummyToken = "dummyToken";
     private final String dummyLogin = "user";
     private final String dummyPassword = "password";
-
-    @BeforeClass
-    public static void beforeClass() throws Exception {
-        RESTMockServer.whenGET(pathContains("api/app_data"))
-                .thenReturnFile(200, "api/app_data.json");
-    }
 
     /**
      * Setup local Mock REST API server for instrumentation tests
@@ -74,6 +63,8 @@ public class NetworkManagerIntegrationTest {
 
         testObserver.assertSubscribed();
         testObserver.assertValueCount(1);
+        testObserver.assertNoErrors();
+        testObserver.onComplete();
     }
 
     /**
@@ -92,29 +83,8 @@ public class NetworkManagerIntegrationTest {
 
         testObserver.assertSubscribed();
         testObserver.assertValueCount(1);
-    }
-
-    /**
-     * Read asset file to String
-     * @param context required to access assets in apk
-     * @param path file path
-     * @return file loaded to String
-     * @throws Exception file parsing / assets access Exceptions
-     */
-    private String readAssetFile(Context context, String path) throws Exception{
-        StringBuilder stringBuilder = new StringBuilder();
-        InputStream json = context.getAssets().open(path);
-        BufferedReader bufferedReader
-                = new BufferedReader(new InputStreamReader(json, "UTF-8"));
-
-        String str;
-        while ((str = bufferedReader.readLine()) != null) {
-            stringBuilder.append(str);
-        }
-
-        bufferedReader.close();
-
-        return new String(stringBuilder);
+        testObserver.assertNoErrors();
+        testObserver.onComplete();
     }
 
     /**
@@ -134,6 +104,7 @@ public class NetworkManagerIntegrationTest {
         public void onNext(T t) {
             super.onNext(t);
             Assert.assertEquals(data, t);
+            Assert.assertEquals(data.hashCode(), t.hashCode());
         }
     }
 }

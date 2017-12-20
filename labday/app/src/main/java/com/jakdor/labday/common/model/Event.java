@@ -184,4 +184,43 @@ public class Event implements Serializable
         this.longitude = longitude;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Event event = (Event) o;
+
+        if (id != null ? !id.equals(event.id) : event.id != null) return false;
+        if (name != null ? !name.equals(event.name) : event.name != null) return false;
+        if (img != null ? !img.equals(event.img) : event.img != null) return false;
+        if (address != null ? !address.equals(event.address) : event.address != null) return false;
+        if (room != null ? !room.equals(event.room) : event.room != null) return false;
+        if (info != null ? !info.equals(event.info) : event.info != null) return false;
+        if (topic != null ? !topic.equals(event.topic) : event.topic != null) return false;
+        if (speakerId != null ? !speakerId.equals(event.speakerId) : event.speakerId != null)
+            return false;
+        if (dor1Img != null ? !dor1Img.equals(event.dor1Img) : event.dor1Img != null) return false;
+        if (dor2Img != null ? !dor2Img.equals(event.dor2Img) : event.dor2Img != null) return false;
+        if (latitude != null ? !latitude.equals(event.latitude) : event.latitude != null)
+            return false;
+        return longitude != null ? longitude.equals(event.longitude) : event.longitude == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (img != null ? img.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (room != null ? room.hashCode() : 0);
+        result = 31 * result + (info != null ? info.hashCode() : 0);
+        result = 31 * result + (topic != null ? topic.hashCode() : 0);
+        result = 31 * result + (speakerId != null ? speakerId.hashCode() : 0);
+        result = 31 * result + (dor1Img != null ? dor1Img.hashCode() : 0);
+        result = 31 * result + (dor2Img != null ? dor2Img.hashCode() : 0);
+        result = 31 * result + (latitude != null ? latitude.hashCode() : 0);
+        result = 31 * result + (longitude != null ? longitude.hashCode() : 0);
+        return result;
+    }
 }
