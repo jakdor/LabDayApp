@@ -12,7 +12,7 @@
 
   Backend providing REST API handled by Retrofit with local off-line backup in native sqlite database accessed with StorIO/SQLBrite, all managed by RXJava and LiveData (no ORM this time to see performance difference/learn new things). Additionally some mechanism to handle situation when backend is down with no local data backup.
 
-  Implement Dependency Injection project pattern with Dagger2 and Reactive programming with RXJava2/LiveData. 
+  Dependency Injection project pattern with Dagger2 and Reactive programming with RXJava2/LiveData. 
   Some classes implemented in Kotlin, to learn new Language.
 
   ## Technology stack
@@ -20,9 +20,9 @@
   ### Android
   Name |  Version |
   | :--: | :---: |
-  | API level | 21+ |
-  | Build tools | 26.0.3 |
-  | Support libs | 26.1.0 |
+  | API level | 21-27 |
+  | Build tools | 27.0.2 |
+  | Support libs | 27.0.2 |
   | Java | 1.8 |
   | Kotlin | 1.2 |
 
@@ -32,6 +32,7 @@
   | Retrofit2 | 2.3.0 |
   | OkHttp | 3.9.1 |
   | Dagger2 | 2.13 |
+  | RxJava | 2.1.7 |
   | Glide | 4.3.1 |
   | ButterKnife | 8.8.1 |
   | ... | |
@@ -40,5 +41,8 @@
   Name |  Version |
   | :--: | :---: |
   | Junit4 | 4.12 |
+  | Mockito | 2.13.0 |
   | Espresso | 3.0.1 |
   | Roboelectric | 3.5.1 |
+  | DaggerMock | 0.8.2 |
+  | RESTMock | 0.2.2 |

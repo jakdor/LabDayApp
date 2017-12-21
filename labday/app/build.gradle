@@ -5,7 +5,8 @@ apply plugin: 'kotlin-android-extensions'
 project.ext {
     arch = "1.0.3"
     archExt = "1.0.0"
-    supportLibsVersion = "26.1.0"
+    supportLibsVersion = "27.0.2"
+    constraintLayoutVersion = "1.0.2"
     butterKnifeVersion = "8.8.1"
     daggerVersion = "2.13"
     retrofitVersion = "2.3.0"
@@ -14,16 +15,19 @@ project.ext {
     rxAndroidVersion = "2.0.1"
 
     mockitoVersion = "2.13.0"
+    androidTestRunnerVersion = "1.0.1"
+    espressoVersion = "3.0.1"
     daggerMockVersion = "0.8.2"
+    restMockVersion = "0.2.2"
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.3'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.2'
     defaultConfig {
         applicationId "com.jakdor.labday"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'io.appflate.restmock.android.RESTMockTestRunner'
@@ -49,6 +53,8 @@ dependencies {
 
     //support libs
     implementation "com.android.support:appcompat-v7:$project.supportLibsVersion"
+    implementation "com.android.support:support-v4:$project.supportLibsVersion"
+    implementation "com.android.support.constraint:constraint-layout:$project.constraintLayoutVersion"
 
     //android architecture
     annotationProcessor "android.arch.lifecycle:compiler:$project.archExt"
@@ -59,27 +65,26 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$project.butterKnifeVersion"
     implementation "com.jakewharton:butterknife:$project.butterKnifeVersion"
 
-    //other GUI libs
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-
-    // Dagger core
+    //Dagger core
     annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
     implementation "com.google.dagger:dagger:$project.daggerVersion"
 
-    // Dagger Android
+    //Dagger Android
     annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
     implementation "com.google.dagger:dagger:$project.daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
 
-    //retrofit + okHttp
+    //retrofit
     implementation "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
     implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$project.retrofitVersion"
+
+    //okHttp
     implementation "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
 
-    // rxJava
+    //rxJava
     implementation "io.reactivex.rxjava2:rxjava:$project.rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroidVersion"
 
@@ -87,9 +92,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation "org.mockito:mockito-core:$project.mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$project.mockitoVersion"
-    androidTestImplementation 'com.github.andrzejchm.RESTMock:android:0.2.2'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation "com.github.andrzejchm.RESTMock:android:$project.restMockVersion"
+    androidTestImplementation "com.android.support.test:runner:$project.androidTestRunnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$project.espressoVersion"
 
     testImplementation "com.github.fabioCollini.daggermock:daggermock:$project.daggerMockVersion"
     androidTestImplementation "com.github.fabioCollini.daggermock:daggermock:$project.daggerMockVersion"

@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     }
 
     /**
-     * discard back press if MainFragment, double tap to app exit
+     * discard back press if MainFragment loaded, double tap to app exit
      */
     @Override
     public void onBackPressed() {
