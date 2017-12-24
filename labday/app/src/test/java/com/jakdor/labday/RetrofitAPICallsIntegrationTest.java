@@ -26,6 +26,7 @@ public class RetrofitAPICallsIntegrationTest {
     RetrofitBuilder retrofitBuilder;
 
     private final String appDataJsonPath = "app/src/test/assets/api/app_data.json";
+    private final String lastUpdateJsonPath = "app/src/test/assets/api/last_update.json";
 
     private final String dummyApiUrl = LabService.MOCK_API_URL;
     private final String dummyToken = "dummyToken";
@@ -37,6 +38,22 @@ public class RetrofitAPICallsIntegrationTest {
         retrofitBuilder = new RetrofitBuilder();
     }
 
+    @Test
+    public void lastUpdateTest() throws Exception {
+        LabService labService = retrofitBuilder.createService(dummyApiUrl, LabService.class);
+        String expectedLastUpdate = readFile(lastUpdateJsonPath);
+        TestObserver<String> testObserver = new CustomTestObserver<>(expectedLastUpdate);
+        labService.getLastUpdate().subscribe(testObserver);
+
+        testObserver.assertSubscribed();
+        testObserver.assertValueCount(1);
+        testObserver.assertNoErrors();
+        testObserver.onComplete();
+    }
+
+    /**
+     * Tests response from AppData API call with login&password authorization
+     */
     @Test
     public void appDataLoginTest() throws Exception {
         Gson gson = new Gson();
@@ -53,6 +70,9 @@ public class RetrofitAPICallsIntegrationTest {
         testObserver.onComplete();
     }
 
+    /**
+     * Tests response from AppData API call with token authorization
+     */
     @Test
     public void appDataTokenTest() throws Exception {
         Gson gson = new Gson();
@@ -68,6 +88,10 @@ public class RetrofitAPICallsIntegrationTest {
         testObserver.onComplete();
     }
 
+    /**
+     * Reads file to string
+     * @return String
+     */
     private String readFile(String filePath) throws Exception{
         Path path = Paths.get(filePath);
         return new String(Files.readAllBytes(path));

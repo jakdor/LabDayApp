@@ -14,4 +14,7 @@ public interface LabService {
 
     @GET("api/app_data")
     Observable<AppData> getAppData();
+
+    @GET("api/last_update")
+    Observable<String> getLastUpdate();
 }

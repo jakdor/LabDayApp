@@ -16,6 +16,9 @@ public class JUnitInstrumentationTests {
     public static void beforeAll(){
         RESTMockServer.whenGET(pathContains("api/app_data"))
             .thenReturnFile(200, "api/app_data.json");
+
+        RESTMockServer.whenGET(pathContains("api/last_update"))
+                .thenReturnFile(200, "api/last_update.json");
     }
 
 }

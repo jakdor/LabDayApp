@@ -1,5 +1,10 @@
 package com.jakdor.labday.common.repository;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
+
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
@@ -13,6 +18,8 @@ import io.reactivex.Observable;
  */
 public class NetworkManager {
 
+    private final String CLASS_TAG = "NetworkManager";
+
     private RetrofitBuilder retrofitBuilder;
     private LabService labService;
     private LabService loginLabService;
@@ -20,6 +27,31 @@ public class NetworkManager {
     @Inject
     public NetworkManager(RetrofitBuilder retrofitBuilder){
         this.retrofitBuilder = retrofitBuilder;
+    }
+
+    /**
+     * Check network status
+     * @param context required to retrieve ConnectivityService
+     * @return boolean - network status
+     */
+    public boolean checkNetworkStatus(Context context) {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if(connectivityManager == null){
+            Log.wtf(CLASS_TAG, "Internet status: failed to get status!");
+            return false;
+        }
+
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if(networkInfo == null){
+            Log.e(CLASS_TAG, "Internet status: no service!");
+            return false;
+        }
+        else {
+            Log.i(CLASS_TAG, "Internet status: OK");
+            return true;
+        }
     }
 
     /**
@@ -59,10 +91,18 @@ public class NetworkManager {
 
     /**
      * Main NetworkManager api call - get all appData bundled in single call
-     * @return Observable with {@link AppData} in List
+     * @return Observable with {@link AppData}
      */
     public Observable<AppData> getAppData(){
         return labService.getAppData();
+    }
+
+    /**
+     * Last update api call - backend db update id/time in seconds from unix epoch;
+     * @return Observable String with update unique id
+     */
+    public Observable<String> getLastUpdate(){
+        return labService.getLastUpdate();
     }
 
     /**

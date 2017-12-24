@@ -1,6 +1,8 @@
 package com.jakdor.labday.androidjunt;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.test.InstrumentationRegistry;
 
 import com.google.gson.Gson;
@@ -44,6 +46,42 @@ public class NetworkManagerIntegrationTest {
     public void setUp() throws Exception {
         testContext = InstrumentationRegistry.getContext();
         networkManager = new NetworkManager(new RetrofitBuilder());
+    }
+
+    /**
+     * {@link NetworkManager} unit test: check network status
+     */
+    @Test
+    public void checkNetworkStatusTest() throws Exception {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) testContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if(networkInfo == null){
+            Assert.assertFalse(networkManager.checkNetworkStatus(testContext));
+        }
+        else {
+            Assert.assertTrue(networkManager.checkNetworkStatus(testContext));
+        }
+    }
+
+    /**
+     * {@link NetworkManager} integration test: get last_update id from local REST API mock server
+     */
+    @Test
+    public void getLastUpdate() throws Exception {
+        networkManager.configAuth(dummyApiUrl);
+
+        String expectedLastUpdate
+                = new String(readAssetFile(testContext, "api/last_update.json").getBytes());
+
+        TestObserver<String> testObserver = new CustomTestObserver<>(expectedLastUpdate);
+        networkManager.getLastUpdate().subscribe(testObserver);
+
+        testObserver.assertSubscribed();
+        testObserver.assertValueCount(1);
+        testObserver.assertNoErrors();
+        testObserver.onComplete();
     }
 
     /**

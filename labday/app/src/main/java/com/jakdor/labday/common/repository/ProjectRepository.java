@@ -3,7 +3,6 @@ package com.jakdor.labday.common.repository;
 import android.util.Log;
 
 import com.jakdor.labday.common.model.AppData;
-import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxSchedulersFacade;
 import com.jakdor.labday.rx.RxStatus;
@@ -71,6 +70,7 @@ public class ProjectRepository {
                         @Override
                         public void onError(Throwable throwable) {
                             Log.e(CLASS_TAG, "API request failed, " + throwable.toString());
+                            ProjectRepository.this.repositoryState = repositoryStates.ERROR;
                             e.onNext(new RxResponse<>(RxStatus.ERROR, null, throwable));
                         }
 

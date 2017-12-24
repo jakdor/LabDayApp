@@ -35,6 +35,7 @@ public class ProjectRepositoryIntegrationTest {
     private ProjectRepository projectRepository;
 
     private final String dummyApiUrl = RESTMockServer.getUrl();
+    private final String dummyApiBadUrl = "http://www.dummy.com/";
 
     @Before
     public void setUp() throws Exception {
@@ -50,6 +51,12 @@ public class ProjectRepositoryIntegrationTest {
                 ProjectRepository.repositoryStates.INIT);
     }
 
+    /**
+     * {@link ProjectRepository} getAppData() / getData() integration test scenario 1
+     * - check init ProjectRepository state
+     * - get appData API response (successful)
+     * - check ProjectRepository after successful call
+     */
     @Test
     public void integrationTestScenario1() throws Exception {
         Assert.assertEquals(projectRepository.getRepositoryState(),
@@ -79,6 +86,36 @@ public class ProjectRepositoryIntegrationTest {
 
                     Assert.assertNotNull(projectRepository.getData());
                     Assert.assertEquals(projectRepository.getData().data, appData);
+
+                    disposable.dispose();
+                }));
+    }
+
+    /**
+     * {@link ProjectRepository} getAppData() / getData() integration test scenario 2
+     * - check init ProjectRepository state
+     * - get appData API response (failed)
+     */
+    @Test
+    public void integrationTestScenario2() throws Exception {
+        Assert.assertEquals(projectRepository.getRepositoryState(),
+                ProjectRepository.repositoryStates.INIT);
+        Assert.assertNull(projectRepository.getData());
+
+        CompositeDisposable disposable = new CompositeDisposable();
+
+        disposable.add(projectRepository.getAppData(dummyApiBadUrl)
+                .subscribeOn(Schedulers.io())
+                .doOnError(throwable -> Assert.fail())
+                .subscribe(appDataRxResponse -> {
+
+                    Assert.assertNotNull(appDataRxResponse);
+                    Assert.assertNull(appDataRxResponse.data);
+                    Assert.assertNotNull(appDataRxResponse.error);
+                    Assert.assertEquals(RxStatus.ERROR, appDataRxResponse.status);
+
+                    Assert.assertEquals(projectRepository.getRepositoryState(),
+                            ProjectRepository.repositoryStates.ERROR);
 
                     disposable.dispose();
                 }));
