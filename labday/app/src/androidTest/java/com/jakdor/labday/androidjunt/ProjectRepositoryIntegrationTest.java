@@ -1,8 +1,10 @@
 package com.jakdor.labday.androidjunt;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
 
 import com.google.gson.Gson;
+import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 import com.jakdor.labday.common.repository.NetworkManager;
@@ -31,6 +33,7 @@ public class ProjectRepositoryIntegrationTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Context testContext;
+    private Context targetContext;
 
     private ProjectRepository projectRepository;
 
@@ -40,6 +43,7 @@ public class ProjectRepositoryIntegrationTest {
     @Before
     public void setUp() throws Exception {
         testContext = InstrumentationRegistry.getContext();
+        targetContext = InstrumentationRegistry.getTargetContext();
 
         projectRepository = new ProjectRepository(
                 new NetworkManager(new RetrofitBuilder()), new RxSchedulersFacade());
@@ -51,6 +55,19 @@ public class ProjectRepositoryIntegrationTest {
                 ProjectRepository.repositoryStates.INIT);
     }
 
+    @Test
+    public void sharedPreferencesTest() throws Exception {
+        projectRepository.saveApiLastUpdateId("1234", targetContext);
+        Assert.assertTrue(projectRepository.isLocalDataCurrent("1234", targetContext));
+
+        SharedPreferences sharedPreferences = targetContext.getSharedPreferences(
+                targetContext.getString(R.string.pref_file_name), Context.MODE_PRIVATE);
+        String test = sharedPreferences.getString(
+                targetContext.getString(R.string.pref_api_last_update_id), "0");
+
+        Assert.assertEquals("1234", test);
+    }
+
     /**
      * {@link ProjectRepository} getAppData() / getData() integration test scenario 1
      * - check init ProjectRepository state
@@ -58,7 +75,7 @@ public class ProjectRepositoryIntegrationTest {
      * - check ProjectRepository after successful call
      */
     @Test
-    public void integrationTestScenario1() throws Exception {
+    public void integrationDataTestScenario1() throws Exception {
         Assert.assertEquals(projectRepository.getRepositoryState(),
                 ProjectRepository.repositoryStates.INIT);
         Assert.assertNull(projectRepository.getData());
@@ -97,7 +114,7 @@ public class ProjectRepositoryIntegrationTest {
      * - get appData API response (failed)
      */
     @Test
-    public void integrationTestScenario2() throws Exception {
+    public void integrationDataTestScenario2() throws Exception {
         Assert.assertEquals(projectRepository.getRepositoryState(),
                 ProjectRepository.repositoryStates.INIT);
         Assert.assertNull(projectRepository.getData());
@@ -118,6 +135,152 @@ public class ProjectRepositoryIntegrationTest {
                             ProjectRepository.repositoryStates.ERROR);
 
                     disposable.dispose();
+                }));
+    }
+
+    /**
+     * {@link ProjectRepository} getUpdate() integration test scenario 1
+     * - local last update id doesn't match API id
+     * - get API last update id
+     * - get appData API response (successful)
+     * - check ProjectRepository after successful call
+     */
+    @Test
+    public void integrationUpdateTestScenario1() throws Exception {
+        SharedPreferences sharedPreferences = targetContext.getSharedPreferences(
+                targetContext.getString(R.string.pref_file_name), Context.MODE_PRIVATE);
+
+        sharedPreferences.edit().putString(
+                targetContext.getString(R.string.pref_api_last_update_id), "0").commit();
+
+        Assert.assertEquals(projectRepository.getRepositoryState(),
+                ProjectRepository.repositoryStates.INIT);
+        Assert.assertNull(projectRepository.getData());
+
+        Gson gson = new Gson();
+        AppData appData = gson.fromJson(
+                readAssetFile(testContext, "api/app_data.json"), AppData.class);
+
+        CompositeDisposable disposable = new CompositeDisposable();
+
+        disposable.add(projectRepository.getUpdate(dummyApiUrl, targetContext)
+                .subscribeOn(Schedulers.io())
+                .doOnError(throwable -> Assert.fail())
+                .subscribe(appDataRxResponse -> {
+
+                    Assert.assertNotNull(appDataRxResponse);
+                    Assert.assertNotNull(appDataRxResponse.data);
+                    Assert.assertNull(appDataRxResponse.error);
+                    Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
+                    Assert.assertEquals(appData, appDataRxResponse.data);
+                    Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
+
+                    Assert.assertEquals(projectRepository.getRepositoryState(),
+                            ProjectRepository.repositoryStates.READY);
+
+                    Assert.assertNotNull(projectRepository.getData());
+                    Assert.assertEquals(projectRepository.getData().data, appData);
+
+                    Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
+                            sharedPreferences.getString(targetContext.getString(
+                                    R.string.pref_api_last_update_id), null));
+
+                    disposable.dispose();
+
+                }));
+    }
+
+    /**
+     * {@link ProjectRepository} getUpdate() integration test scenario 2
+     * - local last update id matches API id
+     * - get API last update id
+     * - load AppData from local db
+     * - check ProjectRepository after successful call/load
+     */
+    @Test
+    public void integrationUpdateTestScenario2() throws Exception {
+        SharedPreferences sharedPreferences = targetContext.getSharedPreferences(
+                targetContext.getString(R.string.pref_file_name), Context.MODE_PRIVATE);
+
+        sharedPreferences.edit().putString(
+                targetContext.getString(R.string.pref_api_last_update_id),
+                readAssetFile(testContext, "api/last_update.json")).commit();
+
+        Assert.assertEquals(projectRepository.getRepositoryState(),
+                ProjectRepository.repositoryStates.INIT);
+        Assert.assertNull(projectRepository.getData());
+
+        Gson gson = new Gson();
+        AppData appData = gson.fromJson(
+                readAssetFile(testContext, "api/app_data.json"), AppData.class);
+
+        CompositeDisposable disposable = new CompositeDisposable();
+
+        disposable.add(projectRepository.getUpdate(dummyApiUrl, targetContext)
+                .subscribeOn(Schedulers.io())
+                .doOnError(throwable -> Assert.fail())
+                .subscribe(appDataRxResponse -> {
+
+                    Assert.assertNotNull(appDataRxResponse);
+                    Assert.assertNotNull(appDataRxResponse.data);
+                    Assert.assertNull(appDataRxResponse.error);
+                    Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
+                    Assert.assertEquals(appData, appDataRxResponse.data);
+                    Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
+
+                    Assert.assertEquals(projectRepository.getRepositoryState(),
+                            ProjectRepository.repositoryStates.READY);
+
+                    Assert.assertNotNull(projectRepository.getData());
+                    Assert.assertEquals(projectRepository.getData().data, appData);
+
+                    Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
+                            sharedPreferences.getString(targetContext.getString(
+                                    R.string.pref_api_last_update_id), null));
+
+                    disposable.dispose();
+
+                }));
+    }
+
+    /**
+     * {@link ProjectRepository} getUpdate() integration test scenario 3
+     * - get API last update id (failed)
+     * - load AppData from local db
+     * - check ProjectRepository after successful load
+     */
+    @Test
+    public void integrationUpdateTestScenario3() throws Exception {
+        Assert.assertEquals(projectRepository.getRepositoryState(),
+                ProjectRepository.repositoryStates.INIT);
+        Assert.assertNull(projectRepository.getData());
+
+        Gson gson = new Gson();
+        AppData appData = gson.fromJson(
+                readAssetFile(testContext, "api/app_data.json"), AppData.class);
+
+        CompositeDisposable disposable = new CompositeDisposable();
+
+        disposable.add(projectRepository.getUpdate(dummyApiBadUrl, targetContext)
+                .subscribeOn(Schedulers.io())
+                .doOnError(throwable -> Assert.fail())
+                .subscribe(appDataRxResponse -> {
+
+                    Assert.assertNotNull(appDataRxResponse);
+                    Assert.assertNotNull(appDataRxResponse.data);
+                    Assert.assertNull(appDataRxResponse.error);
+                    Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
+                    Assert.assertEquals(appData, appDataRxResponse.data);
+                    Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
+
+                    Assert.assertEquals(projectRepository.getRepositoryState(),
+                            ProjectRepository.repositoryStates.READY);
+
+                    Assert.assertNotNull(projectRepository.getData());
+                    Assert.assertEquals(projectRepository.getData().data, appData);
+
+                    disposable.dispose();
+
                 }));
     }
 }
