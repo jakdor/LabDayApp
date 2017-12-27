@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Creates ViewModel instances
+ * Factory for ViewModel instances
  */
 @Singleton
 public class ViewModelFactory implements ViewModelProvider.Factory {
@@ -31,6 +31,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
         creators.put(MainViewModel.class, viewModelSubComponent::mainViewModel);
         creators.put(SplashViewModel.class, viewModelSubComponent::splashViewModel);
+        creators.put(LoginViewModel.class, viewModelSubComponent::loginViewModel);
     }
 
     /**

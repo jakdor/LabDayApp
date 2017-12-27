@@ -3,56 +3,60 @@ package com.jakdor.labday.view.ui;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.di.InjectableFragment;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxStatus;
-import com.jakdor.labday.viewmodel.SplashViewModel;
+import com.jakdor.labday.viewmodel.LoginViewModel;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
+
 /**
- * Loaded in MainActivity prepares {@link com.jakdor.labday.common.repository.ProjectRepository}
- * while displaying welcome logo/animations, provides seamless transition between
- * {@link SplashActivity} and {@link MainActivity}
- * */
-public class SplashFragment extends Fragment implements InjectableFragment {
+ * First use login fragment
+ */
+public class LoginFragment extends Fragment implements InjectableFragment {
 
-    private final String CLASS_TAG = "SplashFragment";
-
-    @BindView(R.id.splash_logo)
-    ImageView splashLogo;
+    @BindView(R.id.login_logo)
+    ImageView loginLogo;
+    @BindView(R.id.loginCard)
+    CardView loginCard;
+    @BindView(R.id.logo_text)
+    TextView logoText;
+    @BindView(R.id.login_background_image)
+    ImageView background;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
-    private SplashViewModel viewModel;
-
-    private Handler delayedTransactionHandler = new Handler();
-    private Runnable runnable = this::switchToLoginFragment;
+    private LoginViewModel viewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = getLayoutInflater().inflate(R.layout.splash, container, false);
+        View view = getLayoutInflater().inflate(R.layout.login_background, container, false);
         ButterKnife.bind(this, view);
         startAnimations();
         return view;
@@ -62,33 +66,31 @@ public class SplashFragment extends Fragment implements InjectableFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(SplashViewModel.class);
-
-        if(viewModel.isLoggedIn()) {
-            observeLastUpdate();
-            viewModel.updateAppData(getContext());
-        }
-        else {
-            Log.i(CLASS_TAG, "No access token, switching to loginFragment");
-            delayedTransactionHandler.postDelayed(runnable, 1000);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        delayedTransactionHandler.removeCallbacks(runnable);
+                .get(LoginViewModel.class);
     }
 
     public void startAnimations(){
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.splash_anim);
+        Glide.with(this)
+                .load(getString(R.string.login_background_url))
+                .centerCrop()
+                .crossFade()
+                .into(background);
+
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.login_anim);
         animation.start();
 
-        splashLogo.clearAnimation();
-        splashLogo.startAnimation(animation);
+        Animation animation2 = AnimationUtils.loadAnimation(getContext(), R.anim.login_card_anim);
+        animation2.start();
+
+        Animation animation3 = AnimationUtils.loadAnimation(getContext(), R.anim.login_text_anim);
+        animation3.start();
+
+        loginLogo.startAnimation(animation);
+        loginCard.startAnimation(animation2);
+        logoText.startAnimation(animation3);
     }
 
-    public void observeLastUpdate(){
+    public void observeLogin(){
         viewModel.getResponse().observe(this, this::switchToMainFragment);
     }
 
@@ -105,20 +107,7 @@ public class SplashFragment extends Fragment implements InjectableFragment {
                     .commit();
         }
         else {
-            Log.wtf(CLASS_TAG, "Unable to get repo data, fallback to login");
-            switchToLoginFragment();
+            Toast.makeText(getContext(), R.string.unable_to_login, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void switchToLoginFragment(){
-        LoginFragment loginFragment = new LoginFragment();
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.popBackStack();
-        fragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
-                .addToBackStack(null)
-                .replace(R.id.fragmentLayout, loginFragment)
-                .commit();
     }
 }

@@ -18,13 +18,13 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public abstract class BaseViewModel extends AndroidViewModel {
 
-    private ProjectRepository projectRepository;
-    private RxSchedulersFacade rxSchedulersFacade;
+    ProjectRepository projectRepository;
+    RxSchedulersFacade rxSchedulersFacade;
 
-    private CompositeDisposable disposable = new CompositeDisposable();
+    CompositeDisposable disposable = new CompositeDisposable();
 
-    private final MutableLiveData<Boolean> loadingStatus = new MutableLiveData<>();
-    private final MutableLiveData<RxResponse<AppData>> appData = new MutableLiveData<>();
+    final MutableLiveData<Boolean> loadingStatus = new MutableLiveData<>();
+    final MutableLiveData<RxResponse<AppData>> appData = new MutableLiveData<>();
 
     public BaseViewModel(@NonNull ProjectRepository projectRepository,
                          @NonNull Application application,

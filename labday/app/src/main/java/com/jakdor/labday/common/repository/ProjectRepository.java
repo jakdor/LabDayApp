@@ -33,10 +33,20 @@ public class ProjectRepository {
     private boolean apiUpdateCurrent = false;
     private repositoryStates repositoryState = repositoryStates.INIT;
 
+    private String accessToken;
+
     @Inject
     public ProjectRepository(NetworkManager networkManager, RxSchedulersFacade rxSchedulersFacade){
         this.networkManager = networkManager;
         this.rxSchedulersFacade = rxSchedulersFacade;
+    }
+
+    /**
+     * Checks if logging in is required
+     * @return boolean
+     */
+    public boolean isLoggedIn(){
+        return false; //todo implement checking if token is saved
     }
 
     /**

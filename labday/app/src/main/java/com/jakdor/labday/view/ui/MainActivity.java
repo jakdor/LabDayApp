@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentLayout);
-        if(fragment instanceof MainFragment){
+        if(fragment instanceof MainFragment || fragment instanceof LoginFragment){
             if(doubleBackToExit) {
                 finish();
                 return;

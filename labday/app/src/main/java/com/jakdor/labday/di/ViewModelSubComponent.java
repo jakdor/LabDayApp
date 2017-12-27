@@ -1,5 +1,6 @@
 package com.jakdor.labday.di;
 
+import com.jakdor.labday.viewmodel.LoginViewModel;
 import com.jakdor.labday.viewmodel.MainViewModel;
 import com.jakdor.labday.viewmodel.SplashViewModel;
 
@@ -19,4 +20,5 @@ public interface ViewModelSubComponent {
 
     MainViewModel mainViewModel();
     SplashViewModel splashViewModel();
+    LoginViewModel loginViewModel();
 }

@@ -1,5 +1,6 @@
 package com.jakdor.labday.di;
 
+import com.jakdor.labday.view.ui.LoginFragment;
 import com.jakdor.labday.view.ui.MainFragment;
 import com.jakdor.labday.view.ui.SplashFragment;
 
@@ -16,4 +17,7 @@ public abstract class MainActivityFragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract SplashFragment contributeSplashFragment();
+
+    @ContributesAndroidInjector
+    abstract LoginFragment contributeLoginFragment();
 }
