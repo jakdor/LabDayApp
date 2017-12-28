@@ -96,6 +96,11 @@ public class SplashFragment extends Fragment implements InjectableFragment {
         if(response.status == RxStatus.SUCCESS) {
             MainFragment mainFragment = new MainFragment();
 
+            if(getActivity() == null){
+                Log.wtf(CLASS_TAG, "Unable to get Activity");
+                return;
+            }
+
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.popBackStack();
             fragmentManager.beginTransaction()
@@ -112,6 +117,11 @@ public class SplashFragment extends Fragment implements InjectableFragment {
 
     public void switchToLoginFragment(){
         LoginFragment loginFragment = new LoginFragment();
+
+        if(getActivity() == null){
+            Log.wtf(CLASS_TAG, "Unable to get Activity");
+            return;
+        }
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.popBackStack();

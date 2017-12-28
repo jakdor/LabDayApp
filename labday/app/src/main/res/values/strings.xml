@@ -7,4 +7,12 @@
     <string name="unable_to_login">Nie można zalogować</string>
     <string name="login_background">login_background</string>
     <string name="login_background_url">http://www.audiotech.pl/wp-content/uploads/2017/04/Politechnika-Wroc%C5%82awska-C13-Serowiec-multimedia-12.jpg</string>
+    <string name="login_card_title">logowanie</string>
+    <string name="login_card_login">login:</string>
+    <string name="login_card_password">hasło:</string>
+    <string name="login_card_login_button">rozpocznij</string>
+    <string name="login_card_error_text_holder">TextView</string>
+    <string name="login_logo_text">labday</string>
+    <string name="loading_animation_desc">loading animation</string>
+    <string name="login_failed_empty_fields">Uzupełnij wszystkie pola</string>
 </resources>

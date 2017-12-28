@@ -8,7 +8,7 @@ project.ext {
     supportLibsVersion = "27.0.2"
     constraintLayoutVersion = "1.0.2"
     butterKnifeVersion = "8.8.1"
-    glideVersion = "3.7.0"
+    glideVersion = "4.4.0"
     daggerVersion = "2.13"
     retrofitVersion = "2.3.0"
     okHttpVersion = "3.9.1"

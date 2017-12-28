@@ -25,6 +25,7 @@
         </activity>
 
         <activity android:name=".view.ui.MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:screenOrientation="portrait"/>
 
     </application>

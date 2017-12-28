@@ -33,7 +33,7 @@
   | OkHttp | 3.9.1 |
   | Dagger2 | 2.13 |
   | RxJava | 2.1.7 |
-  | Glide | 4.3.1 |
+  | Glide | 4.4.0 |
   | ButterKnife | 8.8.1 |
   | ... | |
 

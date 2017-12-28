@@ -9,7 +9,7 @@ import com.jakdor.labday.rx.RxSchedulersFacade;
 import javax.inject.Inject;
 
 /**
- * ViewModel for
+ * ViewModel for {@link com.jakdor.labday.view.ui.LoginFragment}
  */
 public class LoginViewModel extends BaseViewModel {
     @Inject

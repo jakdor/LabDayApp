@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/splash_layout"
+    android:id="@+id/login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -20,13 +20,29 @@
         android:layout_marginStart="8dp"
         android:contentDescription="@string/logoDescription"
         android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintBottom_toTopOf="@+id/loginCard"
+        app:layout_constraintBottom_toTopOf="@+id/login_card"
         app:layout_constraintEnd_toStartOf="@+id/logo_text"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/logo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/login_logo_text"
+        android:textAllCaps="true"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="@+id/login_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/login_logo"
+        app:layout_constraintTop_toTopOf="@+id/login_logo" />
+
     <android.support.v7.widget.CardView
-        android:id="@+id/loginCard"
+        android:id="@+id/login_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -42,17 +58,16 @@
 
     </android.support.v7.widget.CardView>
 
-    <TextView
-        android:id="@+id/logo_text"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="44dp"
+    <ImageView
+        android:id="@+id/login_loading_anim"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
-        android:text="LABDAY"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/loginCard"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/loading_animation_desc"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/login_logo" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_card" />
 
 </android.support.constraint.ConstraintLayout>

@@ -4,12 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--
+     Background image loaded to ImageView not layout background parameter
+     to utilize Glide's crossFade() and centerCrop()
+     -->
     <ImageView
         android:id="@+id/login_background_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="matrix"
         android:contentDescription="@string/login_background"/>
 
-    <include layout="@layout/login"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:isScrollContainer="true">
+
+        <include layout="@layout/login" />
+
+    </ScrollView>
 
 </FrameLayout>
