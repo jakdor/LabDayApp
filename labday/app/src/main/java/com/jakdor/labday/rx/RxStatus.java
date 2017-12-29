@@ -5,6 +5,7 @@ package com.jakdor.labday.rx;
  */
 public enum  RxStatus {
     SUCCESS,
+    SUCCESS_DB,
     NO_DB,
     NO_INTERNET,
     ERROR

@@ -1,6 +1,8 @@
   # Lab Day App - project goal
   Guide Android App for Lab Day PWR Event. Application will provide event map, timetable and other informations.
 
+  Current status: indev
+
   ## Technology goals
   Use as many professionally used frameworks, libraries and project patterns as saintly possible.
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.jakdor.labday.App;
 import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.rx.RxResponse;
@@ -55,8 +56,7 @@ public class ProjectRepository {
      */
     public Observable<RxResponse<AppData>> getUpdate(String apiUrl, Context context){
         networkManager.configAuth(apiUrl, "dummyToken");
-        return Observable.create(e ->
-                networkManager.getLastUpdate()
+        return networkManager.getLastUpdate()
                 .subscribeOn(rxSchedulersFacade.io())
                 .observeOn(rxSchedulersFacade.ui())
                         .onErrorResumeNext(Observable.just("-1"))
@@ -64,35 +64,21 @@ public class ProjectRepository {
                 .flatMap(s -> isLocalDataCurrent(apiUpdateId = s, context) ?
                         apiRequest(networkManager.getAppData()) : // load from local db //todo replace with local db access observable
                         apiRequest(networkManager.getAppData())) // get appData from api
-                .subscribe(new Observer<RxResponse<AppData>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(RxResponse<AppData> appDataRxResponse) {
+                .doOnNext(appDataRxResponse -> {
+                    if(appDataRxResponse.status == RxStatus.SUCCESS) {
                         saveApiLastUpdateId(apiUpdateId, context);
-                        e.onNext(appDataRxResponse);
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-                        if(apiUpdateCurrent) {
-                            ProjectRepository.this.repositoryState = repositoryStates.NO_DB;
-                            e.onNext(new RxResponse<>(RxStatus.NO_DB, null, throwable));
-                        }
-                        else {
-                            ProjectRepository.this.repositoryState = repositoryStates.ERROR;
-                            e.onNext(new RxResponse<>(RxStatus.ERROR, null, throwable));
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        e.onComplete();
                     }
                 })
-        );
+                .onErrorReturn(throwable -> {
+                    if(apiUpdateCurrent) {
+                        ProjectRepository.this.repositoryState = repositoryStates.NO_DB;
+                        return RxResponse.noDb(throwable);
+                    }
+                    else {
+                        ProjectRepository.this.repositoryState = repositoryStates.ERROR;
+                        return RxResponse.error(throwable);
+                    }
+                });
     }
 
     /**
@@ -135,39 +121,22 @@ public class ProjectRepository {
      * ApiRequest chained observables
      * - first get Retrofit API response, then handle it - process received data, save locally
      * @param apiCall Observable Retrofit API call
-     * @param <T> template to handle various API calls
      * @return {Observable<RxResponse<T>>}
      */
-    public <T> Observable<RxResponse<T>> apiRequest(final Observable<T> apiCall) {
-        return Observable.create(e ->
-            apiCall.subscribeOn(rxSchedulersFacade.io())
+    public Observable<RxResponse<AppData>> apiRequest(final Observable<AppData> apiCall) {
+        return apiCall.subscribeOn(rxSchedulersFacade.io())
                     .observeOn(rxSchedulersFacade.ui())
-                    .subscribe(new Observer<T>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-                        }
-
-                        @Override
-                        public void onNext(T data) { //todo save data to local db
-                            ProjectRepository.this.data = new RxResponse<>(RxStatus.SUCCESS, data, null);
-                            ProjectRepository.this.repositoryState = repositoryStates.READY;
-                            Log.i(CLASS_TAG, "API request success");
-                            e.onNext(new RxResponse<>(RxStatus.SUCCESS, data, null));
-                        }
-
-                        @Override
-                        public void onError(Throwable throwable) {
-                            Log.e(CLASS_TAG, "API request failed, " + throwable.toString());
-                            ProjectRepository.this.repositoryState = repositoryStates.ERROR;
-                            e.onNext(new RxResponse<>(RxStatus.ERROR, null, throwable));
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            e.onComplete();
-                        }
+                    .doOnNext(t -> {
+                        ProjectRepository.this.data = RxResponse.success(t);
+                        ProjectRepository.this.repositoryState = repositoryStates.READY;
+                        Log.i(CLASS_TAG, "API request success");
                     })
-        );
+                    .map(RxResponse::success)
+                    .onErrorReturn(throwable -> {
+                        Log.e(CLASS_TAG, "API request failed, " + throwable.toString());
+                        ProjectRepository.this.repositoryState = repositoryStates.ERROR;
+                        return RxResponse.error(throwable);
+                    });
     }
 
     public String daggerHelloWorld(){

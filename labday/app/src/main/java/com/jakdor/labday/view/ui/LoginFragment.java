@@ -147,7 +147,7 @@ public class LoginFragment extends Fragment implements InjectableFragment {
                 hideKeyboard();
                 loginInProgressAnimation();
 
-                viewModel.loadAppData();
+                viewModel.loadAppData(); //todo replace with login API call
             }
             else {
                 loginStatusInfo.setText(R.string.login_failed_empty_fields);

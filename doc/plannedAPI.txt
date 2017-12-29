@@ -4,7 +4,8 @@ any other API call -> GET with Authorization header - access token -> 200 respon
 
 API endpoints:
 /api/app_data -> all other request responses wrapped in single json (without /login, /last_update)
-/api/last_update -> (no token required) returns last date of db modification in seconds from unix epoch 
+/api/last_update -> (no token required) returns last date of db modification in seconds from unix epoch (or some other unique id)
+/api/public_access -> (no token required) activates automatically or manually after event ending, returns public access token, or 403 if inactive
 
 /api/paths -> returns path names + marked logged user path
 /api/timetable -> returns events ids, paths ids, time
