@@ -1,5 +1,6 @@
 package com.jakdor.labday.common.network;
 
+import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
 
 import io.reactivex.Observable;
@@ -17,4 +18,7 @@ public interface LabService {
 
     @GET("api/last_update")
     Observable<String> getLastUpdate();
+
+    @GET("api/login")
+    Observable<AccessToken> getAccessToken();
 }

@@ -15,4 +15,5 @@
     <string name="login_logo_text">labday</string>
     <string name="loading_animation_desc">loading animation</string>
     <string name="login_failed_empty_fields">Uzupełnij wszystkie pola</string>
+    <string name="login_no_internet">Brak połączenia z internetem</string>
 </resources>

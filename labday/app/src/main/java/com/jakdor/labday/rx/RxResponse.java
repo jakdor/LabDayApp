@@ -3,6 +3,7 @@ package com.jakdor.labday.rx;
 import android.support.annotation.Nullable;
 
 import static com.jakdor.labday.rx.RxStatus.ERROR;
+import static com.jakdor.labday.rx.RxStatus.LOGIN_ERROR;
 import static com.jakdor.labday.rx.RxStatus.NO_DB;
 import static com.jakdor.labday.rx.RxStatus.NO_INTERNET;
 import static com.jakdor.labday.rx.RxStatus.SUCCESS;
@@ -38,6 +39,10 @@ public class RxResponse<T> {
 
     public static <T> RxResponse<T> error(Throwable error) {
         return new RxResponse<>(ERROR, null, error);
+    }
+
+    public static <T> RxResponse<T> loginError(Throwable error) {
+        return new RxResponse<>(LOGIN_ERROR, null, error);
     }
 
     public static <T> RxResponse<T> noDb(Throwable error) {

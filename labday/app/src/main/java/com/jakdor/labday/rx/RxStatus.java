@@ -8,5 +8,6 @@ public enum  RxStatus {
     SUCCESS_DB,
     NO_DB,
     NO_INTERNET,
-    ERROR
+    ERROR,
+    LOGIN_ERROR
 }

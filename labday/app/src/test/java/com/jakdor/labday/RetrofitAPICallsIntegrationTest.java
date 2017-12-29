@@ -1,6 +1,7 @@
 package com.jakdor.labday;
 
 import com.google.gson.Gson;
+import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
@@ -27,6 +28,7 @@ public class RetrofitAPICallsIntegrationTest {
 
     private final String appDataJsonPath = "app/src/test/assets/api/app_data.json";
     private final String lastUpdateJsonPath = "app/src/test/assets/api/last_update.json";
+    private final String loginAccessTokenPath = "app/src/test/assets/api/login.json";
 
     private final String dummyApiUrl = LabService.MOCK_API_URL;
     private final String dummyToken = "dummyToken";
@@ -38,6 +40,28 @@ public class RetrofitAPICallsIntegrationTest {
         retrofitBuilder = new RetrofitBuilder();
     }
 
+    /**
+     * Tests login API call
+     */
+    @Test
+    public void loginTest() throws Exception {
+        LabService labService = retrofitBuilder.createService(
+                dummyApiUrl, LabService.class, dummyLogin, dummyPassword);
+
+        Gson gson = new Gson();
+        AccessToken accessToken = gson.fromJson(readFile(loginAccessTokenPath), AccessToken.class);
+        TestObserver<AccessToken> testObserver = new CustomTestObserver<>(accessToken);
+        labService.getAccessToken().subscribe(testObserver);
+
+        testObserver.assertSubscribed();
+        testObserver.assertValueCount(1);
+        testObserver.assertNoErrors();
+        testObserver.onComplete();
+    }
+
+    /**
+     * Tests API response to last_update call
+     */
     @Test
     public void lastUpdateTest() throws Exception {
         LabService labService = retrofitBuilder.createService(dummyApiUrl, LabService.class);

@@ -147,7 +147,8 @@ public class LoginFragment extends Fragment implements InjectableFragment {
                 hideKeyboard();
                 loginInProgressAnimation();
 
-                viewModel.loadAppData(); //todo replace with login API call
+                viewModel.login(getContext(), loginField.getText().toString(),
+                        passwordField.getText().toString());
             }
             else {
                 loginStatusInfo.setText(R.string.login_failed_empty_fields);
@@ -215,6 +216,11 @@ public class LoginFragment extends Fragment implements InjectableFragment {
                     .addToBackStack(null)
                     .replace(R.id.fragmentLayout, mainFragment)
                     .commit();
+        }
+        else if(response.status == RxStatus.NO_INTERNET){
+            loginStatusInfo.setText(R.string.login_no_internet);
+            loginStatusInfo.setVisibility(View.VISIBLE);
+            loadingAnim.setVisibility(View.GONE);
         }
         else {
             loginStatusInfo.setText(R.string.unable_to_login);

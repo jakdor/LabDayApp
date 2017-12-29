@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.jakdor.labday.App;
 import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.rx.RxResponse;
@@ -15,8 +14,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Main app data repository handler - manages data sources
@@ -42,6 +39,26 @@ public class ProjectRepository {
         this.rxSchedulersFacade = rxSchedulersFacade;
     }
 
+    public Observable<RxResponse<AppData>> login(
+            String apiUrl, Context context, String login, String password){
+        if(!networkManager.checkNetworkStatus(context)){
+            return Observable.just(RxResponse.noInternetNoDb(new Throwable("No internet service")));
+        }
+
+        networkManager.configAuth(apiUrl, login, password);
+        return networkManager.getAccessToken()
+                .subscribeOn(rxSchedulersFacade.io())
+                .observeOn(rxSchedulersFacade.ui())
+                .doOnNext(accessTokenResponse -> saveAccessToken(accessTokenResponse.getAccessToken()))
+                .flatMap(accessTokenResponse -> getUpdate(apiUrl, context));
+    }
+
+    public void saveAccessToken(String token){
+        //todo impalement secure saving of access token
+        Log.i(CLASS_TAG, "Successful login, access token saved");
+        this.accessToken = token;
+    }
+
     /**
      * Checks if logging in is required
      * @return boolean
@@ -55,12 +72,12 @@ public class ProjectRepository {
      * @return {Single<RxResponse<AppData>>} appData wrapped with {@link RxResponse}
      */
     public Observable<RxResponse<AppData>> getUpdate(String apiUrl, Context context){
-        networkManager.configAuth(apiUrl, "dummyToken");
+        networkManager.configAuth(apiUrl, accessToken);
         return networkManager.getLastUpdate()
                 .subscribeOn(rxSchedulersFacade.io())
                 .observeOn(rxSchedulersFacade.ui())
-                        .onErrorResumeNext(Observable.just("-1"))
-                        .onExceptionResumeNext(Observable.just("-1"))
+                .onErrorResumeNext(Observable.just("-1"))
+                .onExceptionResumeNext(Observable.just("-1"))
                 .flatMap(s -> isLocalDataCurrent(apiUpdateId = s, context) ?
                         apiRequest(networkManager.getAppData()) : // load from local db //todo replace with local db access observable
                         apiRequest(networkManager.getAppData())) // get appData from api
@@ -113,7 +130,7 @@ public class ProjectRepository {
      * @return {Single<RxResponse<AppData>>} appData wrapped with {@link RxResponse}
      */
     public Observable<RxResponse<AppData>> getAppData(String apiUrl){
-        networkManager.configAuth(apiUrl, "dummyToken");
+        networkManager.configAuth(apiUrl, accessToken);
         return apiRequest(networkManager.getAppData());
     }
 

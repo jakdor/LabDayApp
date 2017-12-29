@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
@@ -71,8 +72,7 @@ public class NetworkManager {
      */
     public void configAuth(String apiUrl, String token){
         if(labService == null) {
-            labService = retrofitBuilder.createService(apiUrl,
-                    LabService.class, token);
+            labService = retrofitBuilder.createService(apiUrl, LabService.class, token);
         }
     }
 
@@ -103,6 +103,14 @@ public class NetworkManager {
      */
     public Observable<String> getLastUpdate(){
         return labService.getLastUpdate();
+    }
+
+    /**
+     * Login api call - returns access token after successful login
+     * @return Observable AccessToken
+     */
+    public Observable<AccessToken> getAccessToken(){
+        return loginLabService.getAccessToken();
     }
 
     /**
