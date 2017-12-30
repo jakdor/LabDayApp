@@ -41,6 +41,7 @@ public class ProjectRepository {
 
     public Observable<RxResponse<AppData>> login(
             String apiUrl, Context context, String login, String password){
+
         if(!networkManager.checkNetworkStatus(context)){
             return Observable.just(RxResponse.noInternetNoDb(new Throwable("No internet service")));
         }
@@ -54,9 +55,14 @@ public class ProjectRepository {
     }
 
     public void saveAccessToken(String token){
-        //todo impalement secure saving of access token
+        //todo implement secure saving of access token
         Log.i(CLASS_TAG, "Successful login, access token saved");
         this.accessToken = token;
+    }
+
+    public void loadAccessToken(){
+        //todo implement token loading
+        this.accessToken = "sampleToken";
     }
 
     /**
@@ -72,6 +78,9 @@ public class ProjectRepository {
      * @return {Single<RxResponse<AppData>>} appData wrapped with {@link RxResponse}
      */
     public Observable<RxResponse<AppData>> getUpdate(String apiUrl, Context context){
+        if(accessToken == null){
+            loadAccessToken();
+        }
         networkManager.configAuth(apiUrl, accessToken);
         return networkManager.getLastUpdate()
                 .subscribeOn(rxSchedulersFacade.io())
@@ -130,6 +139,9 @@ public class ProjectRepository {
      * @return {Single<RxResponse<AppData>>} appData wrapped with {@link RxResponse}
      */
     public Observable<RxResponse<AppData>> getAppData(String apiUrl){
+        if(accessToken == null){
+            loadAccessToken();
+        }
         networkManager.configAuth(apiUrl, accessToken);
         return apiRequest(networkManager.getAppData());
     }
@@ -160,6 +172,10 @@ public class ProjectRepository {
         return "HelloStabo" + "\n" + networkManager.embeddedDaggerTest();
     }
 
+    /**
+     * Access to AppData if repository is in READY state
+     * @return {RxResponse<AppData>}
+     */
     public RxResponse getData() {
         Log.i(CLASS_TAG, "repository data available locally");
         return data;

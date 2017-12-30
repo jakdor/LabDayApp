@@ -39,6 +39,8 @@ public class ProjectRepositoryIntegrationTest {
 
     private final String dummyApiUrl = RESTMockServer.getUrl();
     private final String dummyApiBadUrl = "http://www.dummy.com/";
+    private final String dummyLogin = "user";
+    private final String dummyPassword = "password";
 
     @Before
     public void setUp() throws Exception {
@@ -281,6 +283,84 @@ public class ProjectRepositoryIntegrationTest {
 
                     disposable.dispose();
 
+                }));
+    }
+
+    /**
+     * {@link ProjectRepository} login() api call
+     * - get accessToken after successful login
+     * - get AppData
+     * - check ProjectRepository after successful login/load
+     */
+    @Test
+    public void integrationLoginTestScenario1() throws Exception {
+        SharedPreferences sharedPreferences = targetContext.getSharedPreferences(
+                targetContext.getString(R.string.pref_file_name), Context.MODE_PRIVATE);
+
+        sharedPreferences.edit().putString(
+                targetContext.getString(R.string.pref_api_last_update_id), "null").commit();
+
+        Assert.assertEquals(projectRepository.getRepositoryState(),
+                ProjectRepository.repositoryStates.INIT);
+        Assert.assertNull(projectRepository.getData());
+
+        Gson gson = new Gson();
+        AppData appData = gson.fromJson(
+                readAssetFile(testContext, "api/app_data.json"), AppData.class);
+
+        CompositeDisposable disposable = new CompositeDisposable();
+
+        disposable.add(projectRepository.login(dummyApiUrl, targetContext, dummyLogin, dummyPassword)
+                .subscribeOn(Schedulers.io())
+                .doOnError(throwable -> Assert.fail())
+                .subscribe(appDataRxResponse -> {
+
+                    Assert.assertNotNull(appDataRxResponse);
+                    Assert.assertNotNull(appDataRxResponse.data);
+                    Assert.assertNull(appDataRxResponse.error);
+                    Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
+                    Assert.assertEquals(appData, appDataRxResponse.data);
+                    Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
+
+                    Assert.assertEquals(projectRepository.getRepositoryState(),
+                            ProjectRepository.repositoryStates.READY);
+
+                    Assert.assertNotNull(projectRepository.getData());
+                    Assert.assertEquals(projectRepository.getData().data, appData);
+
+                    Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
+                            sharedPreferences.getString(targetContext.getString(
+                                    R.string.pref_api_last_update_id), null));
+
+                    Assert.assertTrue(projectRepository.isLoggedIn());
+
+                    disposable.dispose();
+
+                }));
+    }
+
+    /**
+     * {@link ProjectRepository} login() api call
+     * - get accessToken after successful login (failed)
+     */
+    @Test
+    public void integrationLoginTestScenario2() throws Exception {
+        Assert.assertEquals(projectRepository.getRepositoryState(),
+                ProjectRepository.repositoryStates.INIT);
+        Assert.assertNull(projectRepository.getData());
+
+        CompositeDisposable disposable = new CompositeDisposable();
+
+        disposable.add(projectRepository.login(dummyApiBadUrl, targetContext, dummyLogin, dummyPassword)
+                .subscribeOn(Schedulers.io())
+                .doOnError(throwable -> Assert.fail())
+                .subscribe(appDataRxResponse -> {
+
+                        Assert.assertNotNull(appDataRxResponse);
+                        Assert.assertNull(appDataRxResponse.data);
+                        Assert.assertEquals(RxStatus.NO_INTERNET, appDataRxResponse.status);
+
+                        disposable.dispose();
                 }));
     }
 }

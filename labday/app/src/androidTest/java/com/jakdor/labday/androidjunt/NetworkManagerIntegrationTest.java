@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.support.test.InstrumentationRegistry;
 
 import com.google.gson.Gson;
+import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 import com.jakdor.labday.common.repository.NetworkManager;
@@ -63,6 +64,26 @@ public class NetworkManagerIntegrationTest {
         else {
             Assert.assertTrue(networkManager.checkNetworkStatus(testContext));
         }
+    }
+
+    /**
+     * {@link NetworkManager} integration test: login request to, local REST API server mock
+     */
+    @Test
+    public void loginTest() throws Exception{
+        networkManager.configAuth(dummyApiUrl, dummyLogin, dummyPassword);
+
+        Gson gson = new Gson();
+        AccessToken expectedAccessToken
+                = gson.fromJson(readAssetFile(testContext, "api/login.json"), AccessToken.class);
+
+        TestObserver<AccessToken> testObserver = new CustomTestObserver<>(expectedAccessToken);
+        networkManager.getAccessToken().subscribe(testObserver);
+
+        testObserver.assertSubscribed();
+        testObserver.assertValueCount(1);
+        testObserver.assertNoErrors();
+        testObserver.onComplete();
     }
 
     /**
