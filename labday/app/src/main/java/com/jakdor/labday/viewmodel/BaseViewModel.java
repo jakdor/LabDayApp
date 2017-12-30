@@ -3,6 +3,7 @@ package com.jakdor.labday.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.jakdor.labday.common.model.AppData;
@@ -43,12 +44,12 @@ public abstract class BaseViewModel extends AndroidViewModel {
     /**
      * Setups observer for data from {@link ProjectRepository}
      */
-    public void loadAppData(){
+    public void loadAppData(Context context){
         if(projectRepository.getRepositoryState() == ProjectRepository.repositoryStates.READY){
             appData.setValue(projectRepository.getData());
         }
         else {
-            disposable.add(projectRepository.getAppData(LabService.MOCK_API_URL)
+            disposable.add(projectRepository.getAppData(LabService.MOCK_API_URL, context)
                     .subscribeOn(rxSchedulersFacade.io())
                     .observeOn(rxSchedulersFacade.ui())
                     .doOnSubscribe(disposable1 -> loadingStatus.setValue(true))

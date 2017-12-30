@@ -12,7 +12,7 @@
 
   Views designed fallowing Material Design and UX guidelines, use of new Constraint & classic layouts, Data binding / Butter Knife where suitable.
 
-  Backend providing REST API handled by Retrofit with local off-line backup in native sqlite database accessed with StorIO/SQLBrite, all managed by RXJava and LiveData (no ORM this time to see performance difference/learn new things). Additionally some mechanism to handle situation when backend is down with no local data backup.
+  Backend providing REST API handled by Retrofit with local off-line backup in native sqlite database accessed with StorIO/SQLBrite, all managed by RXJava and LiveData (no ORM this time to see performance difference/learn new things). API access tokens stored after encrytion with Facebook Conceal lib. Additionally some mechanism to handle situation when backend is down with no local data backup.
 
   Dependency Injection project pattern with Dagger2 and Reactive programming with RXJava2/LiveData. 
   Some classes implemented in Kotlin, to learn new Language.
@@ -35,6 +35,7 @@
   | OkHttp | 3.9.1 |
   | Dagger2 | 2.13 |
   | RxJava | 2.1.7 |
+  | Conceal | 2.0.1 |
   | Glide | 4.4.0 |
   | ButterKnife | 8.8.1 |
   | ... | |

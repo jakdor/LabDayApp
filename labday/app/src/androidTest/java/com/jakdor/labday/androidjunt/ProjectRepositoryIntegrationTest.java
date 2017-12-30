@@ -2,6 +2,7 @@ package com.jakdor.labday.androidjunt;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
+import android.test.mock.MockContext;
 
 import com.google.gson.Gson;
 import com.jakdor.labday.R;
@@ -17,6 +18,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import java.io.FileOutputStream;
+import java.nio.charset.Charset;
 
 import io.appflate.restmock.RESTMockServer;
 import io.reactivex.disposables.CompositeDisposable;
@@ -41,11 +45,12 @@ public class ProjectRepositoryIntegrationTest {
     private final String dummyApiBadUrl = "http://www.dummy.com/";
     private final String dummyLogin = "user";
     private final String dummyPassword = "password";
+    private final String dummyToken = "dummyToken";
 
     @Before
     public void setUp() throws Exception {
         testContext = InstrumentationRegistry.getContext();
-        targetContext = InstrumentationRegistry.getTargetContext();
+        targetContext = InstrumentationRegistry.getTargetContext(); //todo replace with mock
 
         projectRepository = new ProjectRepository(
                 new NetworkManager(new RetrofitBuilder()), new RxSchedulersFacade());
@@ -57,8 +62,11 @@ public class ProjectRepositoryIntegrationTest {
                 ProjectRepository.repositoryStates.INIT);
     }
 
+    /**
+     * {@link ProjectRepository} Save lastUpdate id, check if saved id matches expected
+     */
     @Test
-    public void sharedPreferencesTest() throws Exception {
+    public void sharedPreferencesLastUpdateTest() throws Exception {
         projectRepository.saveApiLastUpdateId("1234", targetContext);
         Assert.assertTrue(projectRepository.isLocalDataCurrent("1234", targetContext));
 
@@ -68,6 +76,22 @@ public class ProjectRepositoryIntegrationTest {
                 targetContext.getString(R.string.pref_api_last_update_id), "0");
 
         Assert.assertEquals("1234", test);
+    }
+
+    /**
+     * {@link ProjectRepository} readFile() unit test
+     */
+    @Test
+    public void readFileTest() throws Exception {
+        String testStr = "Test123";
+
+        FileOutputStream outputStream = testContext.openFileOutput("testFile", Context.MODE_PRIVATE);
+        outputStream.write(testStr.getBytes(Charset.forName("UTF-8")));
+        outputStream.close();
+
+        byte[] savedStr = projectRepository.readFile(testContext, "testFile");
+
+        Assert.assertEquals(testStr, new String(savedStr));
     }
 
     /**
@@ -82,13 +106,15 @@ public class ProjectRepositoryIntegrationTest {
                 ProjectRepository.repositoryStates.INIT);
         Assert.assertNull(projectRepository.getData());
 
+        projectRepository.setAccessToken(dummyToken);
+
         Gson gson = new Gson();
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
 
         CompositeDisposable disposable = new CompositeDisposable();
 
-        disposable.add(projectRepository.getAppData(dummyApiUrl)
+        disposable.add(projectRepository.getAppData(dummyApiUrl, targetContext)
                 .subscribeOn(Schedulers.io())
                 .doOnError(throwable -> Assert.fail())
                 .subscribe(appDataRxResponse -> {
@@ -121,9 +147,11 @@ public class ProjectRepositoryIntegrationTest {
                 ProjectRepository.repositoryStates.INIT);
         Assert.assertNull(projectRepository.getData());
 
+        projectRepository.setAccessToken(dummyToken);
+
         CompositeDisposable disposable = new CompositeDisposable();
 
-        disposable.add(projectRepository.getAppData(dummyApiBadUrl)
+        disposable.add(projectRepository.getAppData(dummyApiBadUrl, targetContext)
                 .subscribeOn(Schedulers.io())
                 .doOnError(throwable -> Assert.fail())
                 .subscribe(appDataRxResponse -> {
@@ -158,6 +186,8 @@ public class ProjectRepositoryIntegrationTest {
         Assert.assertEquals(projectRepository.getRepositoryState(),
                 ProjectRepository.repositoryStates.INIT);
         Assert.assertNull(projectRepository.getData());
+
+        projectRepository.setAccessToken(dummyToken);
 
         Gson gson = new Gson();
         AppData appData = gson.fromJson(
@@ -212,6 +242,8 @@ public class ProjectRepositoryIntegrationTest {
                 ProjectRepository.repositoryStates.INIT);
         Assert.assertNull(projectRepository.getData());
 
+        projectRepository.setAccessToken(dummyToken);
+
         Gson gson = new Gson();
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
@@ -257,6 +289,8 @@ public class ProjectRepositoryIntegrationTest {
                 ProjectRepository.repositoryStates.INIT);
         Assert.assertNull(projectRepository.getData());
 
+        projectRepository.setAccessToken(dummyToken);
+
         Gson gson = new Gson();
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
@@ -269,7 +303,7 @@ public class ProjectRepositoryIntegrationTest {
                 .subscribe(appDataRxResponse -> {
 
                     Assert.assertNotNull(appDataRxResponse);
-                    Assert.assertNotNull(appDataRxResponse.data);
+                    Assert.assertNotNull(appDataRxResponse.data); //fails because local db load not implemented
                     Assert.assertNull(appDataRxResponse.error);
                     Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
                     Assert.assertEquals(appData, appDataRxResponse.data);
@@ -332,7 +366,7 @@ public class ProjectRepositoryIntegrationTest {
                             sharedPreferences.getString(targetContext.getString(
                                     R.string.pref_api_last_update_id), null));
 
-                    Assert.assertTrue(projectRepository.isLoggedIn());
+                    Assert.assertTrue(projectRepository.isLoggedIn(targetContext));
 
                     disposable.dispose();
 
@@ -358,7 +392,7 @@ public class ProjectRepositoryIntegrationTest {
 
                         Assert.assertNotNull(appDataRxResponse);
                         Assert.assertNull(appDataRxResponse.data);
-                        Assert.assertEquals(RxStatus.NO_INTERNET, appDataRxResponse.status);
+                        Assert.assertEquals(RxStatus.LOGIN_ERROR, appDataRxResponse.status);
 
                         disposable.dispose();
                 }));

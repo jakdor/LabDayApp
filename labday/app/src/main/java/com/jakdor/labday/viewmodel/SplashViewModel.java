@@ -42,7 +42,7 @@ public class SplashViewModel extends BaseViewModel {
      * Provides access to isLoggedIn
      * @return {projectRepository.isLoggedIn()}
      */
-    public boolean isLoggedIn(){
-        return projectRepository.isLoggedIn();
+    public boolean isLoggedIn(Context context){
+        return projectRepository.isLoggedIn(context);
     }
 }

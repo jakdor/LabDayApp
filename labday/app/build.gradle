@@ -14,6 +14,7 @@ project.ext {
     okHttpVersion = "3.9.1"
     rxJavaVersion = "2.1.7"
     rxAndroidVersion = "2.0.1"
+    concealVersion = "2.0.1"
 
     mockitoVersion = "2.13.0"
     androidTestRunnerVersion = "1.0.1"
@@ -92,6 +93,9 @@ dependencies {
     //rxJava
     implementation "io.reactivex.rxjava2:rxjava:$project.rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroidVersion"
+
+    //Conceal
+    implementation "com.facebook.conceal:conceal:$project.concealVersion@aar"
 
     //testing
     testImplementation 'junit:junit:4.12'

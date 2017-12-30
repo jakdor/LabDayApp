@@ -64,7 +64,7 @@ public class SplashFragment extends Fragment implements InjectableFragment {
         viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(SplashViewModel.class);
 
-        if(viewModel.isLoggedIn()) {
+        if(viewModel.isLoggedIn(getContext())) {
             observeLastUpdate();
             viewModel.updateAppData(getContext());
         }

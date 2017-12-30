@@ -55,7 +55,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
 
         observeAppData();
 
-        viewModel.loadAppData();
+        viewModel.loadAppData(getContext());
     }
 
     public void observeAppData(){

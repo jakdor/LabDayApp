@@ -16,4 +16,5 @@
     <string name="loading_animation_desc">loading animation</string>
     <string name="login_failed_empty_fields">Uzupełnij wszystkie pola</string>
     <string name="login_no_internet">Brak połączenia z internetem</string>
+    <string name="access_token_field">accessTokenField</string>
 </resources>

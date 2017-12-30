@@ -4,11 +4,23 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.facebook.android.crypto.keychain.AndroidConceal;
+import com.facebook.android.crypto.keychain.SharedPrefsBackedKeyChain;
+import com.facebook.crypto.Crypto;
+import com.facebook.crypto.CryptoConfig;
+import com.facebook.crypto.Entity;
+import com.facebook.crypto.keychain.KeyChain;
 import com.jakdor.labday.R;
+import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxSchedulersFacade;
 import com.jakdor.labday.rx.RxStatus;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.charset.Charset;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -39,6 +51,10 @@ public class ProjectRepository {
         this.rxSchedulersFacade = rxSchedulersFacade;
     }
 
+    /**
+     * Login using basic auth method - login/password, save received access token, load appData
+     * @return {Observable<RxResponse<AppData>>}
+     */
     public Observable<RxResponse<AppData>> login(
             String apiUrl, Context context, String login, String password){
 
@@ -50,27 +66,108 @@ public class ProjectRepository {
         return networkManager.getAccessToken()
                 .subscribeOn(rxSchedulersFacade.io())
                 .observeOn(rxSchedulersFacade.ui())
-                .doOnNext(accessTokenResponse -> saveAccessToken(accessTokenResponse.getAccessToken()))
+                .onErrorResumeNext(Observable.just(new AccessToken("-1")))
+                .onExceptionResumeNext(Observable.just(new AccessToken("-1")))
+                .doOnNext(accessTokenResponse ->
+                        saveAccessToken(accessTokenResponse.getAccessToken(), context))
                 .flatMap(accessTokenResponse -> getUpdate(apiUrl, context));
     }
 
-    public void saveAccessToken(String token){
-        //todo implement secure saving of access token
-        Log.i(CLASS_TAG, "Successful login, access token saved");
+    /**
+     * Saves access token encrypted with Conceal
+     * @param token access token retrieved after successful login
+     * @param context required for SharedPreferences/Conceal
+     */
+    public void saveAccessToken(String token, Context context){
+
+        if(token.equals("-1")){
+            this.accessToken = token;
+            Log.e(CLASS_TAG, "bad access token");
+            return;
+        }
+
+        KeyChain keyChain = new SharedPrefsBackedKeyChain(context, CryptoConfig.KEY_256);
+        Crypto crypto = AndroidConceal.get().createDefaultCrypto(keyChain);
+
+        try {
+            byte[] tokenBytes = token.getBytes(Charset.forName("UTF-8"));
+            byte[] encryptedToken = crypto.encrypt(tokenBytes, Entity.create("token"));
+
+            FileOutputStream outputStream = context.openFileOutput("lab", Context.MODE_PRIVATE);
+            outputStream.write(encryptedToken);
+            outputStream.close();
+
+            Log.i(CLASS_TAG, "Successful login, access token saved");
+        }
+        catch (Exception e){
+            Log.wtf(CLASS_TAG, "unable to save access token");
+        }
+
         this.accessToken = token;
     }
 
-    public void loadAccessToken(){
-        //todo implement token loading
-        this.accessToken = "sampleToken";
+    /**
+     * Loads access token and decrypts it with Conceal
+     * @param context required for SharedPreferences/Conceal
+     * @return boolean success/fail
+     */
+    public boolean loadAccessToken(Context context){
+        KeyChain keyChain = new SharedPrefsBackedKeyChain(context, CryptoConfig.KEY_256);
+        Crypto crypto = AndroidConceal.get().createDefaultCrypto(keyChain);
+
+        try {
+            byte[] encryptedToken = readFile(context,"lab");
+
+            if(encryptedToken == null || encryptedToken.length == 0){
+                Log.e(CLASS_TAG,"Access token not found");
+                return false;
+            }
+
+            byte[] plainToken = crypto.decrypt(encryptedToken, Entity.create("token"));
+            this.accessToken = new String(plainToken);
+            Log.i(CLASS_TAG, "Loaded and decrypted access token");
+        }
+        catch (Exception e){
+            Log.wtf(CLASS_TAG, "unable to decipher access token");
+            return false;
+        }
+
+        return true;
     }
 
     /**
      * Checks if logging in is required
      * @return boolean
      */
-    public boolean isLoggedIn(){
-        return false; //todo implement checking if token is saved
+    public boolean isLoggedIn(Context context){
+        try {
+            byte[] encryptedToken = readFile(context,"lab");
+            if(encryptedToken == null || encryptedToken.length == 0){
+                Log.e(CLASS_TAG,"Access token not available");
+                return false;
+            }
+        }
+        catch (Exception e){
+            Log.e(CLASS_TAG, "Unable to read access token, " + e.toString());
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Loads file to byte array
+     * @param context used to obtain app fileDir
+     * @param path file path
+     * @return byte[] encrypted token
+     */
+    public byte[] readFile(Context context, String path) throws Exception{
+        File file = new File(context.getFilesDir().getAbsolutePath() + "/" + path);
+        FileInputStream inputStream = new FileInputStream(file);
+        byte fileBytes[] = new byte[(int)file.length()];
+        inputStream.read(fileBytes);
+        inputStream.close();
+        return fileBytes;
     }
 
     /**
@@ -79,8 +176,16 @@ public class ProjectRepository {
      */
     public Observable<RxResponse<AppData>> getUpdate(String apiUrl, Context context){
         if(accessToken == null){
-            loadAccessToken();
+            if(!loadAccessToken(context)){
+                repositoryState = repositoryStates.ERROR;
+                return Observable.just(RxResponse.loginError(new Throwable("no access token")));
+            }
         }
+        else if(accessToken.equals("-1")){
+            repositoryState = repositoryStates.ERROR;
+            return Observable.just(RxResponse.loginError(new Throwable("bad access token")));
+        }
+
         networkManager.configAuth(apiUrl, accessToken);
         return networkManager.getLastUpdate()
                 .subscribeOn(rxSchedulersFacade.io())
@@ -116,10 +221,16 @@ public class ProjectRepository {
     public boolean isLocalDataCurrent(String updateId, Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.pref_file_name), Context.MODE_PRIVATE);
-        apiUpdateCurrent = sharedPreferences.getString(
-                context.getString(R.string.pref_api_last_update_id), "0").equals(updateId);
 
-        return apiUpdateCurrent;
+        if(apiUpdateCurrent = sharedPreferences.getString(
+                context.getString(R.string.pref_api_last_update_id), "0").equals(updateId)){
+            Log.i(CLASS_TAG, "Local data - up-to-date with API db");
+            return true;
+        }
+        else {
+            Log.i(CLASS_TAG, "Local data - update required");
+            return false;
+        }
     }
 
     /**
@@ -138,10 +249,18 @@ public class ProjectRepository {
      * Gets appData from api call
      * @return {Single<RxResponse<AppData>>} appData wrapped with {@link RxResponse}
      */
-    public Observable<RxResponse<AppData>> getAppData(String apiUrl){
+    public Observable<RxResponse<AppData>> getAppData(String apiUrl, Context context){
         if(accessToken == null){
-            loadAccessToken();
+            if(!loadAccessToken(context)){
+                repositoryState = repositoryStates.ERROR;
+                return Observable.just(RxResponse.loginError(new Throwable("no access token")));
+            }
         }
+        else if(accessToken.equals("-1")){
+            repositoryState = repositoryStates.ERROR;
+            return Observable.just(RxResponse.loginError(new Throwable("bad access token")));
+        }
+
         networkManager.configAuth(apiUrl, accessToken);
         return apiRequest(networkManager.getAppData());
     }
@@ -183,6 +302,20 @@ public class ProjectRepository {
 
     public repositoryStates getRepositoryState() {
         return repositoryState;
+    }
+
+    /**
+     * token access for test purpose
+     */
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    /**
+     * token access for test purpose
+     */
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public enum repositoryStates{

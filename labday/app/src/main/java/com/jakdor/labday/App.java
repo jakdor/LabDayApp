@@ -3,6 +3,7 @@ package com.jakdor.labday;
 import android.app.Activity;
 import android.app.Application;
 
+import com.facebook.soloader.SoLoader;
 import com.jakdor.labday.di.AppInjector;
 
 import javax.inject.Inject;
@@ -22,6 +23,7 @@ public class App extends Application implements HasActivityInjector {
     public void onCreate() {
         super.onCreate();
         AppInjector.init(this);
+        SoLoader.init(this, false);
     }
 
     @Override
