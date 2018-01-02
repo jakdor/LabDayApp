@@ -16,7 +16,9 @@ project.ext {
     rxAndroidVersion = "2.0.1"
     concealVersion = "2.0.1"
 
+    junitVersion = "4.12"
     mockitoVersion = "2.13.0"
+    robolectricVersion = "3.6.1"
     androidTestRunnerVersion = "1.0.1"
     espressoVersion = "3.0.1"
     daggerMockVersion = "0.8.2"
@@ -42,6 +44,11 @@ android {
     }
     dataBinding {
         enabled = true
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -98,8 +105,10 @@ dependencies {
     implementation "com.facebook.conceal:conceal:$project.concealVersion@aar"
 
     //testing
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:$project.junitVersion"
     testImplementation "org.mockito:mockito-core:$project.mockitoVersion"
+    testImplementation "org.robolectric:robolectric:$project.robolectricVersion"
+    testImplementation "org.robolectric:shadows-support-v4:3.3.2"
     androidTestImplementation "org.mockito:mockito-android:$project.mockitoVersion"
     androidTestImplementation "com.github.andrzejchm.RESTMock:android:$project.restMockVersion"
     androidTestImplementation "com.android.support.test:runner:$project.androidTestRunnerVersion"

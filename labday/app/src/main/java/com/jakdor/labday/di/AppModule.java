@@ -18,18 +18,18 @@ import dagger.Provides;
 @Module(subcomponents = ViewModelSubComponent.class)
 public class AppModule {
     @Provides
-    Context provideContext(App app){
+    public Context provideContext(App app){
         return app.getApplicationContext();
     }
 
     @Singleton
     @Provides
-    ViewModelProvider.Factory provideViewModelFactory(ViewModelSubComponent.Builder viewModelBuilder){
+    public ViewModelProvider.Factory provideViewModelFactory(ViewModelSubComponent.Builder viewModelBuilder){
         return new ViewModelFactory(viewModelBuilder.build());
     }
 
     @Provides
-    RxSchedulersFacade provideRxSchedulersFacade(){
+    public RxSchedulersFacade provideRxSchedulersFacade(){
         return new RxSchedulersFacade();
     }
 }

@@ -24,6 +24,7 @@ public interface AppComponent {
 
     @Component.Builder
     interface Builder{
+        Builder appModule(AppModule appModule); //required by DaggerMock
         @BindsInstance
         Builder application(Application application);
         AppComponent build();

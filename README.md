@@ -46,6 +46,6 @@
   | Junit4 | 4.12 |
   | Mockito | 2.13.0 |
   | Espresso | 3.0.1 |
-  | Roboelectric | 3.5.1 |
+  | Robolectric | 3.6.1 |
   | DaggerMock | 0.8.2 |
   | RESTMock | 0.2.2 |
