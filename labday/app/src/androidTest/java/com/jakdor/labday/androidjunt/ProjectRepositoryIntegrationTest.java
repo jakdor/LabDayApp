@@ -85,11 +85,11 @@ public class ProjectRepositoryIntegrationTest {
     public void readFileTest() throws Exception {
         String testStr = "Test123";
 
-        FileOutputStream outputStream = testContext.openFileOutput("testFile", Context.MODE_PRIVATE);
+        FileOutputStream outputStream = targetContext.openFileOutput("testFile", Context.MODE_PRIVATE);
         outputStream.write(testStr.getBytes(Charset.forName("UTF-8")));
         outputStream.close();
 
-        byte[] savedStr = projectRepository.readFile(testContext, "testFile");
+        byte[] savedStr = projectRepository.readFile(targetContext, "testFile");
 
         Assert.assertEquals(testStr, new String(savedStr));
     }

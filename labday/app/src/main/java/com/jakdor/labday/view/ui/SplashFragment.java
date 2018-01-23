@@ -61,8 +61,11 @@ public class SplashFragment extends Fragment implements InjectableFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(SplashViewModel.class);
+
+        if(viewModel == null) {
+            viewModel = ViewModelProviders.of(this, viewModelFactory)
+                    .get(SplashViewModel.class);
+        }
 
         if(viewModel.isLoggedIn(getContext())) {
             observeLastUpdate();
@@ -130,5 +133,9 @@ public class SplashFragment extends Fragment implements InjectableFragment {
                 .addToBackStack(null)
                 .replace(R.id.fragmentLayout, loginFragment)
                 .commit();
+    }
+
+    public void setViewModel(SplashViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 }
