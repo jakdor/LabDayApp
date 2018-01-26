@@ -8,7 +8,6 @@ import com.jakdor.labday.R;
 import com.jakdor.labday.TestApp;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.rx.RxResponse;
-import com.jakdor.labday.rx.RxStatus;
 import com.jakdor.labday.view.ui.SplashFragment;
 import com.jakdor.labday.viewmodel.SplashViewModel;
 
@@ -22,7 +21,6 @@ import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static com.jakdor.labday.rx.RxResponse.success;
 import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startFragment;
 
 @RunWith(RobolectricTestRunner.class)
