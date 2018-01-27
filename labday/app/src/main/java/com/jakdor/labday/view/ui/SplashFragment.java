@@ -24,7 +24,6 @@ import com.jakdor.labday.rx.RxStatus;
 import com.jakdor.labday.viewmodel.SplashViewModel;
 
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -137,5 +136,9 @@ public class SplashFragment extends Fragment implements InjectableFragment {
 
     public void setViewModel(SplashViewModel viewModel) {
         this.viewModel = viewModel;
+    }
+
+    public Handler getDelayedTransactionHandler() {
+        return delayedTransactionHandler;
     }
 }
