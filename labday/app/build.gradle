@@ -3,8 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 project.ext {
-    arch = "1.0.3"
-    archExt = "1.0.0"
+    arch = "1.1.0"
+    archExt = "1.1.0"
     supportLibsVersion = "27.0.2"
     constraintLayoutVersion = "1.0.2"
     butterKnifeVersion = "8.8.1"
