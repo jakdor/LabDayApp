@@ -1,4 +1,4 @@
-package com.jakdor.labday.androidjunt;
+package com.jakdor.labday.androidjunit;
 
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -6,7 +6,6 @@ import org.junit.runners.Suite;
 
 import io.appflate.restmock.RESTMockServer;
 
-import static io.appflate.restmock.utils.RequestMatchers.hasExactQueryParameters;
 import static io.appflate.restmock.utils.RequestMatchers.pathContains;
 
 @RunWith(Suite.class)

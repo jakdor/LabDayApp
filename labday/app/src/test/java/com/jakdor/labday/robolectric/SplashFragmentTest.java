@@ -72,21 +72,23 @@ public class SplashFragmentTest {
     @Test
     public void isLoggedInTrueResponseSuccessIntegrationTest() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No view found for id 0x7f070036 (com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
+        thrown.expectMessage("No view found for id 0x7f070036" +
+                " (com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
 
         Mockito.when(splashViewModel.isLoggedIn(Mockito.any(Context.class))).thenReturn(true);
         startFragment(splashFragment);
     }
 
     /**
-     * Integration test - check if fragment gets replaced with {@link com.jakdor.labday.view.ui.LoginFragment}
-     * after lastUpdate Error response
+     * Integration test - check if fragment gets replaced with
+     * {@link com.jakdor.labday.view.ui.LoginFragment} after lastUpdate Error response
      * @throws Exception expected view not found (Parent Activity view with fragmentLayout not loaded)
      */
     @Test
     public void isLoggedInTrueResponseErrorIntegrationTest() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No view found for id 0x7f070036 (com.jakdor.labday:id/fragmentLayout) for fragment LoginFragment");
+        thrown.expectMessage("No view found for id 0x7f070036" +
+                " (com.jakdor.labday:id/fragmentLayout) for fragment LoginFragment");
 
         MutableLiveData<RxResponse<AppData>> appData = new MutableLiveData<>();
         appData.setValue(RxResponse.error(new Throwable("dummy error")));
@@ -114,7 +116,8 @@ public class SplashFragmentTest {
     @Test
     public void switchToMainFragmentTest() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No view found for id 0x7f070036 (com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
+        thrown.expectMessage("No view found for id 0x7f070036" +
+                " (com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
 
         startFragment(splashFragment);
         splashFragment.switchToMainFragment(appData.getValue());
@@ -127,7 +130,8 @@ public class SplashFragmentTest {
     @Test
     public void switchToLoginFragmentTest() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No view found for id 0x7f070036 (com.jakdor.labday:id/fragmentLayout) for fragment LoginFragment");
+        thrown.expectMessage("No view found for id 0x7f070036" +
+                " (com.jakdor.labday:id/fragmentLayout) for fragment LoginFragment");
 
         startFragment(splashFragment);
         splashFragment.switchToLoginFragment();

@@ -1,8 +1,7 @@
-package com.jakdor.labday.androidjunt;
+package com.jakdor.labday.androidjunit;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
-import android.test.mock.MockContext;
 
 import com.google.gson.Gson;
 import com.jakdor.labday.R;
@@ -26,7 +25,7 @@ import io.appflate.restmock.RESTMockServer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.jakdor.labday.androidjunt.TestUtils.readAssetFile;
+import static com.jakdor.labday.androidjunit.TestUtils.readAssetFile;
 
 /**
  * {@link ProjectRepository} integration tests on local REST API mock

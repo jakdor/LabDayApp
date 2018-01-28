@@ -1,4 +1,4 @@
-package com.jakdor.labday.androidjunt;
+package com.jakdor.labday.androidjunit;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -21,7 +21,7 @@ import org.junit.rules.ExpectedException;
 import io.appflate.restmock.RESTMockServer;
 import io.reactivex.observers.TestObserver;
 
-import static com.jakdor.labday.androidjunt.TestUtils.readAssetFile;
+import static com.jakdor.labday.androidjunit.TestUtils.readAssetFile;
 
 /**
  * {@link NetworkManager} integration tests on local REST API mock
