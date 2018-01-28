@@ -1,5 +1,6 @@
 package com.jakdor.labday.di;
 
+import com.jakdor.labday.common.localdb.LocalDbHandler;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 import com.jakdor.labday.common.repository.NetworkManager;
 
@@ -24,5 +25,11 @@ public class RepositoryModule {
     @Provides
     public RetrofitBuilder getRetrofitBuilder(){
         return new RetrofitBuilder();
+    }
+
+    @Singleton
+    @Provides
+    public LocalDbHandler getLocalDBHandler() {
+        return new LocalDbHandler();
     }
 }

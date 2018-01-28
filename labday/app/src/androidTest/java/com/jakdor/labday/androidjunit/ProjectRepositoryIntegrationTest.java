@@ -5,6 +5,7 @@ import android.support.test.InstrumentationRegistry;
 
 import com.google.gson.Gson;
 import com.jakdor.labday.R;
+import com.jakdor.labday.common.localdb.LocalDbHandler;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 import com.jakdor.labday.common.repository.NetworkManager;
@@ -52,7 +53,9 @@ public class ProjectRepositoryIntegrationTest {
         targetContext = InstrumentationRegistry.getTargetContext(); //todo replace with mock
 
         projectRepository = new ProjectRepository(
-                new NetworkManager(new RetrofitBuilder()), new RxSchedulersFacade());
+                new NetworkManager(new RetrofitBuilder()),
+                new LocalDbHandler(),
+                new RxSchedulersFacade());
     }
 
     @Test
