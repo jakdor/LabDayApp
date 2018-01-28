@@ -95,8 +95,11 @@ public class LoginFragment extends Fragment implements InjectableFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(LoginViewModel.class);
+
+        if(viewModel == null) {
+            viewModel = ViewModelProviders.of(this, viewModelFactory)
+                    .get(LoginViewModel.class);
+        }
 
         observeLogin();
     }
@@ -227,5 +230,9 @@ public class LoginFragment extends Fragment implements InjectableFragment {
             loginStatusInfo.setVisibility(View.VISIBLE);
             loadingAnim.setVisibility(View.GONE);
         }
+    }
+
+    public void setViewModel(LoginViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 }
