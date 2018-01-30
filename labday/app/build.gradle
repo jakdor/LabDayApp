@@ -86,6 +86,7 @@ dependencies {
     implementation "com.jakewharton:butterknife:$project.butterKnifeVersion"
 
     //Glide
+    annotationProcessor "com.github.bumptech.glide:compiler:$project.glideVersion"
     implementation "com.github.bumptech.glide:glide:$project.glideVersion"
 
     //Dagger core
