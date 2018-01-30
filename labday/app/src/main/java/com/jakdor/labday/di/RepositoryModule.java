@@ -1,5 +1,7 @@
 package com.jakdor.labday.di;
 
+import android.app.Application;
+
 import com.jakdor.labday.common.localdb.LocalDbHandler;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 import com.jakdor.labday.common.repository.NetworkManager;
@@ -29,7 +31,7 @@ public class RepositoryModule {
 
     @Singleton
     @Provides
-    public LocalDbHandler getLocalDBHandler() {
-        return new LocalDbHandler();
+    public LocalDbHandler getLocalDBHandler(Application application) {
+        return new LocalDbHandler(application);
     }
 }

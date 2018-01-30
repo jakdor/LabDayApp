@@ -23,7 +23,7 @@
   Name |  Version |
   | :--: | :---: |
   | API level | 21-27 |
-  | Build tools | 27.0.2 |
+  | Build tools | 27.0.3 |
   | Support libs | 27.0.2 |
   | Java | 1.8 |
   | Kotlin | 1.2 |
@@ -35,6 +35,7 @@
   | OkHttp | 3.9.1 |
   | Dagger2 | 2.13 |
   | RxJava | 2.1.7 |
+  | SQLBrite | 3.1.0 |
   | Conceal | 2.0.1 |
   | Glide | 4.4.0 |
   | ButterKnife | 8.8.1 |

@@ -82,12 +82,14 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:$project.archExt"
     implementation "android.arch.lifecycle:extensions:$project.archExt"
     implementation "android.arch.lifecycle:runtime:$project.arch"
+    implementation "android.arch.persistence:db-framework:$project.archExt"
 
     //ButterKnife
     annotationProcessor "com.jakewharton:butterknife-compiler:$project.butterKnifeVersion"
     implementation "com.jakewharton:butterknife:$project.butterKnifeVersion"
 
     //Glide
+    annotationProcessor "com.github.bumptech.glide:compiler:$project.glideVersion"
     implementation "com.github.bumptech.glide:glide:$project.glideVersion"
 
     //Dagger core
