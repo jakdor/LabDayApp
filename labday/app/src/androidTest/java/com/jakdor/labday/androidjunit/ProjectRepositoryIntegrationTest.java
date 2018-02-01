@@ -1,10 +1,13 @@
 package com.jakdor.labday.androidjunit;
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
 
 import com.google.gson.Gson;
 import com.jakdor.labday.R;
+import com.jakdor.labday.TestApp;
+import com.jakdor.labday.common.localdb.LocalDbHandler;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 import com.jakdor.labday.common.repository.NetworkManager;
@@ -53,7 +56,9 @@ public class ProjectRepositoryIntegrationTest {
         targetContext = InstrumentationRegistry.getTargetContext(); //todo replace with mock
 
         projectRepository = new ProjectRepository(
-                new NetworkManager(new RetrofitBuilder()), new RxSchedulersFacade());
+                new NetworkManager(new RetrofitBuilder()),
+                new LocalDbHandler(Instrumentation.newApplication(TestApp.class, testContext)),
+                new RxSchedulersFacade());
     }
 
     @Test
@@ -392,7 +397,7 @@ public class ProjectRepositoryIntegrationTest {
                     sharedPreferences.getString(targetContext.getString(
                             R.string.pref_api_last_update_id), null));
 
-            Assert.assertTrue(projectRepository.isLoggedIn(targetContext)); //fails (probably connected with context permissions)
+            Assert.assertTrue(projectRepository.isLoggedIn(targetContext)); //fails (probably connected with test context permissions)
             return true;
         });
 

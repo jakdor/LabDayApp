@@ -11,6 +11,7 @@ import com.facebook.crypto.CryptoConfig;
 import com.facebook.crypto.Entity;
 import com.facebook.crypto.keychain.KeyChain;
 import com.jakdor.labday.R;
+import com.jakdor.labday.common.localdb.LocalDbHandler;
 import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.rx.RxResponse;
@@ -36,6 +37,7 @@ public class ProjectRepository {
     private final String CLASS_TAG = "ProjectRepository";
 
     private NetworkManager networkManager;
+    private LocalDbHandler localDbHandler;
     private RxSchedulersFacade rxSchedulersFacade;
 
     private RxResponse data;
@@ -46,8 +48,11 @@ public class ProjectRepository {
     private String accessToken;
 
     @Inject
-    public ProjectRepository(NetworkManager networkManager, RxSchedulersFacade rxSchedulersFacade){
+    public ProjectRepository(NetworkManager networkManager,
+                             LocalDbHandler localDbHandler,
+                             RxSchedulersFacade rxSchedulersFacade){
         this.networkManager = networkManager;
+        this.localDbHandler = localDbHandler;
         this.rxSchedulersFacade = rxSchedulersFacade;
     }
 

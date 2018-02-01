@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 project.ext {
     arch = "1.1.0"
     archExt = "1.1.0"
+    archDb = "1.0.0"
     supportLibsVersion = "27.0.2"
     constraintLayoutVersion = "1.0.2"
     butterKnifeVersion = "8.8.1"
@@ -15,10 +16,12 @@ project.ext {
     rxJavaVersion = "2.1.7"
     rxAndroidVersion = "2.0.1"
     concealVersion = "2.0.1"
+    sqlBriteVersion = "3.1.0"
 
     junitVersion = "4.12"
     mockitoVersion = "2.13.0"
     robolectricVersion = "3.6.1"
+    robolectricShadowsVersion = "3.3.2"
     androidTestRunnerVersion = "1.0.1"
     espressoVersion = "3.0.1"
     daggerMockVersion = "0.8.2"
@@ -80,6 +83,7 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:$project.archExt"
     implementation "android.arch.lifecycle:extensions:$project.archExt"
     implementation "android.arch.lifecycle:runtime:$project.arch"
+    implementation "android.arch.persistence:db-framework:$project.archDb"
 
     //ButterKnife
     annotationProcessor "com.jakewharton:butterknife-compiler:$project.butterKnifeVersion"
@@ -115,11 +119,14 @@ dependencies {
     //Conceal
     implementation "com.facebook.conceal:conceal:$project.concealVersion@aar"
 
+    //SQLBrite
+    implementation "com.squareup.sqlbrite3:sqlbrite:$project.sqlBriteVersion"
+
     //testing
     testImplementation "junit:junit:$project.junitVersion"
     testImplementation "org.mockito:mockito-core:$project.mockitoVersion"
     testImplementation "org.robolectric:robolectric:$project.robolectricVersion"
-    testImplementation "org.robolectric:shadows-support-v4:3.3.2"
+    testImplementation "org.robolectric:shadows-support-v4:$project.robolectricShadowsVersion"
     androidTestImplementation "org.mockito:mockito-android:$project.mockitoVersion"
     androidTestImplementation "com.github.andrzejchm.RESTMock:android:$project.restMockVersion"
     androidTestImplementation "com.android.support.test:runner:$project.androidTestRunnerVersion"
