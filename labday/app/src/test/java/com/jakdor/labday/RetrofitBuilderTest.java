@@ -5,6 +5,7 @@ import com.jakdor.labday.common.network.AuthenticationInterceptor;
 import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -32,7 +33,7 @@ import static org.mockito.Mockito.when;
 public class RetrofitBuilderTest {
 
     @Rule
-    public ExpectedException thrown= ExpectedException.none();
+    public ExpectedException thrown = ExpectedException.none();
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -79,9 +80,7 @@ public class RetrofitBuilderTest {
 
         LabService labService = retrofitBuilder.createService(dummyApiUrl, LabService.class, dummyToken);
 
-        TestObserver<AppData> testObserver = new TestObserver<>();
-        labService.getAppData().subscribe(testObserver);
-
+        TestObserver<AppData> testObserver = labService.getAppData().test();
         testObserver.assertSubscribed();
         testObserver.onComplete();
 

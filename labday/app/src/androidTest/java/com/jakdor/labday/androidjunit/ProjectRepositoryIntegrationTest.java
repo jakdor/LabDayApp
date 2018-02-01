@@ -9,6 +9,7 @@ import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 import com.jakdor.labday.common.repository.NetworkManager;
 import com.jakdor.labday.common.repository.ProjectRepository;
+import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxSchedulersFacade;
 import com.jakdor.labday.rx.RxStatus;
 
@@ -22,7 +23,7 @@ import java.io.FileOutputStream;
 import java.nio.charset.Charset;
 
 import io.appflate.restmock.RESTMockServer;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.jakdor.labday.androidjunit.TestUtils.readAssetFile;
@@ -111,28 +112,33 @@ public class ProjectRepositoryIntegrationTest {
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
 
-        CompositeDisposable disposable = new CompositeDisposable();
+        TestObserver<RxResponse<AppData>> testObserver =
+                projectRepository.getAppData(dummyApiUrl, targetContext)
+                        .subscribeOn(Schedulers.io())
+                        .doOnError(throwable -> Assert.fail())
+                        .test();
 
-        disposable.add(projectRepository.getAppData(dummyApiUrl, targetContext)
-                .subscribeOn(Schedulers.io())
-                .doOnError(throwable -> Assert.fail())
-                .subscribe(appDataRxResponse -> {
+        testObserver.assertSubscribed();
+        testObserver.awaitCount(1);
+        testObserver.assertNoErrors();
 
-                    Assert.assertNotNull(appDataRxResponse);
-                    Assert.assertNotNull(appDataRxResponse.data);
-                    Assert.assertNull(appDataRxResponse.error);
-                    Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
-                    Assert.assertEquals(appData, appDataRxResponse.data);
-                    Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
+        testObserver.assertValue(appDataRxResponse -> {
+            Assert.assertNotNull(appDataRxResponse);
+            Assert.assertNotNull(appDataRxResponse.data);
+            Assert.assertNull(appDataRxResponse.error);
+            Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
+            Assert.assertEquals(appData, appDataRxResponse.data);
+            Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
 
-                    Assert.assertEquals(projectRepository.getRepositoryState(),
-                            ProjectRepository.repositoryStates.READY);
+            Assert.assertEquals(projectRepository.getRepositoryState(),
+                    ProjectRepository.repositoryStates.READY);
 
-                    Assert.assertNotNull(projectRepository.getData());
-                    Assert.assertEquals(projectRepository.getData().data, appData);
+            Assert.assertNotNull(projectRepository.getData());
+            Assert.assertEquals(projectRepository.getData().data, appData);
+            return true;
+        });
 
-                    disposable.dispose();
-                }));
+        testObserver.onComplete();
     }
 
     /**
@@ -148,23 +154,28 @@ public class ProjectRepositoryIntegrationTest {
 
         projectRepository.setAccessToken(dummyToken);
 
-        CompositeDisposable disposable = new CompositeDisposable();
+        TestObserver<RxResponse<AppData>> testObserver =
+                projectRepository.getAppData(dummyApiBadUrl, targetContext)
+                        .subscribeOn(Schedulers.io())
+                        .doOnError(throwable -> Assert.fail())
+                        .test();
 
-        disposable.add(projectRepository.getAppData(dummyApiBadUrl, targetContext)
-                .subscribeOn(Schedulers.io())
-                .doOnError(throwable -> Assert.fail())
-                .subscribe(appDataRxResponse -> {
+        testObserver.assertSubscribed();
+        testObserver.awaitCount(1);
+        testObserver.assertNoErrors();
 
-                    Assert.assertNotNull(appDataRxResponse);
-                    Assert.assertNull(appDataRxResponse.data);
-                    Assert.assertNotNull(appDataRxResponse.error);
-                    Assert.assertEquals(RxStatus.ERROR, appDataRxResponse.status);
+        testObserver.assertValue(appDataRxResponse -> {
+            Assert.assertNotNull(appDataRxResponse);
+            Assert.assertNull(appDataRxResponse.data);
+            Assert.assertNotNull(appDataRxResponse.error);
+            Assert.assertEquals(RxStatus.ERROR, appDataRxResponse.status);
 
-                    Assert.assertEquals(projectRepository.getRepositoryState(),
-                            ProjectRepository.repositoryStates.ERROR);
+            Assert.assertEquals(projectRepository.getRepositoryState(),
+                    ProjectRepository.repositoryStates.ERROR);
+            return true;
+        });
 
-                    disposable.dispose();
-                }));
+        testObserver.onComplete();
     }
 
     /**
@@ -192,33 +203,37 @@ public class ProjectRepositoryIntegrationTest {
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
 
-        CompositeDisposable disposable = new CompositeDisposable();
+        TestObserver<RxResponse<AppData>> testObserver =
+                projectRepository.getUpdate(dummyApiUrl, targetContext)
+                        .subscribeOn(Schedulers.io())
+                        .doOnError(throwable -> Assert.fail())
+                        .test();
 
-        disposable.add(projectRepository.getUpdate(dummyApiUrl, targetContext)
-                .subscribeOn(Schedulers.io())
-                .doOnError(throwable -> Assert.fail())
-                .subscribe(appDataRxResponse -> {
+        testObserver.assertSubscribed();
+        testObserver.awaitCount(1);
+        testObserver.assertNoErrors();
 
-                    Assert.assertNotNull(appDataRxResponse);
-                    Assert.assertNotNull(appDataRxResponse.data);
-                    Assert.assertNull(appDataRxResponse.error);
-                    Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
-                    Assert.assertEquals(appData, appDataRxResponse.data);
-                    Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
+        testObserver.assertValue(appDataRxResponse -> {
+            Assert.assertNotNull(appDataRxResponse);
+            Assert.assertNotNull(appDataRxResponse.data);
+            Assert.assertNull(appDataRxResponse.error);
+            Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
+            Assert.assertEquals(appData, appDataRxResponse.data);
+            Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
 
-                    Assert.assertEquals(projectRepository.getRepositoryState(),
-                            ProjectRepository.repositoryStates.READY);
+            Assert.assertEquals(projectRepository.getRepositoryState(),
+                    ProjectRepository.repositoryStates.READY);
 
-                    Assert.assertNotNull(projectRepository.getData());
-                    Assert.assertEquals(projectRepository.getData().data, appData);
+            Assert.assertNotNull(projectRepository.getData());
+            Assert.assertEquals(projectRepository.getData().data, appData);
 
-                    Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
-                            sharedPreferences.getString(targetContext.getString(
-                                    R.string.pref_api_last_update_id), null));
+            Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
+                    sharedPreferences.getString(targetContext.getString(
+                            R.string.pref_api_last_update_id), null));
+            return true;
+        });
 
-                    disposable.dispose();
-
-                }));
+        testObserver.onComplete();
     }
 
     /**
@@ -247,33 +262,37 @@ public class ProjectRepositoryIntegrationTest {
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
 
-        CompositeDisposable disposable = new CompositeDisposable();
+        TestObserver<RxResponse<AppData>> testObserver =
+                projectRepository.getUpdate(dummyApiUrl, targetContext)
+                        .subscribeOn(Schedulers.io())
+                        .doOnError(throwable -> Assert.fail())
+                        .test();
 
-        disposable.add(projectRepository.getUpdate(dummyApiUrl, targetContext)
-                .subscribeOn(Schedulers.io())
-                .doOnError(throwable -> Assert.fail())
-                .subscribe(appDataRxResponse -> {
+        testObserver.assertSubscribed();
+        testObserver.awaitCount(1);
+        testObserver.assertNoErrors();
 
-                    Assert.assertNotNull(appDataRxResponse);
-                    Assert.assertNotNull(appDataRxResponse.data);
-                    Assert.assertNull(appDataRxResponse.error);
-                    Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
-                    Assert.assertEquals(appData, appDataRxResponse.data);
-                    Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
+        testObserver.assertValue(appDataRxResponse -> {
+            Assert.assertNotNull(appDataRxResponse);
+            Assert.assertNotNull(appDataRxResponse.data);
+            Assert.assertNull(appDataRxResponse.error);
+            Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
+            Assert.assertEquals(appData, appDataRxResponse.data);
+            Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
 
-                    Assert.assertEquals(projectRepository.getRepositoryState(),
-                            ProjectRepository.repositoryStates.READY);
+            Assert.assertEquals(projectRepository.getRepositoryState(),
+                    ProjectRepository.repositoryStates.READY);
 
-                    Assert.assertNotNull(projectRepository.getData());
-                    Assert.assertEquals(projectRepository.getData().data, appData);
+            Assert.assertNotNull(projectRepository.getData());
+            Assert.assertEquals(projectRepository.getData().data, appData);
 
-                    Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
-                            sharedPreferences.getString(targetContext.getString(
-                                    R.string.pref_api_last_update_id), null));
+            Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
+                    sharedPreferences.getString(targetContext.getString(
+                            R.string.pref_api_last_update_id), null));
+            return true;
+        });
 
-                    disposable.dispose();
-
-                }));
+        testObserver.onComplete();
     }
 
     /**
@@ -294,29 +313,33 @@ public class ProjectRepositoryIntegrationTest {
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
 
-        CompositeDisposable disposable = new CompositeDisposable();
+        TestObserver<RxResponse<AppData>> testObserver =
+                projectRepository.getUpdate(dummyApiBadUrl, targetContext)
+                        .subscribeOn(Schedulers.io())
+                        .doOnError(throwable -> Assert.fail())
+                        .test();
 
-        disposable.add(projectRepository.getUpdate(dummyApiBadUrl, targetContext)
-                .subscribeOn(Schedulers.io())
-                .doOnError(throwable -> Assert.fail())
-                .subscribe(appDataRxResponse -> {
+        testObserver.assertSubscribed();
+        testObserver.awaitCount(1);
+        testObserver.assertNoErrors();
 
-                    Assert.assertNotNull(appDataRxResponse);
-                    Assert.assertNotNull(appDataRxResponse.data); //fails because local db load not implemented
-                    Assert.assertNull(appDataRxResponse.error);
-                    Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
-                    Assert.assertEquals(appData, appDataRxResponse.data);
-                    Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
+        testObserver.assertValue(appDataRxResponse -> {
+            Assert.assertNotNull(appDataRxResponse);
+            Assert.assertNotNull(appDataRxResponse.data); //fails because local db loading not implemented
+            Assert.assertNull(appDataRxResponse.error);
+            Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
+            Assert.assertEquals(appData, appDataRxResponse.data);
+            Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
 
-                    Assert.assertEquals(projectRepository.getRepositoryState(),
-                            ProjectRepository.repositoryStates.READY);
+            Assert.assertEquals(projectRepository.getRepositoryState(),
+                    ProjectRepository.repositoryStates.READY);
 
-                    Assert.assertNotNull(projectRepository.getData());
-                    Assert.assertEquals(projectRepository.getData().data, appData);
+            Assert.assertNotNull(projectRepository.getData());
+            Assert.assertEquals(projectRepository.getData().data, appData);
+            return true;
+        });
 
-                    disposable.dispose();
-
-                }));
+        testObserver.onComplete();
     }
 
     /**
@@ -341,35 +364,39 @@ public class ProjectRepositoryIntegrationTest {
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
 
-        CompositeDisposable disposable = new CompositeDisposable();
+        TestObserver<RxResponse<AppData>> testObserver =
+                projectRepository.login(dummyApiUrl, targetContext, dummyLogin, dummyPassword)
+                        .subscribeOn(Schedulers.io())
+                        .doOnError(throwable -> Assert.fail())
+                        .test();
 
-        disposable.add(projectRepository.login(dummyApiUrl, targetContext, dummyLogin, dummyPassword)
-                .subscribeOn(Schedulers.io())
-                .doOnError(throwable -> Assert.fail())
-                .subscribe(appDataRxResponse -> {
+        testObserver.assertSubscribed();
+        testObserver.awaitCount(1);
+        testObserver.assertNoErrors();
 
-                    Assert.assertNotNull(appDataRxResponse);
-                    Assert.assertNotNull(appDataRxResponse.data);
-                    Assert.assertNull(appDataRxResponse.error);
-                    Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
-                    Assert.assertEquals(appData, appDataRxResponse.data);
-                    Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
+        testObserver.assertValue(appDataRxResponse -> {
+            Assert.assertNotNull(appDataRxResponse);
+            Assert.assertNotNull(appDataRxResponse.data);
+            Assert.assertNull(appDataRxResponse.error);
+            Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
+            Assert.assertEquals(appData, appDataRxResponse.data);
+            Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
 
-                    Assert.assertEquals(projectRepository.getRepositoryState(),
-                            ProjectRepository.repositoryStates.READY);
+            Assert.assertEquals(projectRepository.getRepositoryState(),
+                    ProjectRepository.repositoryStates.READY);
 
-                    Assert.assertNotNull(projectRepository.getData());
-                    Assert.assertEquals(projectRepository.getData().data, appData);
+            Assert.assertNotNull(projectRepository.getData());
+            Assert.assertEquals(projectRepository.getData().data, appData);
 
-                    Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
-                            sharedPreferences.getString(targetContext.getString(
-                                    R.string.pref_api_last_update_id), null));
+            Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
+                    sharedPreferences.getString(targetContext.getString(
+                            R.string.pref_api_last_update_id), null));
 
-                    Assert.assertTrue(projectRepository.isLoggedIn(targetContext));
+            Assert.assertTrue(projectRepository.isLoggedIn(targetContext)); //fails (probably connected with context permissions)
+            return true;
+        });
 
-                    disposable.dispose();
-
-                }));
+        testObserver.onComplete();
     }
 
     /**
@@ -382,18 +409,23 @@ public class ProjectRepositoryIntegrationTest {
                 ProjectRepository.repositoryStates.INIT);
         Assert.assertNull(projectRepository.getData());
 
-        CompositeDisposable disposable = new CompositeDisposable();
+        TestObserver<RxResponse<AppData>> testObserver =
+                projectRepository.login(dummyApiBadUrl, targetContext, dummyLogin, dummyPassword)
+                        .subscribeOn(Schedulers.io())
+                        .doOnError(throwable -> Assert.fail())
+                        .test();
 
-        disposable.add(projectRepository.login(dummyApiBadUrl, targetContext, dummyLogin, dummyPassword)
-                .subscribeOn(Schedulers.io())
-                .doOnError(throwable -> Assert.fail())
-                .subscribe(appDataRxResponse -> {
+        testObserver.assertSubscribed();
+        testObserver.awaitCount(1);
+        testObserver.assertNoErrors();
 
-                        Assert.assertNotNull(appDataRxResponse);
-                        Assert.assertNull(appDataRxResponse.data);
-                        Assert.assertEquals(RxStatus.LOGIN_ERROR, appDataRxResponse.status);
+        testObserver.assertValue(appDataRxResponse -> {
+            Assert.assertNotNull(appDataRxResponse);
+            Assert.assertNull(appDataRxResponse.data);
+            Assert.assertEquals(RxStatus.LOGIN_ERROR, appDataRxResponse.status);
+            return true;
+        });
 
-                        disposable.dispose();
-                }));
+        testObserver.onComplete();
     }
 }

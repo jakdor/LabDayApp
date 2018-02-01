@@ -77,12 +77,17 @@ public class NetworkManagerIntegrationTest {
         AccessToken expectedAccessToken
                 = gson.fromJson(readAssetFile(testContext, "api/login.json"), AccessToken.class);
 
-        TestObserver<AccessToken> testObserver = new CustomTestObserver<>(expectedAccessToken);
-        networkManager.getAccessToken().subscribe(testObserver);
+        TestObserver<AccessToken> testObserver = networkManager.getAccessToken().test();
+        testObserver.awaitCount(1);
 
         testObserver.assertSubscribed();
-        testObserver.assertValueCount(1);
         testObserver.assertNoErrors();
+        testObserver.assertValue(accessToken -> {
+            Assert.assertEquals(expectedAccessToken, accessToken);
+            Assert.assertEquals(expectedAccessToken.hashCode(), accessToken.hashCode());
+            return true;
+        });
+
         testObserver.onComplete();
     }
 
@@ -96,12 +101,16 @@ public class NetworkManagerIntegrationTest {
         String expectedLastUpdate
                 = new String(readAssetFile(testContext, "api/last_update.json").getBytes());
 
-        TestObserver<String> testObserver = new CustomTestObserver<>(expectedLastUpdate);
-        networkManager.getLastUpdate().subscribe(testObserver);
+        TestObserver<String> testObserver = networkManager.getLastUpdate().test();
+        testObserver.awaitCount(1);
 
         testObserver.assertSubscribed();
-        testObserver.assertValueCount(1);
         testObserver.assertNoErrors();
+        testObserver.assertValue(s -> {
+            Assert.assertEquals(expectedLastUpdate, s);
+            return true;
+        });
+
         testObserver.onComplete();
     }
 
@@ -117,12 +126,17 @@ public class NetworkManagerIntegrationTest {
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
 
-        TestObserver<AppData> testObserver = new CustomTestObserver<>(appData);
-        networkManager.getAppData().subscribe(testObserver);
+        TestObserver<AppData> testObserver = networkManager.getAppData().test();
+        testObserver.awaitCount(1);
 
         testObserver.assertSubscribed();
-        testObserver.assertValueCount(1);
         testObserver.assertNoErrors();
+        testObserver.assertValue(appData1 -> {
+            Assert.assertEquals(appData, appData1);
+            Assert.assertEquals(appData.hashCode(), appData1.hashCode());
+            return true;
+        });
+
         testObserver.onComplete();
     }
 
@@ -137,33 +151,17 @@ public class NetworkManagerIntegrationTest {
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
 
-        TestObserver<AppData> testObserver = new CustomTestObserver<>(appData);
-        networkManager.getAppData().subscribe(testObserver);
+        TestObserver<AppData> testObserver = networkManager.getAppData().test();
+        testObserver.awaitCount(1);
 
         testObserver.assertSubscribed();
-        testObserver.assertValueCount(1);
         testObserver.assertNoErrors();
+        testObserver.assertValue(appData1 -> {
+            Assert.assertEquals(appData, appData1);
+            Assert.assertEquals(appData.hashCode(), appData1.hashCode());
+            return true;
+        });
+
         testObserver.onComplete();
-    }
-
-    /**
-     * Custom RXJava TestObserver, after getting data from API call comperes is to Object
-     * provided in constructor
-     * @param <T>
-     */
-    private class CustomTestObserver<T> extends TestObserver<T>{
-
-        private T data;
-
-        CustomTestObserver(T t){
-            this.data = t;
-        }
-
-        @Override
-        public void onNext(T t) {
-            super.onNext(t);
-            Assert.assertEquals(data, t);
-            Assert.assertEquals(data.hashCode(), t.hashCode());
-        }
     }
 }

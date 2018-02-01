@@ -50,12 +50,18 @@ public class RetrofitAPICallsIntegrationTest {
 
         Gson gson = new Gson();
         AccessToken accessToken = gson.fromJson(readFile(loginAccessTokenPath), AccessToken.class);
-        TestObserver<AccessToken> testObserver = new CustomTestObserver<>(accessToken);
-        labService.getAccessToken().subscribe(testObserver);
 
+        TestObserver<AccessToken> testObserver = labService.getAccessToken().test();
         testObserver.assertSubscribed();
-        testObserver.assertValueCount(1);
+        testObserver.awaitCount(1);
         testObserver.assertNoErrors();
+
+        testObserver.assertValue(accessToken1 -> {
+            Assert.assertEquals(accessToken, accessToken1);
+            Assert.assertEquals(accessToken.hashCode(), accessToken1.hashCode());
+            return true;
+        });
+
         testObserver.onComplete();
     }
 
@@ -66,12 +72,17 @@ public class RetrofitAPICallsIntegrationTest {
     public void lastUpdateTest() throws Exception {
         LabService labService = retrofitBuilder.createService(dummyApiUrl, LabService.class);
         String expectedLastUpdate = readFile(lastUpdateJsonPath);
-        TestObserver<String> testObserver = new CustomTestObserver<>(expectedLastUpdate);
-        labService.getLastUpdate().subscribe(testObserver);
 
+        TestObserver<String> testObserver = labService.getLastUpdate().test();
         testObserver.assertSubscribed();
-        testObserver.assertValueCount(1);
+        testObserver.awaitCount(1);
         testObserver.assertNoErrors();
+
+        testObserver.assertValue(s -> {
+            Assert.assertEquals(expectedLastUpdate, s);
+            return true;
+        });
+
         testObserver.onComplete();
     }
 
@@ -85,12 +96,18 @@ public class RetrofitAPICallsIntegrationTest {
 
         LabService labService = retrofitBuilder.createService(
                 dummyApiUrl, LabService.class, dummyLogin, dummyPassword);
-        TestObserver<AppData> testObserver = new CustomTestObserver<>(appData);
-        labService.getAppData().subscribe(testObserver);
 
+        TestObserver<AppData> testObserver = labService.getAppData().test();
         testObserver.assertSubscribed();
-        testObserver.assertValueCount(1);
+        testObserver.awaitCount(1);
         testObserver.assertNoErrors();
+
+        testObserver.assertValue(appData1 -> {
+            Assert.assertEquals(appData, appData1);
+            Assert.assertEquals(appData.hashCode(), appData1.hashCode());
+            return true;
+        });
+
         testObserver.onComplete();
     }
 
@@ -103,12 +120,18 @@ public class RetrofitAPICallsIntegrationTest {
         AppData appData = gson.fromJson(readFile(appDataJsonPath), AppData.class);
 
         LabService labService = retrofitBuilder.createService(dummyApiUrl, LabService.class, dummyToken);
-        TestObserver<AppData> testObserver = new CustomTestObserver<>(appData);
-        labService.getAppData().subscribe(testObserver);
 
+        TestObserver<AppData> testObserver = labService.getAppData().test();
         testObserver.assertSubscribed();
-        testObserver.assertValueCount(1);
+        testObserver.awaitCount(1);
         testObserver.assertNoErrors();
+
+        testObserver.assertValue(appData1 -> {
+            Assert.assertEquals(appData, appData1);
+            Assert.assertEquals(appData.hashCode(), appData1.hashCode());
+            return true;
+        });
+
         testObserver.onComplete();
     }
 
@@ -119,26 +142,5 @@ public class RetrofitAPICallsIntegrationTest {
     private String readFile(String filePath) throws Exception{
         Path path = Paths.get(filePath);
         return new String(Files.readAllBytes(path));
-    }
-
-    /**
-     * Custom RXJava TestObserver, after getting data from API call comperes is to Object
-     * provided in constructor
-     * @param <T>
-     */
-    private class CustomTestObserver<T> extends TestObserver<T>{
-
-        private T data;
-
-        CustomTestObserver(T t){
-            this.data = t;
-        }
-
-        @Override
-        public void onNext(T t) {
-            super.onNext(t);
-            Assert.assertEquals(data, t);
-            Assert.assertEquals(data.hashCode(), t.hashCode());
-        }
     }
 }
