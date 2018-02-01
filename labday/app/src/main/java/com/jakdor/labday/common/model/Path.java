@@ -30,11 +30,10 @@ public class Path implements Serializable
     }
 
     /**
-     * 
-     * @param id
-     * @param name
-     * @param active
-     * @param info
+     * @param id path id
+     * @param name path name
+     * @param active is active for user
+     * @param info short description
      */
     public Path(Integer id, String name, String info, Integer active) {
         super();

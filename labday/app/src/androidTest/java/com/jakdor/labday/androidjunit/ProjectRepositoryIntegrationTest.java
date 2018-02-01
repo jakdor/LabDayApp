@@ -1,10 +1,12 @@
 package com.jakdor.labday.androidjunit;
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
 
 import com.google.gson.Gson;
 import com.jakdor.labday.R;
+import com.jakdor.labday.TestApp;
 import com.jakdor.labday.common.localdb.LocalDbHandler;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.network.RetrofitBuilder;
@@ -54,7 +56,7 @@ public class ProjectRepositoryIntegrationTest {
 
         projectRepository = new ProjectRepository(
                 new NetworkManager(new RetrofitBuilder()),
-                new LocalDbHandler(),
+                new LocalDbHandler(Instrumentation.newApplication(TestApp.class, testContext)),
                 new RxSchedulersFacade());
     }
 
@@ -116,7 +118,7 @@ public class ProjectRepositoryIntegrationTest {
 
         CompositeDisposable disposable = new CompositeDisposable();
 
-        disposable.add(projectRepository.getAppData(dummyApiUrl, targetContext)
+        disposable.add(projectRepository.getAppData(dummyApiUrl, targetContext) //todo refactor to synchronous test
                 .subscribeOn(Schedulers.io())
                 .doOnError(throwable -> Assert.fail())
                 .subscribe(appDataRxResponse -> {

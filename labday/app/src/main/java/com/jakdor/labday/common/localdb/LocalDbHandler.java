@@ -3,56 +3,77 @@ package com.jakdor.labday.common.localdb;
 import android.app.Application;
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.arch.persistence.db.framework.FrameworkSQLiteOpenHelperFactory;
-import android.content.ContentValues;
-import android.database.Cursor;
 import android.util.Log;
 
+import com.jakdor.labday.common.dao.PathDao;
+import com.jakdor.labday.common.model.Path;
 import com.squareup.sqlbrite3.BriteDatabase;
 import com.squareup.sqlbrite3.SqlBrite;
 
-import io.reactivex.Observable;
+import java.util.ArrayList;
+
 import io.reactivex.schedulers.Schedulers;
 
-import static android.database.sqlite.SQLiteDatabase.CONFLICT_FAIL;
-
+/**
+ * Handles all communication between local db and project repository
+ */
 public class LocalDbHandler {
 
     private static final String CLASS_TAG = "LocalDbHandler";
 
+    private static final String DB_NAME = "localDb.db";
+
+    private Application app;
     private BriteDatabase db;
 
+    /**
+     * Init local db connection/create
+     * @param application required by SupportSQLiteOpenHelper
+     */
     public LocalDbHandler(Application application){
+        this.app = application;
+
         SqlBrite sqlBrite = new SqlBrite.Builder()
                 .logger(message -> Log.d("LocalDB", message))
                 .build();
 
         SupportSQLiteOpenHelper.Configuration configuration
                 = SupportSQLiteOpenHelper.Configuration.builder(application)
-                .name("localDb.db")
+                .name(DB_NAME)
                 .callback(new DbCallback())
                 .build();
 
         SupportSQLiteOpenHelper.Factory factory = new FrameworkSQLiteOpenHelperFactory();
         SupportSQLiteOpenHelper helper = factory.create(configuration);
         db = sqlBrite.wrapDatabaseHelper(helper, Schedulers.io());
-
-        //insert test
-        ContentValues values = new ContentValues();
-        values.put("name", "dummyName");
-        values.put("info", "dummy info");
-        values.put("active", 2);
-
-        db.insert("path", CONFLICT_FAIL, values);
-
-        //select test
-        Observable<SqlBrite.Query> users = db.createQuery("path", "SELECT * FROM path");
-        users.subscribe(query -> {
-            Cursor cursor = query.run();
-
-            cursor.moveToFirst();
-            Log.d(CLASS_TAG, "Test local DB:");
-            Log.d(CLASS_TAG, cursor.getString(cursor.getColumnIndex("name")));
-        });
     }
 
+    public BriteDatabase getDb() {
+        return db;
+    }
+
+    /**
+     * Drops local database
+     */
+    public void dropDb(){
+        closeDb();
+        app.getApplicationContext().deleteDatabase(DB_NAME);
+    }
+
+    /**
+     * Delete all entries from all tables
+     */
+    public void purgeDb(){
+        PathDao.deleteAll(db);
+    }
+
+    public void closeDb(){
+        db.close();
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        closeDb();
+    }
 }
