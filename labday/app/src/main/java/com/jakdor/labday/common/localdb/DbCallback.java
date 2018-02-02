@@ -4,6 +4,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.util.Log;
 
+import com.jakdor.labday.common.dao.MapOtherDao;
 import com.jakdor.labday.common.dao.PathDao;
 
 public class DbCallback extends SupportSQLiteOpenHelper.Callback {
@@ -22,6 +23,7 @@ public class DbCallback extends SupportSQLiteOpenHelper.Callback {
     @Override
     public void onCreate(SupportSQLiteDatabase db) {
         Log.i(CLASS_TAG, "local db init");
+        db.execSQL(MapOtherDao.CREATE_MAP_OTHER);
         db.execSQL(PathDao.CREATE_PATH);
     }
 

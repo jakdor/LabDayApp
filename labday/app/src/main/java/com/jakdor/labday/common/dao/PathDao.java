@@ -80,7 +80,7 @@ public abstract class PathDao {
     public static final class Builder {
         private final ContentValues values = new ContentValues();
 
-        public Builder id(long id){
+        public Builder id(Integer id){
             values.put(ID, id);
             return this;
         }

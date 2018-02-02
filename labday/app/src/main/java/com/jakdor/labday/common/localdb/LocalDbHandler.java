@@ -5,12 +5,10 @@ import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.arch.persistence.db.framework.FrameworkSQLiteOpenHelperFactory;
 import android.util.Log;
 
+import com.jakdor.labday.common.dao.MapOtherDao;
 import com.jakdor.labday.common.dao.PathDao;
-import com.jakdor.labday.common.model.Path;
 import com.squareup.sqlbrite3.BriteDatabase;
 import com.squareup.sqlbrite3.SqlBrite;
-
-import java.util.ArrayList;
 
 import io.reactivex.schedulers.Schedulers;
 
@@ -58,13 +56,16 @@ public class LocalDbHandler {
     public void dropDb(){
         closeDb();
         app.getApplicationContext().deleteDatabase(DB_NAME);
+        Log.i(CLASS_TAG, "local db - dropped");
     }
 
     /**
      * Delete all entries from all tables
      */
     public void purgeDb(){
+        MapOtherDao.deleteAll(db);
         PathDao.deleteAll(db);
+        Log.i(CLASS_TAG, "local db - cleared all entries");
     }
 
     public void closeDb(){
