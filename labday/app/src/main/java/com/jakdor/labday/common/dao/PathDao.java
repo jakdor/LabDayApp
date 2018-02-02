@@ -52,8 +52,8 @@ public abstract class PathDao {
     }
 
     public static Observable<List<Path>> getAllPaths(BriteDatabase db){
-        Observable<SqlBrite.Query> users = db.createQuery(TABLE, "SELECT * FROM " + TABLE);
-        return users.map(query -> {
+        Observable<SqlBrite.Query> dbQuery = db.createQuery(TABLE, "SELECT * FROM " + TABLE);
+        return dbQuery.map(query -> {
             ArrayList<Path> paths = new ArrayList<>();
 
             Cursor cursor = query.run();

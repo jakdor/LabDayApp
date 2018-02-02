@@ -4,8 +4,11 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.util.Log;
 
+import com.jakdor.labday.common.dao.EventDao;
 import com.jakdor.labday.common.dao.MapOtherDao;
 import com.jakdor.labday.common.dao.PathDao;
+import com.jakdor.labday.common.dao.SpeakerDao;
+import com.jakdor.labday.common.dao.TimetableDao;
 
 public class DbCallback extends SupportSQLiteOpenHelper.Callback {
 
@@ -25,6 +28,9 @@ public class DbCallback extends SupportSQLiteOpenHelper.Callback {
         Log.i(CLASS_TAG, "local db init");
         db.execSQL(MapOtherDao.CREATE_MAP_OTHER);
         db.execSQL(PathDao.CREATE_PATH);
+        db.execSQL(SpeakerDao.CREATE_SPEAKER);
+        db.execSQL(TimetableDao.CREATE_TIMETABLE);
+        db.execSQL(EventDao.CRATE_EVENT);
     }
 
     @Override

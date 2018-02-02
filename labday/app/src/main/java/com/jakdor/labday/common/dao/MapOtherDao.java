@@ -61,8 +61,8 @@ public abstract class MapOtherDao {
     }
 
     public static Observable<List<MapOther>> getMapOthers(BriteDatabase db){
-        Observable<SqlBrite.Query> users = db.createQuery(TABLE, "SELECT * FROM " + TABLE);
-        return users.map(query -> {
+        Observable<SqlBrite.Query> dbQuery = db.createQuery(TABLE, "SELECT * FROM " + TABLE);
+        return dbQuery.map(query -> {
             ArrayList<MapOther> mapOthers = new ArrayList<>();
 
             Cursor cursor = query.run();

@@ -14,6 +14,10 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * Handles all communication between local db and project repository
+ *
+ * - again a massive overkill just for sake of showing that I know how to write
+ * SQL db and to use SQLBrite framework. Fastest approach would be to simply serialize and
+ * cache AppData object.
  */
 public class LocalDbHandler {
 

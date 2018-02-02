@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 /**
  * Instrumentation test helper functions
  */
-class TestUtils {
+abstract class TestUtils {
 
     /**
      * Read asset file to String

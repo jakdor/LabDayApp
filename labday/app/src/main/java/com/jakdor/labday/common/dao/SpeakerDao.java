@@ -1,13 +1,23 @@
 package com.jakdor.labday.common.dao;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
+import com.jakdor.labday.common.model.Speaker;
 import com.squareup.sqlbrite3.BriteDatabase;
+import com.squareup.sqlbrite3.SqlBrite;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observable;
+
+import static android.database.sqlite.SQLiteDatabase.CONFLICT_FAIL;
 
 /**
  * DAO for Speaker model
  */
-public class SpeakerDao {
+public abstract class SpeakerDao {
 
     public static final String TABLE = "speaker";
 
@@ -23,6 +33,45 @@ public class SpeakerDao {
             + INFO + " TEXT,"
             + IMG + " TEXT"
             + ")";
+
+    public static long insertSpeakerList(BriteDatabase db, List<Speaker> speakers){
+        long pos = -1;
+
+        for(Speaker speaker : speakers) {
+            ContentValues values = new SpeakerDao.Builder()
+                    .id(speaker.getId())
+                    .name(speaker.getSpeakerName())
+                    .info(speaker.getSpeakerInfo())
+                    .img(speaker.getSpeakerImg())
+                    .build();
+
+            pos = db.insert(TABLE, CONFLICT_FAIL, values);
+        }
+
+        return pos;
+    }
+
+    public static Observable<List<Speaker>> getAllSpeakers(BriteDatabase db){
+        Observable<SqlBrite.Query> dbQuery = db.createQuery(TABLE, "SELECT * FROM " + TABLE);
+        return dbQuery.map(query -> {
+            ArrayList<Speaker> speakers = new ArrayList<>();
+
+            Cursor cursor = query.run();
+            if (cursor == null){
+                return speakers;
+            }
+
+            while(cursor.moveToNext()){
+                speakers.add(new Speaker(cursor.getInt(cursor.getColumnIndex(ID)),
+                        cursor.getString(cursor.getColumnIndex(NAME)),
+                        cursor.getString(cursor.getColumnIndex(INFO)),
+                        cursor.getString(cursor.getColumnIndex(IMG))));
+            }
+
+            cursor.close();
+            return speakers;
+        });
+    }
 
     public static void deleteAll(BriteDatabase db){
         db.delete(TABLE, null);
