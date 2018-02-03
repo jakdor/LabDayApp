@@ -68,6 +68,10 @@ public class MainFragment extends Fragment implements InjectableFragment {
                 binding.setHelloWorld(response.data.getEvents().get(0).getInfo());
                 break;
 
+            case SUCCESS_DB:
+                binding.setHelloWorld(response.data.getEvents().get(0).getInfo());
+                break;
+
             case ERROR:
                 Log.e(CLASS_TAG, response.error.toString());
                 binding.setHelloWorld(viewModel.getProjectRepositoryHelloWorld());

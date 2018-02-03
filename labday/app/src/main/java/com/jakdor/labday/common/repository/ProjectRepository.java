@@ -198,20 +198,33 @@ public class ProjectRepository {
                 .onErrorResumeNext(Observable.just("-1"))
                 .onExceptionResumeNext(Observable.just("-1"))
                 .flatMap(s -> isLocalDataCurrent(apiUpdateId = s, context) ?
-                        apiRequest(networkManager.getAppData()) : // load from local db //todo replace with local db access observable
+                        localDbHandler.getAppDataFromDb() : // load from local db
                         apiRequest(networkManager.getAppData())) // get appData from api
+                .onErrorResumeNext(localDbHandler.getAppDataFromDb()) //last effort data retrieval
+                .flatMap(appDataRxResponse -> { //last effort data retrieval from local db
+                    if(appDataRxResponse.status == RxStatus.ERROR){
+                        return localDbHandler.getAppDataFromDb();
+                    }
+                    else {
+                        return Observable.just(appDataRxResponse);
+                    }
+                })
                 .doOnNext(appDataRxResponse -> {
                     if(appDataRxResponse.status == RxStatus.SUCCESS) {
                         saveApiLastUpdateId(apiUpdateId, context);
                     }
+                    else if(appDataRxResponse.status == RxStatus.SUCCESS_DB){
+                        this.data = appDataRxResponse;
+                        this.repositoryState = repositoryStates.READY;
+                    }
                 })
                 .onErrorReturn(throwable -> {
                     if(apiUpdateCurrent) {
-                        ProjectRepository.this.repositoryState = repositoryStates.NO_DB;
+                        this.repositoryState = repositoryStates.NO_DB;
                         return RxResponse.noDb(throwable);
                     }
                     else {
-                        ProjectRepository.this.repositoryState = repositoryStates.ERROR;
+                        this.repositoryState = repositoryStates.ERROR;
                         return RxResponse.error(throwable);
                     }
                 });
@@ -279,15 +292,16 @@ public class ProjectRepository {
     public Observable<RxResponse<AppData>> apiRequest(final Observable<AppData> apiCall) {
         return apiCall.subscribeOn(rxSchedulersFacade.io())
                     .observeOn(rxSchedulersFacade.ui())
-                    .doOnNext(t -> {
-                        ProjectRepository.this.data = RxResponse.success(t);
-                        ProjectRepository.this.repositoryState = repositoryStates.READY;
+                    .doOnNext(appData -> {
+                        this.data = RxResponse.success(appData);
+                        this.repositoryState = repositoryStates.READY;
+                        localDbHandler.pushAppDataToDb(appData); //save AppData to local db;
                         Log.i(CLASS_TAG, "API request success");
                     })
                     .map(RxResponse::success)
                     .onErrorReturn(throwable -> {
                         Log.e(CLASS_TAG, "API request failed, " + throwable.toString());
-                        ProjectRepository.this.repositoryState = repositoryStates.ERROR;
+                        this.repositoryState = repositoryStates.ERROR;
                         return RxResponse.error(throwable);
                     });
     }

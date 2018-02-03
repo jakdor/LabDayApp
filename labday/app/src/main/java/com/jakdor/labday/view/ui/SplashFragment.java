@@ -95,7 +95,7 @@ public class SplashFragment extends Fragment implements InjectableFragment {
     }
 
     public void switchToMainFragment(RxResponse<AppData> response){
-        if(response.status == RxStatus.SUCCESS) {
+        if(response.status == RxStatus.SUCCESS || response.status == RxStatus.SUCCESS_DB) {
             MainFragment mainFragment = new MainFragment();
 
             if(getActivity() == null){

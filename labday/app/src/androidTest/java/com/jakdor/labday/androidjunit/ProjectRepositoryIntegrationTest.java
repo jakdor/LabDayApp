@@ -16,6 +16,7 @@ import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxSchedulersFacade;
 import com.jakdor.labday.rx.RxStatus;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -43,6 +44,7 @@ public class ProjectRepositoryIntegrationTest {
     private Context targetContext;
 
     private ProjectRepository projectRepository;
+    private LocalDbHandler localDbHandler;
 
     private final String dummyApiUrl = RESTMockServer.getUrl();
     private final String dummyApiBadUrl = "http://www.dummy.com/";
@@ -53,12 +55,20 @@ public class ProjectRepositoryIntegrationTest {
     @Before
     public void setUp() throws Exception {
         testContext = InstrumentationRegistry.getContext();
-        targetContext = InstrumentationRegistry.getTargetContext(); //todo replace with mock
+        targetContext = InstrumentationRegistry.getTargetContext(); //todo replace with mock, this is a real app context!
+
+        localDbHandler = new LocalDbHandler(
+                Instrumentation.newApplication(TestApp.class, targetContext));
 
         projectRepository = new ProjectRepository(
                 new NetworkManager(new RetrofitBuilder()),
-                new LocalDbHandler(Instrumentation.newApplication(TestApp.class, testContext)),
+                localDbHandler,
                 new RxSchedulersFacade());
+    }
+
+    @After
+    public void tearDown() throws Exception{
+        localDbHandler.dropDb();
     }
 
     @Test
@@ -175,8 +185,8 @@ public class ProjectRepositoryIntegrationTest {
             Assert.assertNotNull(appDataRxResponse.error);
             Assert.assertEquals(RxStatus.ERROR, appDataRxResponse.status);
 
-            Assert.assertEquals(projectRepository.getRepositoryState(),
-                    ProjectRepository.repositoryStates.ERROR);
+            Assert.assertEquals(ProjectRepository.repositoryStates.ERROR,
+                    projectRepository.getRepositoryState());
             return true;
         });
 
@@ -267,6 +277,8 @@ public class ProjectRepositoryIntegrationTest {
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
 
+        localDbHandler.pushAppDataToDb(appData);
+
         TestObserver<RxResponse<AppData>> testObserver =
                 projectRepository.getUpdate(dummyApiUrl, targetContext)
                         .subscribeOn(Schedulers.io())
@@ -281,15 +293,15 @@ public class ProjectRepositoryIntegrationTest {
             Assert.assertNotNull(appDataRxResponse);
             Assert.assertNotNull(appDataRxResponse.data);
             Assert.assertNull(appDataRxResponse.error);
-            Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
+            Assert.assertEquals(RxStatus.SUCCESS_DB, appDataRxResponse.status);
             Assert.assertEquals(appData, appDataRxResponse.data);
             Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
 
-            Assert.assertEquals(projectRepository.getRepositoryState(),
-                    ProjectRepository.repositoryStates.READY);
+            Assert.assertEquals(ProjectRepository.repositoryStates.READY,
+                    projectRepository.getRepositoryState());
 
             Assert.assertNotNull(projectRepository.getData());
-            Assert.assertEquals(projectRepository.getData().data, appData);
+            Assert.assertEquals(appData, projectRepository.getData().data);
 
             Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
                     sharedPreferences.getString(targetContext.getString(
@@ -318,6 +330,8 @@ public class ProjectRepositoryIntegrationTest {
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
 
+        localDbHandler.pushAppDataToDb(appData);
+
         TestObserver<RxResponse<AppData>> testObserver =
                 projectRepository.getUpdate(dummyApiBadUrl, targetContext)
                         .subscribeOn(Schedulers.io())
@@ -330,17 +344,17 @@ public class ProjectRepositoryIntegrationTest {
 
         testObserver.assertValue(appDataRxResponse -> {
             Assert.assertNotNull(appDataRxResponse);
-            Assert.assertNotNull(appDataRxResponse.data); //fails because local db loading not implemented
+            Assert.assertNotNull(appDataRxResponse.data);
             Assert.assertNull(appDataRxResponse.error);
-            Assert.assertEquals(RxStatus.SUCCESS, appDataRxResponse.status);
+            Assert.assertEquals(RxStatus.SUCCESS_DB, appDataRxResponse.status);
             Assert.assertEquals(appData, appDataRxResponse.data);
             Assert.assertEquals(appData.hashCode(), appDataRxResponse.data.hashCode());
 
-            Assert.assertEquals(projectRepository.getRepositoryState(),
-                    ProjectRepository.repositoryStates.READY);
+            Assert.assertEquals(ProjectRepository.repositoryStates.READY,
+                    projectRepository.getRepositoryState());
 
             Assert.assertNotNull(projectRepository.getData());
-            Assert.assertEquals(projectRepository.getData().data, appData);
+            Assert.assertEquals(appData, projectRepository.getData().data);
             return true;
         });
 
@@ -397,7 +411,7 @@ public class ProjectRepositoryIntegrationTest {
                     sharedPreferences.getString(targetContext.getString(
                             R.string.pref_api_last_update_id), null));
 
-            Assert.assertTrue(projectRepository.isLoggedIn(targetContext)); //fails (probably connected with test context permissions)
+            Assert.assertTrue(projectRepository.isLoggedIn(targetContext)); //todo Conceal unable to save in provided targetContext - reason unknown
             return true;
         });
 
