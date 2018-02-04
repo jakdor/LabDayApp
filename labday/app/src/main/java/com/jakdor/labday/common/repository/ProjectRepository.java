@@ -123,8 +123,12 @@ public class ProjectRepository {
         try {
             byte[] encryptedToken = readFile(context,"lab");
 
-            if(encryptedToken == null || encryptedToken.length == 0){
+            if(encryptedToken == null){
                 Log.e(CLASS_TAG,"Access token not found");
+                return false;
+            }
+            else if(encryptedToken.length == 0){
+                Log.e(CLASS_TAG,"Access token not available");
                 return false;
             }
 
@@ -147,7 +151,11 @@ public class ProjectRepository {
     public boolean isLoggedIn(Context context){
         try {
             byte[] encryptedToken = readFile(context,"lab");
-            if(encryptedToken == null || encryptedToken.length == 0){
+            if(encryptedToken == null){
+                Log.e(CLASS_TAG,"Access token not available");
+                return false;
+            }
+            else if(encryptedToken.length == 0){
                 Log.e(CLASS_TAG,"Access token not available");
                 return false;
             }
@@ -173,6 +181,17 @@ public class ProjectRepository {
         inputStream.read(fileBytes);
         inputStream.close();
         return fileBytes;
+    }
+
+    /**
+     * Deletes saved access toke, mainly for test cleanup
+     * @param context used to obtain app fileDir
+     */
+    public void deleteToken(Context context){
+        File file = new File(context.getFilesDir().getAbsolutePath() + "/lab");
+        if(file.exists()){
+            file.delete();
+        }
     }
 
     /**
@@ -296,7 +315,7 @@ public class ProjectRepository {
                         this.data = RxResponse.success(appData);
                         this.repositoryState = repositoryStates.READY;
                         localDbHandler.pushAppDataToDb(appData); //save AppData to local db;
-                        Log.i(CLASS_TAG, "API request success");
+                        Log.i(CLASS_TAG, "API request successful");
                     })
                     .map(RxResponse::success)
                     .onErrorReturn(throwable -> {

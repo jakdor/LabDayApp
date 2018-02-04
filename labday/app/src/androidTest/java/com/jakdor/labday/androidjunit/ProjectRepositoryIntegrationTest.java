@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
 
+import com.facebook.soloader.SoLoader;
 import com.google.gson.Gson;
 import com.jakdor.labday.R;
 import com.jakdor.labday.TestApp;
@@ -54,8 +55,10 @@ public class ProjectRepositoryIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        testContext = InstrumentationRegistry.getContext();
         targetContext = InstrumentationRegistry.getTargetContext(); //todo replace with mock, this is a real app context!
+        testContext = InstrumentationRegistry.getContext();
+
+        SoLoader.init(targetContext, false);
 
         localDbHandler = new LocalDbHandler(
                 Instrumentation.newApplication(TestApp.class, targetContext));
@@ -69,6 +72,8 @@ public class ProjectRepositoryIntegrationTest {
     @After
     public void tearDown() throws Exception{
         localDbHandler.dropDb();
+        projectRepository.deleteToken(targetContext);
+        projectRepository.saveApiLastUpdateId("0", targetContext);
     }
 
     @Test
@@ -91,6 +96,21 @@ public class ProjectRepositoryIntegrationTest {
                 targetContext.getString(R.string.pref_api_last_update_id), "0");
 
         Assert.assertEquals("1234", test);
+    }
+
+    /**
+     * {@link ProjectRepository} saveAccessToken, loadAccessToken methods test
+     * - test saving and loading of access token
+     */
+    @Test
+    public void integrationAccessTokenSaveLoadTest() throws Exception {
+        Assert.assertNull(projectRepository.getAccessToken());
+        projectRepository.saveAccessToken(dummyToken, targetContext);
+        Assert.assertEquals(dummyToken, projectRepository.getAccessToken());
+        projectRepository.setAccessToken(null);
+
+        projectRepository.loadAccessToken(targetContext);
+        Assert.assertEquals(dummyToken, projectRepository.getAccessToken());
     }
 
     /**

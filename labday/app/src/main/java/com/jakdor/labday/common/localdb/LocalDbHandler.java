@@ -72,6 +72,7 @@ public class LocalDbHandler {
         PathDao.insertPathList(db, appData.getPaths());
         SpeakerDao.insertSpeakerList(db, appData.getSpeakers());
         TimetableDao.insertTimetableList(db, appData.getTimetables());
+        Log.i(CLASS_TAG, "Pushed AppData to local db");
     }
 
     /**
@@ -83,6 +84,7 @@ public class LocalDbHandler {
                 PathDao.getAllPaths(db), TimetableDao.getAllTimetables(db), SpeakerDao.getAllSpeakers(db),
                 ((events, mapOthers, paths, timetables, speakers) -> {
                     AppData appData = new AppData(events, mapOthers, paths, timetables, speakers);
+                    Log.i(CLASS_TAG, "Retrieved AppData from local db");
                     return RxResponse.successDb(appData);
                 }))
                 .onErrorReturn(RxResponse::error);
