@@ -131,9 +131,4 @@ dependencies {
     androidTestImplementation "com.github.andrzejchm.RESTMock:android:$project.restMockVersion"
     androidTestImplementation "com.android.support.test:runner:$project.androidTestRunnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$project.espressoVersion"
-
-    testImplementation "com.github.fabioCollini.daggermock:daggermock:$project.daggerMockVersion"
-    androidTestImplementation "com.github.fabioCollini.daggermock:daggermock:$project.daggerMockVersion"
-    testImplementation "com.github.fabioCollini.daggermock:daggermock-kotlin:$project.daggerMockVersion"
-    androidTestImplementation "com.github.fabioCollini.daggermock:daggermock-kotlin:$project.daggerMockVersion"
 }

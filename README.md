@@ -3,6 +3,9 @@
 
   Current status: indev
 
+  Backend repository available here
+  https://github.com/JanStoltman/LabDayBackend
+
   ## Technology goals
   Use as many professionally used frameworks, libraries and project patterns as saintly possible.
 
@@ -48,5 +51,4 @@
   | Mockito | 2.13.0 |
   | Espresso | 3.0.1 |
   | Robolectric | 3.6.1 |
-  | DaggerMock | 0.8.2 |
   | RESTMock | 0.2.2 |
