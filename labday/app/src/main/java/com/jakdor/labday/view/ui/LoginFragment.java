@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -112,12 +113,15 @@ public class LoginFragment extends Fragment implements InjectableFragment {
                 .into(background);
 
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.login_anim);
+        animation.setInterpolator(new FastOutLinearInInterpolator());
         animation.start();
 
         Animation animation2 = AnimationUtils.loadAnimation(getContext(), R.anim.login_card_anim);
+        animation2.setInterpolator(new FastOutLinearInInterpolator());
         animation2.start();
 
         Animation animation3 = AnimationUtils.loadAnimation(getContext(), R.anim.login_text_anim);
+        animation3.setInterpolator(new FastOutLinearInInterpolator());
         animation3.start();
 
         loginLogo.startAnimation(animation);
@@ -204,7 +208,7 @@ public class LoginFragment extends Fragment implements InjectableFragment {
 
     public void switchToMainFragment(RxResponse<AppData> response){
         loginLock = false;
-        if(response.status == RxStatus.SUCCESS) {
+        if(response.status == RxStatus.SUCCESS || response.status == RxStatus.SUCCESS_DB) {
             MainFragment mainFragment = new MainFragment();
 
             if(getActivity() == null){
