@@ -23,4 +23,5 @@
     <string name="menu_title_map">Inne miejsca</string>
     <string name="menu_title_media">Media</string>
     <string name="menu_title_info">Informacje</string>
+    <string name="main_menu_card_image">main menu card image</string>
 </resources>

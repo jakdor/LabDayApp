@@ -58,6 +58,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:src="@{image}"
+                android:contentDescription="@string/main_menu_card_image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

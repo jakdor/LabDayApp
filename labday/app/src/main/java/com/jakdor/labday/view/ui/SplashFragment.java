@@ -108,7 +108,7 @@ public class SplashFragment extends Fragment implements InjectableFragment {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.popBackStack();
             fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
+                    .setCustomAnimations(R.anim.fragment_fade_in_slow, R.anim.fragment_fade_out)
                     .addToBackStack(null)
                     .replace(R.id.fragmentLayout, mainFragment)
                     .commit();

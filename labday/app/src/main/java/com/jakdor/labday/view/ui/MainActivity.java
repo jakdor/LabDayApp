@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
                     .addToBackStack(null)
                     .add(R.id.fragmentLayout, splashFragment)
                     .commit();
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     }
 
     /**
-     * discard back press if MainFragment loaded, double tap to app exit
+     * discard back press if MainFragment/LoginFragment loaded, double tap to app exit
      */
     @Override
     public void onBackPressed() {
