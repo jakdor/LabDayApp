@@ -12,11 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
+import com.jakdor.labday.common.model.Path;
 import com.jakdor.labday.databinding.FragmentMainBinding;
 import com.jakdor.labday.di.InjectableFragment;
 import com.jakdor.labday.rx.RxResponse;
+import com.jakdor.labday.rx.RxStatus;
 import com.jakdor.labday.viewmodel.MainViewModel;
 
 import javax.inject.Inject;
@@ -40,6 +43,11 @@ public class MainFragment extends Fragment implements InjectableFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
+
+        Glide.with(this)
+                .load(R.drawable.lab_day_logo_full)
+                .into(binding.menuLogo);
+
         return binding.getRoot();
     }
 
@@ -50,11 +58,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
         viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(MainViewModel.class);
 
-        //quick architecture test
-        binding.setHelloWorld(viewModel.getProjectRepositoryHelloWorld());
-
         observeAppData();
-
         viewModel.loadAppData(getContext());
     }
 
@@ -63,19 +67,21 @@ public class MainFragment extends Fragment implements InjectableFragment {
     }
 
     private void processResponse(RxResponse<AppData> response) {
-        switch (response.status) {
-            case SUCCESS:
-                binding.setHelloWorld(response.data.getEvents().get(0).getInfo());
-                break;
-
-            case SUCCESS_DB:
-                binding.setHelloWorld(response.data.getEvents().get(0).getInfo());
-                break;
-
-            case ERROR:
+        if(response.status == RxStatus.SUCCESS || response.status == RxStatus.SUCCESS_DB){
+            if(response.data != null) {
+                for(Path path : response.data.getPaths()){
+                    if(path.getActive() == 1){
+                        binding.setPath(path.getName());
+                        break;
+                    }
+                }
+            }
+        }
+        else {
+            if(response.error != null) {
                 Log.e(CLASS_TAG, response.error.toString());
-                binding.setHelloWorld(viewModel.getProjectRepositoryHelloWorld());
-                break;
+            }
+            binding.setPath("");
         }
     }
 }

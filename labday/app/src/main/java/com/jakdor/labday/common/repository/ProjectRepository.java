@@ -325,10 +325,6 @@ public class ProjectRepository {
                     });
     }
 
-    public String daggerHelloWorld(){
-        return "HelloStabo" + "\n" + networkManager.embeddedDaggerTest();
-    }
-
     /**
      * Access to AppData if repository is in READY state
      * @return {RxResponse<AppData>}

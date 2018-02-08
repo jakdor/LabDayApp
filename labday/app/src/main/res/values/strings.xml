@@ -18,4 +18,9 @@
     <string name="login_no_internet">Brak połączenia z internetem</string>
     <string name="access_token_field">accessTokenField</string>
     <string name="lab_day_logo">LabDay logo</string>
+    <string name="menu_card_icon">Menu card icon</string>
+    <string name="menu_title_timetable">Harmonogram</string>
+    <string name="menu_title_map">Inne miejsca</string>
+    <string name="menu_title_media">Media</string>
+    <string name="menu_title_info">Informacje</string>
 </resources>
