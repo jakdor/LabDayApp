@@ -9,4 +9,6 @@
 
     <color name="textWhite">#FFFFFF</color>
     <color name="textRead">#B71C1C</color>
+
+    <drawable name="menu_card1">@color/textRead</drawable>
 </resources>

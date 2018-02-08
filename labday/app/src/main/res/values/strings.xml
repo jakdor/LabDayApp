@@ -17,4 +17,5 @@
     <string name="login_failed_empty_fields">Uzupełnij wszystkie pola</string>
     <string name="login_no_internet">Brak połączenia z internetem</string>
     <string name="access_token_field">accessTokenField</string>
+    <string name="lab_day_logo">LabDay logo</string>
 </resources>
