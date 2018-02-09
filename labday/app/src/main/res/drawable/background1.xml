@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:viewportWidth="450"
+    android:viewportHeight="800"
+    android:width="450dp"
+    android:height="800dp">
+    <path
+        android:pathData="M0 0L450 0 450 800 0 800 0 0"
+        android:fillColor="@color/colorAccent" />
+    <group
+        android:rotation="45"
+        android:translateX="0.0007418106"
+        android:translateY="-252.3618">
+        <path
+            android:pathData="M483.90302 280.073l216.173 0 0 466.69 -216.173 0z"
+            android:fillColor="@color/colorPrimaryDark" />
+    </group>
+    <path
+        android:pathData="M65.66 679.792l1.01 0 0 34.345 -1.01 0 0 -34.345"
+        android:fillColor="@color/colorPrimary" />
+    <path
+        android:pathData="M409.205 596.897l2.857 2.857 -465 465 -2.857 -2.857 465 -465"
+        android:fillColor="@color/shadow" />
+    <group
+        android:rotation="45"
+        android:translateX="0.0007418106"
+        android:translateY="-252.3618">
+        <path
+            android:pathData="M779.49799 309.33499l112.12699 0 0 542.45203 -112.12699 0z"
+            android:fillColor="@color/colorAuxiliary" />
+    </group>
+    <path
+        android:pathData="M394.908 478.946l2.857 2.858 -465 465 -2.857 -2.858 465 -465"
+        android:fillColor="@color/shadow" />
+    <path
+        android:pathData="M307.925 389.138L397.73 478.944 4.213 872.461 -85.592 782.656 307.925 389.138"
+        android:fillColor="@color/colorPrimary" />
+</vector>

@@ -26,41 +26,63 @@
 
             <ImageView
                 android:id="@+id/menu_card_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
                 android:contentDescription="@string/menu_card_icon"
                 android:src="@{icon}"
                 app:layout_constraintBottom_toBottomOf="@+id/menu_card_title"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/menu_card_title"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.0" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/textGuideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.37" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/textGuideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.63" />
 
             <TextView
                 android:id="@+id/menu_card_title"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
                 android:text="@{title}"
                 android:textColor="@color/textWhite"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="@id/textGuideline2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/menu_card_icon"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/textGuideline1" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.25" />
 
             <ImageView
                 android:id="@+id/menu_card_image"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@{image}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="false"
                 android:contentDescription="@string/main_menu_card_image"
+                android:src="@{image}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline" />
 
             <TextView
                 android:id="@+id/menu_card_path_chip"
@@ -69,9 +91,9 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/chip"
+                android:text="@{path}"
                 android:textColor="@color/textWhite"
                 android:textSize="12sp"
-                android:text="@{path}"
                 android:visibility="@{path == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
