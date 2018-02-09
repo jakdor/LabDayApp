@@ -19,7 +19,8 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
-    boolean doubleBackToExit = false;
+    private Handler backHandler = new Handler();
+    private boolean doubleBackToExit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +33,16 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
                     .addToBackStack(null)
                     .add(R.id.fragmentLayout, splashFragment)
                     .commit();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        backHandler.removeCallbacksAndMessages(null); //remove all callbacks
     }
 
     @Override
@@ -45,12 +51,15 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     }
 
     /**
-     * discard back press if MainFragment loaded, double tap to app exit
+     * discard back press if MainFragment/LoginFragment loaded, double tap to app exit
      */
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentLayout);
-        if(fragment instanceof MainFragment || fragment instanceof LoginFragment){
+        if(fragment instanceof MainFragment
+                || fragment instanceof LoginFragment
+                || fragment instanceof SplashFragment){
+
             if(doubleBackToExit) {
                 finish();
                 return;
@@ -59,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
             doubleBackToExit = true;
             Toast.makeText(this, getString(R.string.double_back_info), Toast.LENGTH_SHORT).show();
 
-            new Handler().postDelayed(() -> doubleBackToExit = false, 2000);
+            backHandler.postDelayed(() -> doubleBackToExit = false, 2000);
 
             return;
         }

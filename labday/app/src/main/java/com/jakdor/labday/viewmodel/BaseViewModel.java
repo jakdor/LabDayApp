@@ -66,7 +66,4 @@ public abstract class BaseViewModel extends AndroidViewModel {
         return loadingStatus;
     }
 
-    public String getProjectRepositoryHelloWorld(){
-        return projectRepository.daggerHelloWorld();
-    }
 }

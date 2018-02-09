@@ -3,24 +3,104 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="helloWorld" type="String" />
+        <variable name="path" type="String" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:background="@drawable/main_fragment_background">
 
-        <TextView
-            android:id="@+id/fragmentLayout"
-            android:layout_width="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@{helloWorld}"/>
+            android:paddingBottom="8dp"
+            android:clipToPadding="false"
+            android:background="@android:color/transparent">
 
-    </android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:id="@+id/menu_logo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:contentDescription="@string/lab_day_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread_inside" />
+
+            <include
+                android:id="@+id/menu_timetable"
+                layout="@layout/menu_card"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:background="@{@color/colorAuxiliary}"
+                app:icon="@{@drawable/menu_clock}"
+                app:image="@{@drawable/atom}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/menu_logo"
+                app:path="@{path}"
+                app:title="@{@string/menu_title_timetable}" />
+
+            <include
+                android:id="@+id/menu_map"
+                layout="@layout/menu_card"
+                android:layout_width="0dp"
+                android:layout_height="90dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:background="@{@color/colorMenu2}"
+                app:icon="@{@drawable/menu_map}"
+                app:image="@{@drawable/arrows}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/menu_timetable"
+                app:title="@{@string/menu_title_map}" />
+
+            <include
+                android:id="@+id/menu_media"
+                layout="@layout/menu_card"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:background="@{@color/colorMenu1}"
+                app:icon="@{@drawable/menu_media}"
+                app:image="@{@drawable/sparks}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/menu_map"
+                app:title="@{@string/menu_title_media}" />
+
+            <include
+                android:id="@+id/menu_info"
+                layout="@layout/menu_card"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:background="@{@color/colorMenu3}"
+                app:icon="@{@drawable/menu_about}"
+                app:image="@{@drawable/gear}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/menu_media"
+                app:title="@{@string/menu_title_info}" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </layout>

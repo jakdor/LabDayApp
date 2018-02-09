@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,6 +85,7 @@ public class SplashFragment extends Fragment implements InjectableFragment {
 
     public void startAnimations(){
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.splash_anim);
+        animation.setInterpolator(new LinearOutSlowInInterpolator());
         animation.start();
 
         splashLogo.clearAnimation();
@@ -106,7 +108,7 @@ public class SplashFragment extends Fragment implements InjectableFragment {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.popBackStack();
             fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
+                    .setCustomAnimations(R.anim.fragment_fade_in_slow, R.anim.fragment_fade_out)
                     .addToBackStack(null)
                     .replace(R.id.fragmentLayout, mainFragment)
                     .commit();

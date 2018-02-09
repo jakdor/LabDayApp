@@ -2,7 +2,14 @@
 <resources>
     <color name="colorPrimary">#ffee58</color>
     <color name="colorPrimaryDark">#ffd600</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#fff59d</color>
+    <color name="colorAuxiliary">#fbc02d</color>
+
+    <color name="shadow">#40000000</color>
+    <color name="menuIcon">#ffffff</color>
+    <color name="colorMenu1">#F57C00</color>
+    <color name="colorMenu2">#FF5722</color>
+    <color name="colorMenu3">#F9A825</color>
 
     <color name="textWhite">#FFFFFF</color>
     <color name="textRead">#B71C1C</color>
