@@ -1,6 +1,7 @@
 package com.jakdor.labday.robolectric;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,7 @@ public class LoginFragmentTest {
 
     private LoginViewModel loginViewModel;
     private MutableLiveData<RxResponse<AppData>> appData;
+    private MutableLiveData<Boolean> loadingStatus;
 
     private final String DUMMY_LOGIN = "dummyLogin123";
     private final String DUMMY_PASSWORD = "password123";
@@ -49,8 +51,12 @@ public class LoginFragmentTest {
         appData = new MutableLiveData<>();
         appData.setValue(RxResponse.error(new Throwable("dummy throwable"))); //block login
 
+        loadingStatus = new MutableLiveData<>();
+        loadingStatus.setValue(false); //no loading animation
+
         loginViewModel = Mockito.mock(LoginViewModel.class);
         Mockito.when(loginViewModel.getResponse()).thenReturn(appData);
+        Mockito.when(loginViewModel.getLoadingStatus()).thenReturn(loadingStatus);
 
         loginFragment.setViewModel(loginViewModel);
     }
@@ -175,14 +181,20 @@ public class LoginFragmentTest {
         Button loginButton = view.findViewById(R.id.login_button);
         EditText loginField = view.findViewById(R.id.login_text_field);
         EditText passwordField = view.findViewById(R.id.password_text_field);
+        ImageView loadingAnim = view.findViewById(R.id.login_loading_anim);
 
         loginField.setText(DUMMY_LOGIN);
         passwordField.setText(DUMMY_PASSWORD);
 
-        appData.setValue(RxResponse.success(new AppData()));
-        Mockito.when(loginViewModel.getResponse()).thenReturn(appData);
+        loginButton.setOnClickListener(view1 -> {
+            loginFragment.onLoginButtonClick();
+            loadingStatus.setValue(true);
+            Assert.assertEquals(View.VISIBLE, loadingAnim.getVisibility());
+        });
 
         loginButton.performClick();
+
+        appData.setValue(RxResponse.success(new AppData()));
     }
 
     /**

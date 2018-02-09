@@ -103,6 +103,7 @@ public class LoginFragment extends Fragment implements InjectableFragment {
         }
 
         observeLogin();
+        observeLoadingStatus();
     }
 
     public void startAnimations(){
@@ -129,15 +130,19 @@ public class LoginFragment extends Fragment implements InjectableFragment {
         logoText.startAnimation(animation3);
     }
 
-    public void loginInProgressAnimation(){
-        if(loadingAnim.getVisibility() == View.GONE){
-            loadingAnim.setVisibility(View.VISIBLE);
+    public void loginInProgressAnimation(Boolean animStatus){
+        if(animStatus) {
+            if (loadingAnim.getVisibility() == View.GONE) {
+                loadingAnim.setVisibility(View.VISIBLE);
+            } else {
+                Glide.with(this)
+                        .asGif()
+                        .load(R.drawable.load)
+                        .into(loadingAnim);
+            }
         }
         else {
-            Glide.with(this)
-                    .asGif()
-                    .load(R.drawable.load)
-                    .into(loadingAnim);
+            loadingAnim.setVisibility(View.GONE);
         }
     }
 
@@ -152,7 +157,6 @@ public class LoginFragment extends Fragment implements InjectableFragment {
                 loginStatusInfo.setVisibility(View.GONE);
 
                 hideKeyboard();
-                loginInProgressAnimation();
 
                 viewModel.login(getContext(), loginField.getText().toString(),
                         passwordField.getText().toString());
@@ -204,6 +208,10 @@ public class LoginFragment extends Fragment implements InjectableFragment {
 
     public void observeLogin(){
         viewModel.getResponse().observe(this, this::switchToMainFragment);
+    }
+
+    public void observeLoadingStatus(){
+        viewModel.getLoadingStatus().observe(this, this::loginInProgressAnimation);
     }
 
     public void switchToMainFragment(RxResponse<AppData> response){
