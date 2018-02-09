@@ -19,7 +19,8 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
-    boolean doubleBackToExit = false;
+    private Handler backHandler = new Handler();
+    private boolean doubleBackToExit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,12 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        backHandler.removeCallbacksAndMessages(null); //remove all callbacks
+    }
+
+    @Override
     public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
         return dispatchingAndroidInjector;
     }
@@ -49,7 +56,10 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentLayout);
-        if(fragment instanceof MainFragment || fragment instanceof LoginFragment){
+        if(fragment instanceof MainFragment
+                || fragment instanceof LoginFragment
+                || fragment instanceof SplashFragment){
+
             if(doubleBackToExit) {
                 finish();
                 return;
@@ -58,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
             doubleBackToExit = true;
             Toast.makeText(this, getString(R.string.double_back_info), Toast.LENGTH_SHORT).show();
 
-            new Handler().postDelayed(() -> doubleBackToExit = false, 2000);
+            backHandler.postDelayed(() -> doubleBackToExit = false, 2000);
 
             return;
         }

@@ -62,8 +62,10 @@ public class MainFragment extends Fragment implements InjectableFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(MainViewModel.class);
+        if(viewModel == null) {
+            viewModel = ViewModelProviders.of(this, viewModelFactory)
+                    .get(MainViewModel.class);
+        }
 
         observeAppData();
         viewModel.loadAppData(getContext());
@@ -136,5 +138,13 @@ public class MainFragment extends Fragment implements InjectableFragment {
                 .setDuration(150)
                 .withEndAction(getNextAnimator(views,position + 1))
                 .start();
+    }
+
+    public void setViewModel(MainViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
+    public FragmentMainBinding getBinding() {
+        return binding;
     }
 }
