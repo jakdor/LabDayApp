@@ -73,6 +73,6 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
             return;
         }
 
-        super.onBackPressed();
+        getSupportFragmentManager().popBackStack();
     }
 }

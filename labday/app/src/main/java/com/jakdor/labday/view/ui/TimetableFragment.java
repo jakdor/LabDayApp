@@ -20,7 +20,7 @@ import javax.inject.Inject;
 
 public class TimetableFragment extends Fragment implements InjectableFragment {
 
-    private static final String CLASS_TAG = "TimetableFragment";
+    public static final String CLASS_TAG = "TimetableFragment";
 
     private TimetableViewModel viewModel;
 

@@ -159,17 +159,17 @@ public class MainFragment extends Fragment implements InjectableFragment {
      * Transition to {@link TimetableFragment}
      */
     public void onTimetableCardClick(){
-        FragmentManager fragmentManager = getFragmentManager();
+        if(getActivity() == null){
+            Log.wtf(CLASS_TAG, "Unable to get Activity");
+            return;
+        }
 
-        if(fragmentManager != null) {
-            fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.fragment_fade_in_slow, R.anim.fragment_fade_out)
-                    .replace(R.id.fragmentLayout, new TimetableFragment())
-                    .commit();
-        }
-        else {
-            Log.e(CLASS_TAG, "Unable to get FragmentManager");
-        }
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
+                .addToBackStack(TimetableFragment.CLASS_TAG)
+                .replace(R.id.fragmentLayout, new TimetableFragment())
+                .commit();
     }
 
     public void setViewModel(MainViewModel viewModel) {
