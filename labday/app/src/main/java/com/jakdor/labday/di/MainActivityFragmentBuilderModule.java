@@ -3,6 +3,7 @@ package com.jakdor.labday.di;
 import com.jakdor.labday.view.ui.LoginFragment;
 import com.jakdor.labday.view.ui.MainFragment;
 import com.jakdor.labday.view.ui.SplashFragment;
+import com.jakdor.labday.view.ui.TimetableFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -20,4 +21,7 @@ public abstract class MainActivityFragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract LoginFragment contributeLoginFragment();
+
+    @ContributesAndroidInjector
+    abstract TimetableFragment contributeTimetableFragment();
 }

@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +56,8 @@ public class MainFragment extends Fragment implements InjectableFragment {
 
         animateMenuItems();
 
+        binding.menuTimetable.menuCard.setOnClickListener(view -> onTimetableCardClick());
+
         return binding.getRoot();
     }
 
@@ -71,10 +74,19 @@ public class MainFragment extends Fragment implements InjectableFragment {
         viewModel.loadAppData(getContext());
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        animationHandler.removeCallbacksAndMessages(null); //remove all callbacks
+    }
+
     public void observeAppData(){
         viewModel.getResponse().observe(this, this::processResponse);
     }
 
+    /**
+     * Set path name in timetable card
+     */
     private void processResponse(RxResponse<AppData> response) {
         if(response.status == RxStatus.SUCCESS || response.status == RxStatus.SUCCESS_DB){
             if(response.data != null) {
@@ -94,12 +106,9 @@ public class MainFragment extends Fragment implements InjectableFragment {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        animationHandler.removeCallbacksAndMessages(null); //remove all callbacks
-    }
-
+    /**
+     * Animate logo and menu cards
+     */
     private void animateMenuItems(){
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.main_logo_anim);
         animation.setInterpolator(new FastOutLinearInInterpolator());
@@ -124,6 +133,12 @@ public class MainFragment extends Fragment implements InjectableFragment {
         animationHandler.postDelayed(getNextAnimator(menuItems, 0), 5);
     }
 
+    /**
+     * Animate menu cards
+     * @param views card array
+     * @param position current view to animate
+     * @return Runnable
+     */
     public Runnable getNextAnimator(final View[] views, final int position) {
         if(position >= views.length) {
             return null;
@@ -138,6 +153,23 @@ public class MainFragment extends Fragment implements InjectableFragment {
                 .setDuration(150)
                 .withEndAction(getNextAnimator(views,position + 1))
                 .start();
+    }
+
+    /**
+     * Transition to {@link TimetableFragment}
+     */
+    public void onTimetableCardClick(){
+        FragmentManager fragmentManager = getFragmentManager();
+
+        if(fragmentManager != null) {
+            fragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.fragment_fade_in_slow, R.anim.fragment_fade_out)
+                    .replace(R.id.fragmentLayout, new TimetableFragment())
+                    .commit();
+        }
+        else {
+            Log.e(CLASS_TAG, "Unable to get FragmentManager");
+        }
     }
 
     public void setViewModel(MainViewModel viewModel) {

@@ -3,6 +3,7 @@ package com.jakdor.labday.di;
 import com.jakdor.labday.viewmodel.LoginViewModel;
 import com.jakdor.labday.viewmodel.MainViewModel;
 import com.jakdor.labday.viewmodel.SplashViewModel;
+import com.jakdor.labday.viewmodel.TimetableViewModel;
 
 import dagger.Subcomponent;
 
@@ -21,4 +22,5 @@ public interface ViewModelSubComponent {
     MainViewModel mainViewModel();
     SplashViewModel splashViewModel();
     LoginViewModel loginViewModel();
+    TimetableViewModel timetableViewModel();
 }
