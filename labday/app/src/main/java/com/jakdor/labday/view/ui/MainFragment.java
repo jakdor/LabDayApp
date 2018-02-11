@@ -37,6 +37,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
     private final String CLASS_TAG = "MainFragment";
 
     private FragmentMainBinding binding;
+    private FragmentManager fragmentManager = getFragmentManager();
     private Handler animationHandler = new Handler();
 
     private MainViewModel viewModel;
@@ -53,6 +54,13 @@ public class MainFragment extends Fragment implements InjectableFragment {
         Glide.with(this)
                 .load(R.drawable.lab_day_logo_full)
                 .into(binding.menuLogo);
+
+        if(getActivity() == null){
+            Log.wtf(CLASS_TAG, "Unable to get Activity");
+        }
+        else {
+            fragmentManager = getActivity().getSupportFragmentManager();
+        }
 
         animateMenuItems();
 
@@ -159,12 +167,6 @@ public class MainFragment extends Fragment implements InjectableFragment {
      * Transition to {@link TimetableFragment}
      */
     public void onTimetableCardClick(){
-        if(getActivity() == null){
-            Log.wtf(CLASS_TAG, "Unable to get Activity");
-            return;
-        }
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
                 .addToBackStack(TimetableFragment.CLASS_TAG)

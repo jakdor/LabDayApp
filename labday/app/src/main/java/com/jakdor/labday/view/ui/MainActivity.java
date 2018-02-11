@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.jakdor.labday.R;
@@ -26,6 +27,15 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
+
+        //setup ActionBar
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         setContentView(R.layout.activity_main);
 
         if(savedInstanceState == null) {
@@ -51,7 +61,16 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     }
 
     /**
-     * discard back press if MainFragment/LoginFragment loaded, double tap to app exit
+     * toolbar navigation same as back navigation
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    /**
+     * discard back press if MainFragment/LoginFragment/SplashFragment loaded, double tap to app exit
      */
     @Override
     public void onBackPressed() {
@@ -73,6 +92,6 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
             return;
         }
 
-        getSupportFragmentManager().popBackStack();
+        super.onBackPressed();
     }
 }
