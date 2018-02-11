@@ -4,6 +4,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarStyle">@style/ActionBarNoShadow</item>
+    </style>
+
+    <style name="ActionBarNoShadow" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="elevation">0dp</item>
+        <item name="background">@color/colorPrimaryDark</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">

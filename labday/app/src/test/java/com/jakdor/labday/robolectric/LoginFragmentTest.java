@@ -170,8 +170,7 @@ public class LoginFragmentTest {
     @Test
     public void successfulValidationIntegrationTest() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No view found for id 0x7f070036" +
-                " (com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
+        thrown.expectMessage("(com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
 
         startFragment(loginFragment);
 
@@ -220,7 +219,7 @@ public class LoginFragmentTest {
     @Test
     public void switchToMainFragmentSuccessResponseTest() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No view found for id 0x7f070036" +
+        thrown.expectMessage("No view found for id 0x7f08004b" +
                 " (com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
 
         startFragment(loginFragment);

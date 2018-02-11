@@ -1,5 +1,6 @@
 package com.jakdor.labday.view.ui;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -38,6 +39,8 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_timetable, container, false);
 
+        binding.setTitle("Hello world bar");
+
         return binding.getRoot();
     }
 
@@ -63,12 +66,14 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         if(getActivity() != null) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (actionBar != null) {
+                actionBar.setShowHideAnimationEnabled(false);
                 actionBar.hide();
             }
         }

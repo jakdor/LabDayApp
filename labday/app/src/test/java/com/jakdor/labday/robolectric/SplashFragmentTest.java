@@ -72,8 +72,7 @@ public class SplashFragmentTest {
     @Test
     public void isLoggedInTrueResponseSuccessIntegrationTest() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No view found for id 0x7f070036" +
-                " (com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
+        thrown.expectMessage("(com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
 
         Mockito.when(splashViewModel.isLoggedIn(Mockito.any(Context.class))).thenReturn(true);
         startFragment(splashFragment);
@@ -87,8 +86,7 @@ public class SplashFragmentTest {
     @Test
     public void isLoggedInTrueResponseErrorIntegrationTest() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No view found for id 0x7f070036" +
-                " (com.jakdor.labday:id/fragmentLayout) for fragment LoginFragment");
+        thrown.expectMessage("(com.jakdor.labday:id/fragmentLayout) for fragment LoginFragment");
 
         MutableLiveData<RxResponse<AppData>> appData = new MutableLiveData<>();
         appData.setValue(RxResponse.error(new Throwable("dummy error")));
@@ -116,8 +114,7 @@ public class SplashFragmentTest {
     @Test
     public void switchToMainFragmentTest() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No view found for id 0x7f070036" +
-                " (com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
+        thrown.expectMessage("(com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
 
         startFragment(splashFragment);
         splashFragment.switchToMainFragment(appData.getValue());
@@ -130,8 +127,7 @@ public class SplashFragmentTest {
     @Test
     public void switchToLoginFragmentTest() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No view found for id 0x7f070036" +
-                " (com.jakdor.labday:id/fragmentLayout) for fragment LoginFragment");
+        thrown.expectMessage("(com.jakdor.labday:id/fragmentLayout) for fragment LoginFragment");
 
         startFragment(splashFragment);
         splashFragment.switchToLoginFragment();
