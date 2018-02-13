@@ -39,6 +39,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
     private FragmentMainBinding binding;
     private FragmentManager fragmentManager = getFragmentManager();
     private Handler animationHandler = new Handler();
+    private Path activePath;
 
     private MainViewModel viewModel;
 
@@ -100,7 +101,8 @@ public class MainFragment extends Fragment implements InjectableFragment {
             if(response.data != null) {
                 for(Path path : response.data.getPaths()){
                     if(path.getActive() == 1){
-                        binding.setPath(path.getName());
+                        activePath = path;
+                        binding.setPath(activePath.getName());
                         break;
                     }
                 }
@@ -170,7 +172,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
         fragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
                 .addToBackStack(TimetableFragment.CLASS_TAG)
-                .replace(R.id.fragmentLayout, new TimetableFragment())
+                .replace(R.id.fragmentLayout, TimetableFragment.newInstance(activePath.getId()))
                 .commit();
     }
 
