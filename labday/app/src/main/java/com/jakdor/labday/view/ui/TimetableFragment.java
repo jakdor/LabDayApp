@@ -63,6 +63,7 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        //possible layout inflation bug
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_timetable, container, false);
 
@@ -142,7 +143,8 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        TimetableAdapter timetableAdapter = new TimetableAdapter(appData, activePathId);
+        TimetableAdapter timetableAdapter
+                = new TimetableAdapter(appData, activePathId, 1200);
         recyclerView.setAdapter(timetableAdapter);
     }
 

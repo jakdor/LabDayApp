@@ -22,12 +22,15 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
     private List<Timetable> filteredTimetables = new ArrayList<>();
     private List<Event> filteredEvents = new ArrayList<>();
 
+    private int layoutWidth;
+
     /**
      * Filter timetables list by activePath
      * @param appData loaded from repository
      * @param activePath id of active Path
      */
-    public TimetableAdapter(AppData appData, int activePath) {
+    public TimetableAdapter(AppData appData, int activePath, int layoutWidth) {
+        this.layoutWidth = layoutWidth;
         for(Timetable timetable : appData.getTimetables()){
             if(timetable.getPathId() == activePath) {
                 filteredTimetables.add(timetable);
@@ -41,9 +44,18 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
 
     @Override
     public TimetableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        //TimetableItemBinding binding = TimetableItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+
+
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         TimetableItemBinding binding =
                 DataBindingUtil.inflate(layoutInflater, R.layout.timetable_item, parent, false);
+
+        //sdk bug??? - need to manually set layout width
+        binding.getRoot().getLayoutParams().width = layoutWidth;
+
+
         return new TimetableViewHolder(binding);
     }
 
