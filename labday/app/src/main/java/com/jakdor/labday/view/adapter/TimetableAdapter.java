@@ -15,22 +15,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RecyclerView adapter for {@link com.jakdor.labday.view.ui.TimetableFragment} item
+ * RecyclerView adapter for {@link com.jakdor.labday.view.ui.TimetableFragment} items
  */
 public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> {
 
     private List<Timetable> filteredTimetables = new ArrayList<>();
     private List<Event> filteredEvents = new ArrayList<>();
 
-    private int layoutWidth;
+    private int layoutHeight;
 
     /**
      * Filter timetables list by activePath
      * @param appData loaded from repository
      * @param activePath id of active Path
+     * @param layoutHeight window height used in item height auto scaling
      */
-    public TimetableAdapter(AppData appData, int activePath, int layoutWidth) {
-        this.layoutWidth = layoutWidth;
+    public TimetableAdapter(AppData appData, int activePath, int layoutHeight) {
+        this.layoutHeight = layoutHeight;
         for(Timetable timetable : appData.getTimetables()){
             if(timetable.getPathId() == activePath) {
                 filteredTimetables.add(timetable);
@@ -42,19 +43,20 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
         }
     }
 
+    /**
+     * Binds {@link com.jakdor.labday.view.ui.TimetableFragment} items + height auto scaling
+     * @return binded item with scaled height
+     */
     @Override
     public TimetableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        //TimetableItemBinding binding = TimetableItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-
-
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         TimetableItemBinding binding =
                 DataBindingUtil.inflate(layoutInflater, R.layout.timetable_item, parent, false);
 
-        //sdk bug??? - need to manually set layout width
-        binding.getRoot().getLayoutParams().width = layoutWidth;
-
+        //height auto scaling
+        if(layoutHeight != 0) { 
+            binding.getRoot().getLayoutParams().height = layoutHeight / 7;
+        }
 
         return new TimetableViewHolder(binding);
     }

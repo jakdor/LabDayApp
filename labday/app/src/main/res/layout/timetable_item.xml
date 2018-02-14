@@ -8,18 +8,21 @@
         <variable name="event" type="com.jakdor.labday.common.model.Event"/>
     </data>
 
+    <!--layout_height="100dp" fallback height in case of auto scaling error-->
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="100dp">
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="90dp"
+            android:layout_height="0dp"
             android:layout_margin="20dp"
-            android:layout_marginEnd="72dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:text="@{event.info}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,19 +34,14 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.2" />
 
-        <android.support.constraint.Guideline
-            android:id="@+id/endGuideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.99" />
-
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
-            android:layout_height="78dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="parent" />

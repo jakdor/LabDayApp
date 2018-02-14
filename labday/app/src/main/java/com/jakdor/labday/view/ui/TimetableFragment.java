@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,9 +64,10 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        //possible layout inflation bug
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_timetable, container, false);
+
+        binding.getRoot().measure(View.MeasureSpec.EXACTLY, View.MeasureSpec.EXACTLY);
 
         return binding.getRoot();
     }
@@ -115,7 +117,7 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
     /**
      * Set path name in timetable card
      */
-    private void processResponse(RxResponse<AppData> response) {
+    public void processResponse(RxResponse<AppData> response) {
         if(response.status == RxStatus.SUCCESS || response.status == RxStatus.SUCCESS_DB){
             loadRecyclerView(response.data, activePathId);
         }
@@ -124,6 +126,22 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
                 Log.e(CLASS_TAG, response.error.toString());
             }
         }
+    }
+
+    /**
+     * Get window height for auto scaling in RecyclerView
+     * @return int window height or 0 if unable to get height
+     */
+    public int getHeight(){
+        int height = 0;
+
+        if(getActivity() != null) {
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            height = displayMetrics.heightPixels;
+        }
+
+        return height;
     }
 
     /**
@@ -144,7 +162,7 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         TimetableAdapter timetableAdapter
-                = new TimetableAdapter(appData, activePathId, 1200);
+                = new TimetableAdapter(appData, activePathId, getHeight());
         recyclerView.setAdapter(timetableAdapter);
     }
 
