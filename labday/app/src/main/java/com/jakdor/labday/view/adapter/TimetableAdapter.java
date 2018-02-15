@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.RequestManager;
 import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.model.Event;
@@ -22,6 +23,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
     private List<Timetable> filteredTimetables = new ArrayList<>();
     private List<Event> filteredEvents = new ArrayList<>();
 
+    private RequestManager glide;
     private int layoutHeight;
 
     /**
@@ -30,7 +32,8 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
      * @param activePath id of active Path
      * @param layoutHeight window height used in item height auto scaling
      */
-    public TimetableAdapter(AppData appData, int activePath, int layoutHeight) {
+    public TimetableAdapter(AppData appData, int activePath, RequestManager glide, int layoutHeight) {
+        this.glide = glide;
         this.layoutHeight = layoutHeight;
         for(Timetable timetable : appData.getTimetables()){
             if(timetable.getPathId() == activePath) {
@@ -58,7 +61,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
             binding.getRoot().getLayoutParams().height = layoutHeight / 7;
         }
 
-        return new TimetableViewHolder(binding);
+        return new TimetableViewHolder(binding, glide);
     }
 
     @Override

@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.model.Path;
@@ -162,7 +163,7 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         TimetableAdapter timetableAdapter
-                = new TimetableAdapter(appData, activePathId, getHeight());
+                = new TimetableAdapter(appData, activePathId, Glide.with(this), getHeight());
         recyclerView.setAdapter(timetableAdapter);
     }
 

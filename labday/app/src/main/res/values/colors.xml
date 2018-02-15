@@ -12,6 +12,11 @@
     <color name="colorMenu2">#FF5722</color>
     <color name="colorMenu3">#F9A825</color>
 
+    <color name="card1">#FFE0B2</color>
+    <color name="card2">#FFCC80</color>
+
+    <color name="textBlack">#000000</color>
     <color name="textWhite">#FFFFFF</color>
+    <color name="textGrey">#616161</color>
     <color name="textRead">#B71C1C</color>
 </resources>
