@@ -1,31 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable name="timeStart" type="String"/>
+        <variable name="timeEnd" type="String"/>
         <variable name="timetable" type="com.jakdor.labday.common.model.Timetable"/>
         <variable name="event" type="com.jakdor.labday.common.model.Event"/>
     </data>
 
-    <!--layout_height="100dp" fallback height in case of auto scaling error-->
+    <!--layout_height="120dp" fallback height in case of auto scaling error-->
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="120dp">
 
         <TextView
+            android:id="@+id/timetable_item_time_start"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="20dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:text="@{event.info}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:singleLine="true"
+            android:text="@{timeStart}"
+            android:textAlignment="center"
+            app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/timetable_item_time_end"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="8dp"
+            android:text="@{timeEnd}"
+            android:textAlignment="center"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline2"
@@ -37,14 +52,31 @@
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
+            app:cardCornerRadius="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/timetable_item_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@{timetable.id % 2 == 0 ? @color/colorPrimaryDark : @color/colorMenu3}">
+
+                <TextView
+                    android:id="@+id/timetable_item_title"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    app:autoSizeTextType="uniform"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

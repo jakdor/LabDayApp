@@ -5,6 +5,7 @@
     <color name="colorAccent">#fff59d</color>
     <color name="colorAuxiliary">#fbc02d</color>
 
+    <color name="materialGrey">#fafafa</color>
     <color name="shadow">#40000000</color>
     <color name="menuIcon">#ffffff</color>
     <color name="colorMenu1">#F57C00</color>
