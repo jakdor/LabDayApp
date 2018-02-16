@@ -11,6 +11,7 @@ import com.jakdor.labday.common.model.Timetable;
 import com.jakdor.labday.databinding.TimetableItemBinding;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -31,16 +32,20 @@ public class TimetableViewHolder extends RecyclerView.ViewHolder {
         this.glide = glide;
     }
 
-    public void bind(Timetable timetable, Event event){
+    public void bind(Timetable timetable, Event event, int pos){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.GERMAN);
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Date start = new Date(timetable.getTimeStart()*1000);
-        Date end = new Date(timetable.getTimeEnd()*1000);
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+1"));
+        Date start = new Date((long)timetable.getTimeStart()*1000);
+        Date end = new Date((long)timetable.getTimeEnd()*1000);
 
         glide.load(event.getImg())
                 .apply(new RequestOptions().placeholder(R.mipmap.ic_launcher_foreground).centerCrop())
                 .transition(withCrossFade())
                 .into(binding.timetableItemImage);
+
+        binding.setIsNow(isNow(start, end));
+
+        binding.setIsDarkColor(pos % 2 == 0);
 
         binding.setTimeStart(simpleDateFormat.format(start));
         binding.setTimeEnd(simpleDateFormat.format(end));
@@ -48,5 +53,16 @@ public class TimetableViewHolder extends RecyclerView.ViewHolder {
         binding.setTimetable(timetable);
         binding.setEvent(event);
         binding.executePendingBindings();
+    }
+
+    /**
+     * @param start Date from
+     * @param end Date to
+     * @return true if within range
+     */
+    public boolean isNow(Date start, Date end){
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+        return now.before(end) && now.after(start);
     }
 }

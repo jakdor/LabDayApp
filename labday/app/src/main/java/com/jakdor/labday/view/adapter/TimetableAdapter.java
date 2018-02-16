@@ -13,6 +13,8 @@ import com.jakdor.labday.common.model.Timetable;
 import com.jakdor.labday.databinding.TimetableItemBinding;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -44,6 +46,8 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
                 }
             }
         }
+
+        Collections.sort(filteredTimetables, (t1, t2) -> t1.getTimeStart() - t2.getTimeStart());
     }
 
     /**
@@ -68,7 +72,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
     public void onBindViewHolder(TimetableViewHolder holder, int position) {
         Timetable timetable = filteredTimetables.get(position);
         Event event = filteredEvents.get(position);
-        holder.bind(timetable, event);
+        holder.bind(timetable, event, position);
     }
 
     @Override

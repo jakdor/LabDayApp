@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
+        <variable name="isNow" type="Boolean"/>
+        <variable name="isDarkColor" type="Boolean"/>
         <variable name="timeStart" type="String"/>
         <variable name="timeEnd" type="String"/>
         <variable name="timetable" type="com.jakdor.labday.common.model.Timetable"/>
@@ -13,35 +15,52 @@
     <!--layout_height="120dp" fallback height in case of auto scaling error-->
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="120dp"
+        android:background="@{isNow ? @color/colorAccent : @android:color/transparent}">
 
         <TextView
             android:id="@+id/timetable_item_time_start"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
+            android:gravity="center"
             android:singleLine="true"
             android:text="@{timeStart}"
-            android:textAlignment="center"
             app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25" />
+
         <TextView
             android:id="@+id/timetable_item_time_end"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginBottom="4dp"
             android:layout_marginStart="8dp"
+            android:gravity="center"
             android:singleLine="true"
             android:text="@{timeEnd}"
-            android:textAlignment="center"
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.75" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline2"
@@ -50,7 +69,26 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.2" />
 
+        <TextView
+            android:id="@+id/timetable_item_now_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/chip2"
+            android:elevation="3dp"
+            android:text="@string/now_chip"
+            android:textAllCaps="true"
+            android:textColor="@color/textWhite"
+            android:textSize="12sp"
+            android:visibility="@{isNow ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="4dp"
@@ -70,7 +108,7 @@
                 android:id="@+id/timetable_item_card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@{timetable.id % 2 == 0 ? @color/card2 : @color/card1}">
+                android:background="@{isDarkColor ? @color/card2 : @color/card1}">
 
                 <ImageView
                     android:id="@+id/timetable_item_image"
@@ -85,19 +123,21 @@
                 <TextView
                     android:id="@+id/timetable_item_title"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginBottom="4dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
+                    android:gravity="center|start"
                     android:text="@{event.name}"
                     android:textColor="@color/textBlack"
+                    app:autoSizeMaxTextSize="17sp"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/timetable_item_image"
                     app:layout_constraintTop_toTopOf="parent" />
-                
+
             </android.support.constraint.ConstraintLayout>
 
         </android.support.v7.widget.CardView>
