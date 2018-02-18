@@ -219,8 +219,7 @@ public class LoginFragmentTest {
     @Test
     public void switchToMainFragmentSuccessResponseTest() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("No view found for id 0x7f08004b" +
-                " (com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
+        thrown.expectMessage("(com.jakdor.labday:id/fragmentLayout) for fragment MainFragment");
 
         startFragment(loginFragment);
         loginFragment.switchToMainFragment(RxResponse.success(new AppData()));

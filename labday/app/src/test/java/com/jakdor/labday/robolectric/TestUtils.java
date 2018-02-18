@@ -1,5 +1,8 @@
 package com.jakdor.labday.robolectric;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 
 abstract class TestUtils {
@@ -20,5 +23,14 @@ abstract class TestUtils {
             buffer.append((char) randomLimitedInt);
         }
         return buffer.toString();
+    }
+
+    /**
+     * Reads file to string
+     * @return String
+     */
+    static String readFile(String filePath) throws Exception{
+        Path path = Paths.get(filePath);
+        return new String(Files.readAllBytes(path));
     }
 }

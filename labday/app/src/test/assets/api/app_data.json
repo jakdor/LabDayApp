@@ -92,6 +92,13 @@
             "event_id": 2,
             "time_start": 1000000,
             "time_end": 10003600
+        },
+        {
+            "id": 3,
+            "path_id": 2,
+            "event_id": 2,
+            "time_start": 1518743127,
+            "time_end": 1518746127
         }
     ],
     "speakers:": [
