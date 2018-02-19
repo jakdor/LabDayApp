@@ -6,7 +6,7 @@
     <string name="pref_api_last_update_id">apiLastUpdateID</string>
     <string name="unable_to_login">Nie można zalogować</string>
     <string name="login_background">login_background</string>
-    <string name="login_background_url">http://www.audiotech.pl/wp-content/uploads/2017/04/Politechnika-Wroc%C5%82awska-C13-Serowiec-multimedia-12.jpg</string>
+    <string name="login_background_url">http://labday.pwr.edu.pl/wp-content/uploads/Zegar-przed-C13-mauy.jpg</string>
     <string name="login_card_title">logowanie</string>
     <string name="login_card_login">login:</string>
     <string name="login_card_password">hasło:</string>
