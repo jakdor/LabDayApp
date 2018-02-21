@@ -40,6 +40,8 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
 
     private FragmentTimetableBinding binding;
 
+    private boolean testMode = false;
+
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
@@ -89,6 +91,7 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(testMode) return;
         if(getActivity() != null) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (actionBar != null) {
@@ -102,6 +105,7 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(testMode) return;
         if(getActivity() != null) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (actionBar != null) {
@@ -173,5 +177,9 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
 
     public FragmentTimetableBinding getBinding() {
         return binding;
+    }
+
+    public void setTestMode() {
+        this.testMode = true;
     }
 }
