@@ -167,7 +167,8 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         TimetableAdapter timetableAdapter
-                = new TimetableAdapter(appData, activePathId, Glide.with(this), getHeight());
+                = new TimetableAdapter(this, appData, activePathId,
+                Glide.with(this), getHeight());
         recyclerView.setAdapter(timetableAdapter);
     }
 

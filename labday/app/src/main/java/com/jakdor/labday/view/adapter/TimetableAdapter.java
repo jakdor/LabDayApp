@@ -11,6 +11,8 @@ import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.model.Event;
 import com.jakdor.labday.common.model.Timetable;
 import com.jakdor.labday.databinding.TimetableItemBinding;
+import com.jakdor.labday.view.ui.EventFragment;
+import com.jakdor.labday.view.ui.TimetableFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +27,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
     private List<Timetable> filteredTimetables = new ArrayList<>();
     private List<Event> filteredEvents = new ArrayList<>();
 
+    private TimetableFragment fragment;
     private RequestManager glide;
     private int layoutHeight;
 
@@ -34,7 +37,9 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
      * @param activePath id of active Path
      * @param layoutHeight window height used in item height auto scaling
      */
-    public TimetableAdapter(AppData appData, int activePath, RequestManager glide, int layoutHeight) {
+    public TimetableAdapter(TimetableFragment fragment, AppData appData,
+                            int activePath, RequestManager glide, int layoutHeight) {
+        this.fragment = fragment;
         this.glide = glide;
         this.layoutHeight = layoutHeight;
         for(Timetable timetable : appData.getTimetables()){
@@ -73,10 +78,20 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
         Timetable timetable = filteredTimetables.get(position);
         Event event = filteredEvents.get(position);
         holder.bind(timetable, event, position);
+        holder.getBinding().cardView.setOnClickListener(view -> onCardClick(event.getId()));
     }
 
     @Override
     public int getItemCount() {
         return filteredTimetables.size();
+    }
+
+    public void onCardClick(int eventId){
+        if (fragment.getActivity() != null) {
+            fragment.getActivity().getSupportFragmentManager().beginTransaction()
+                    .addToBackStack(EventFragment.CLASS_TAG)
+                    .replace(R.id.fragmentLayout, EventFragment.Companion.newInstance(eventId))
+                    .commit();
+        }
     }
 }

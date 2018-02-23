@@ -1,11 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 project.ext {
     arch = "1.1.0"
     archExt = "1.1.0"
     archDb = "1.0.0"
+    databindingCompilerVersion = "3.0.1"
     supportLibsVersion = "27.0.2"
     constraintLayoutVersion = "1.0.2"
     butterKnifeVersion = "8.8.1"
@@ -69,9 +71,15 @@ android.sourceSets {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    kapt "com.android.databinding:compiler:$project.databindingCompilerVersion"
 
     //support libs
     implementation "com.android.support:appcompat-v7:$project.supportLibsVersion"
@@ -81,26 +89,26 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$project.constraintLayoutVersion"
 
     //android architecture
-    annotationProcessor "android.arch.lifecycle:compiler:$project.archExt"
+    kapt "android.arch.lifecycle:compiler:$project.archExt"
     implementation "android.arch.lifecycle:extensions:$project.archExt"
     implementation "android.arch.lifecycle:runtime:$project.arch"
     implementation "android.arch.persistence:db-framework:$project.archDb"
 
     //ButterKnife
-    annotationProcessor "com.jakewharton:butterknife-compiler:$project.butterKnifeVersion"
+    kapt "com.jakewharton:butterknife-compiler:$project.butterKnifeVersion"
     implementation "com.jakewharton:butterknife:$project.butterKnifeVersion"
 
     //Glide
-    annotationProcessor "com.github.bumptech.glide:compiler:$project.glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$project.glideVersion"
     implementation "com.github.bumptech.glide:glide:$project.glideVersion"
 
     //Dagger core
-    annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$project.daggerVersion"
     implementation "com.google.dagger:dagger:$project.daggerVersion"
 
     //Dagger Android
-    annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$project.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$project.daggerVersion"
     implementation "com.google.dagger:dagger:$project.daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
 

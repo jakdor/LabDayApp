@@ -65,4 +65,8 @@ public class TimetableViewHolder extends RecyclerView.ViewHolder {
         Date now = calendar.getTime();
         return now.before(end) && now.after(start);
     }
+
+    public TimetableItemBinding getBinding() {
+        return binding;
+    }
 }

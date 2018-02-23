@@ -1,5 +1,6 @@
 package com.jakdor.labday.di;
 
+import com.jakdor.labday.view.ui.EventFragment;
 import com.jakdor.labday.view.ui.LoginFragment;
 import com.jakdor.labday.view.ui.MainFragment;
 import com.jakdor.labday.view.ui.SplashFragment;
@@ -24,4 +25,7 @@ public abstract class MainActivityFragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract TimetableFragment contributeTimetableFragment();
+
+    @ContributesAndroidInjector
+    abstract EventFragment cotributeEventFragment();
 }

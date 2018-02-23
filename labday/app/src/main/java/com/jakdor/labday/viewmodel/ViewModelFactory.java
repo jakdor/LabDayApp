@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.ArrayMap;
 
 import com.jakdor.labday.di.ViewModelSubComponent;
+import com.jakdor.labday.view.ui.EventFragment;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -33,6 +34,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         creators.put(SplashViewModel.class, viewModelSubComponent::splashViewModel);
         creators.put(LoginViewModel.class, viewModelSubComponent::loginViewModel);
         creators.put(TimetableViewModel.class, viewModelSubComponent::timetableViewModel);
+        creators.put(EventViewModel.class, viewModelSubComponent::eventViewModel);
     }
 
     /**
