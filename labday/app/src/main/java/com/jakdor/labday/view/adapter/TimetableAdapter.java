@@ -16,7 +16,6 @@ import com.jakdor.labday.view.ui.TimetableFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -77,8 +76,12 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
     public void onBindViewHolder(TimetableViewHolder holder, int position) {
         Timetable timetable = filteredTimetables.get(position);
         Event event = filteredEvents.get(position);
+        for (Event e : filteredEvents){
+            if (e.getId().equals(timetable.getEventId()))
+                event = e;
+        }
         holder.bind(timetable, event, position);
-        holder.getBinding().cardView.setOnClickListener(view -> onCardClick(event.getId()));
+        holder.getBinding().cardView.setOnClickListener(view -> onCardClick(timetable));
     }
 
     @Override
@@ -86,11 +89,11 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
         return filteredTimetables.size();
     }
 
-    public void onCardClick(int eventId){
+    public void onCardClick(Timetable timetable){
         if (fragment.getActivity() != null) {
             fragment.getActivity().getSupportFragmentManager().beginTransaction()
                     .addToBackStack(EventFragment.CLASS_TAG)
-                    .replace(R.id.fragmentLayout, EventFragment.Companion.newInstance(eventId))
+                    .replace(R.id.fragmentLayout, EventFragment.Companion.newInstance(timetable))
                     .commit();
         }
     }

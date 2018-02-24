@@ -1,18 +1,24 @@
 package com.jakdor.labday.view.ui
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.RequestOptions
 import com.jakdor.labday.R
-import com.jakdor.labday.common.model.AppData
 import com.jakdor.labday.common.model.Event
+import com.jakdor.labday.common.model.Speaker
+import com.jakdor.labday.common.model.Timetable
 import com.jakdor.labday.databinding.FragmentEventBinding
 
 import com.jakdor.labday.di.InjectableFragment
@@ -26,8 +32,9 @@ class EventFragment : Fragment(), InjectableFragment {
     var viewModel: EventViewModel? = null
     lateinit var binding: FragmentEventBinding
 
-    private var eventId: Int = 0
-    lateinit var event: Event
+    private lateinit var timetable: Timetable
+
+    private var testMode = false
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -35,7 +42,7 @@ class EventFragment : Fragment(), InjectableFragment {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(arguments != null){
-            eventId = arguments!!.getInt("event")
+            timetable = arguments!!.getSerializable("timetable") as Timetable
         }
     }
 
@@ -43,6 +50,11 @@ class EventFragment : Fragment(), InjectableFragment {
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_event, container, false)
+
+        binding.eventTitleBar.setNavigationOnClickListener { _ ->
+            activity?.onBackPressed()
+        }
+
         return binding.root
     }
 
@@ -54,24 +66,48 @@ class EventFragment : Fragment(), InjectableFragment {
                     .get(EventViewModel::class.java)
         }
 
-        observeAppData()
-        viewModel!!.loadAppData(context)
+        observeData()
+        viewModel?.loadAppData(context, timetable.eventId)
     }
 
-    fun observeAppData() {
-        viewModel!!.response.observe(this, Observer<RxResponse<AppData>> { response ->
+    @SuppressLint("RestrictedApi")
+    override fun onResume() {
+        super.onResume()
+        if (testMode) return
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar?.setShowHideAnimationEnabled(false)
+        actionBar?.hide()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (testMode) return
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar?.show()
+    }
+
+    /**
+     * Observe Event/Speaker pair
+     */
+    fun observeData() {
+        viewModel?.eventSpeakerPair?.observe(
+                this, Observer<RxResponse<Pair<Event?, Speaker?>>> { response ->
             if (response != null) {
                 this.processResponse(response)
+            } else {
+                Log.e(CLASS_TAG, "RxResponse returned null")
             }
         })
     }
 
     /**
-     * Set path name in timetable card
+     * Checks received data
      */
-    fun processResponse(response: RxResponse<AppData>) {
-        if (response.status == RxStatus.SUCCESS || response.status == RxStatus.SUCCESS_DB) {
-
+    fun processResponse(response: RxResponse<Pair<Event?, Speaker?>>) {
+        if (response.status == RxStatus.SUCCESS) {
+            if(response.data?.first != null && response.data.second != null) {
+                loadView(response.data.first!!, response.data.second!!)
+            }
         } else {
             if (response.error != null) {
                 Log.e(CLASS_TAG, response.error.toString())
@@ -79,14 +115,24 @@ class EventFragment : Fragment(), InjectableFragment {
         }
     }
 
+    fun loadView(event: Event, speaker: Speaker) {
+        binding.title = event.name
+
+        Glide.with(this)
+                .load(event.img)
+                .apply(RequestOptions().centerCrop())
+                .transition(withCrossFade())
+                .into(binding.imgToolbar)
+    }
+
     companion object {
         const val CLASS_TAG: String = "EventFragment"
 
-        fun newInstance(eventId: Int): EventFragment {
+        fun newInstance(timetable: Timetable): EventFragment {
             val eventTimetable = EventFragment()
 
             val args = Bundle()
-            args.putInt("event", eventId)
+            args.putSerializable("timetable", timetable)
             eventTimetable.arguments = args
 
             return eventTimetable
