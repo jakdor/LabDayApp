@@ -14,6 +14,7 @@ import com.jakdor.labday.R;
 import com.jakdor.labday.common.localdb.LocalDbHandler;
 import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
+import com.jakdor.labday.common.model.LastUpdate;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxSchedulersFacade;
 import com.jakdor.labday.rx.RxStatus;
@@ -67,8 +68,8 @@ public class ProjectRepository {
             return Observable.just(RxResponse.noInternetNoDb(new Throwable("No internet service")));
         }
 
-        networkManager.configAuth(apiUrl, login, password);
-        return networkManager.getAccessToken()
+        networkManager.configAuth(apiUrl);
+        return networkManager.getAccessToken(login, password)
                 .subscribeOn(rxSchedulersFacade.io())
                 .observeOn(rxSchedulersFacade.ui())
                 .onErrorResumeNext(Observable.just(new AccessToken("-1")))
@@ -211,12 +212,13 @@ public class ProjectRepository {
         }
 
         networkManager.configAuth(apiUrl, accessToken);
+        networkManager.configAuth(apiUrl);
         return networkManager.getLastUpdate()
                 .subscribeOn(rxSchedulersFacade.io())
                 .observeOn(rxSchedulersFacade.ui())
-                .onErrorResumeNext(Observable.just("-1"))
-                .onExceptionResumeNext(Observable.just("-1"))
-                .flatMap(s -> isLocalDataCurrent(apiUpdateId = s, context) ?
+                .onErrorResumeNext(Observable.just(new LastUpdate("-1")))
+                .onExceptionResumeNext(Observable.just(new LastUpdate("-1")))
+                .flatMap(s -> isLocalDataCurrent(apiUpdateId = s.getUpdatedAt(), context) ?
                         localDbHandler.getAppDataFromDb() : // load from local db
                         apiRequest(networkManager.getAppData())) // get appData from api
                 .onErrorResumeNext(localDbHandler.getAppDataFromDb()) //last effort data retrieval

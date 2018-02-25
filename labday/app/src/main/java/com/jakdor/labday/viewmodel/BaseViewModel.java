@@ -49,7 +49,7 @@ public abstract class BaseViewModel extends AndroidViewModel {
             appData.setValue(projectRepository.getData());
         }
         else {
-            disposable.add(projectRepository.getUpdate(LabService.MOCK_API_URL, context)
+            disposable.add(projectRepository.getUpdate(LabService.API_URL, context)
                     .subscribeOn(rxSchedulersFacade.io())
                     .observeOn(rxSchedulersFacade.ui())
                     .doOnSubscribe(disposable1 -> loadingStatus.setValue(true))

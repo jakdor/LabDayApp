@@ -15,7 +15,7 @@ public class AppData implements Serializable
     @SerializedName("events")
     @Expose
     private List<Event> events = null;
-    @SerializedName("map_others")
+    @SerializedName("places")
     @Expose
     private List<MapOther> mapOthers = null;
     @SerializedName("paths")

@@ -8,6 +8,8 @@ import android.support.test.InstrumentationRegistry;
 import com.google.gson.Gson;
 import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
+import com.jakdor.labday.common.model.LastUpdate;
+import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 import com.jakdor.labday.common.repository.NetworkManager;
 
@@ -35,10 +37,10 @@ public class NetworkManagerIntegrationTest {
 
     private NetworkManager networkManager;
 
-    private final String dummyApiUrl = RESTMockServer.getUrl();
-    private final String dummyToken = "dummyToken";
-    private final String dummyLogin = "user";
-    private final String dummyPassword = "password";
+    private final String dummyApiUrl = LabService.API_URL; //RESTMockServer.getUrl()
+    private final String dummyToken = "c6d74cec06f72f91b41666c9e289fc872a896e44";
+    private final String dummyLogin = "test";
+    private final String dummyPassword = "1234asdf";
 
     /**
      * Setup local Mock REST API server for instrumentation tests
@@ -71,13 +73,14 @@ public class NetworkManagerIntegrationTest {
      */
     @Test
     public void loginTest() throws Exception{
-        networkManager.configAuth(dummyApiUrl, dummyLogin, dummyPassword);
+        networkManager.configAuth(dummyApiUrl);
 
         Gson gson = new Gson();
         AccessToken expectedAccessToken
                 = gson.fromJson(readAssetFile(testContext, "api/login.json"), AccessToken.class);
 
-        TestObserver<AccessToken> testObserver = networkManager.getAccessToken().test();
+        TestObserver<AccessToken> testObserver
+                = networkManager.getAccessToken(dummyLogin, dummyPassword).test();
         testObserver.awaitCount(1);
 
         testObserver.assertSubscribed();
@@ -98,10 +101,11 @@ public class NetworkManagerIntegrationTest {
     public void getLastUpdate() throws Exception {
         networkManager.configAuth(dummyApiUrl);
 
-        String expectedLastUpdate
-                = new String(readAssetFile(testContext, "api/last_update.json").getBytes());
+        Gson gson = new Gson();
+        LastUpdate expectedLastUpdate
+                = gson.fromJson(readAssetFile(testContext, "api/last_update.json"), LastUpdate.class);
 
-        TestObserver<String> testObserver = networkManager.getLastUpdate().test();
+        TestObserver<LastUpdate> testObserver = networkManager.getLastUpdate().test();
         testObserver.awaitCount(1);
 
         testObserver.assertSubscribed();
@@ -120,7 +124,7 @@ public class NetworkManagerIntegrationTest {
      */
     @Test
     public void getAppDataTest() throws Exception {
-        networkManager.configAuth(dummyApiUrl);
+        networkManager.configAuth(dummyApiUrl, dummyToken);
 
         Gson gson = new Gson();
         AppData appData = gson.fromJson(

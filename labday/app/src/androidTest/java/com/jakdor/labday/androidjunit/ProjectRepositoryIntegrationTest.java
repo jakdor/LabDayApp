@@ -10,6 +10,7 @@ import com.jakdor.labday.R;
 import com.jakdor.labday.TestApp;
 import com.jakdor.labday.common.localdb.LocalDbHandler;
 import com.jakdor.labday.common.model.AppData;
+import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 import com.jakdor.labday.common.repository.NetworkManager;
 import com.jakdor.labday.common.repository.ProjectRepository;
@@ -47,11 +48,11 @@ public class ProjectRepositoryIntegrationTest {
     private ProjectRepository projectRepository;
     private LocalDbHandler localDbHandler;
 
-    private final String dummyApiUrl = RESTMockServer.getUrl();
+    private final String dummyApiUrl = LabService.API_URL; //RESTMockServer.getUrl()
     private final String dummyApiBadUrl = "http://www.dummy.com/";
-    private final String dummyLogin = "user";
-    private final String dummyPassword = "password";
-    private final String dummyToken = "dummyToken";
+    private final String dummyLogin = "test";
+    private final String dummyPassword = "1234asdf";
+    private final String dummyToken = "c6d74cec06f72f91b41666c9e289fc872a896e44";
 
     @Before
     public void setUp() throws Exception {

@@ -101,7 +101,7 @@ public class AuthenticationInterceptorTest {
 
         Response testResponse = authenticationInterceptor.intercept(chain);
 
-        Assert.assertEquals(dummyToken, testResponse.header("Authorization"));
+        Assert.assertEquals("token " + dummyToken, testResponse.header("Authorization"));
         Assert.assertEquals(message, testResponse.message());
         Assert.assertEquals(dummyUrl + "/", testResponse.request().url().toString());
     }

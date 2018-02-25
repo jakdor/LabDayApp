@@ -45,20 +45,6 @@ public class RetrofitBuilder {
     }
 
     /**
-     * Basic login & password encoded in base64 authorization header
-     * @param apiUrl base API url
-     * @param serviceClass retrofit config interface
-     * @param username one-time login
-     * @param password one-time password
-     * @param <S> serviceClass type
-     * @return retrofit instance
-     */
-    public <S> S createService(String apiUrl, Class<S> serviceClass, String username, String password) {
-        String authToken = Credentials.basic(username, password);
-        return createService(apiUrl, serviceClass, authToken);
-    }
-
-    /**
      * Token authorization header - token provided after successful login with
      * one-time login & password
      * @param apiUrl base API url

@@ -11,13 +11,13 @@ public class Speaker implements Serializable
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("speaker_name")
+    @SerializedName("name")
     @Expose
     private String speakerName;
-    @SerializedName("speaker_info")
+    @SerializedName("info")
     @Expose
     private String speakerInfo;
-    @SerializedName("speaker_img")
+    @SerializedName("img")
     @Expose
     private String speakerImg;
     private final static long serialVersionUID = -3275378227390756649L;

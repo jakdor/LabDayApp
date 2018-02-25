@@ -65,7 +65,7 @@ public abstract class PathDao {
                 paths.add(new Path(cursor.getInt(cursor.getColumnIndex(ID)),
                                 cursor.getString(cursor.getColumnIndex(NAME)),
                                 cursor.getString(cursor.getColumnIndex(INFO)),
-                                cursor.getInt(cursor.getColumnIndex(ACTIVE))));
+                                cursor.getInt(cursor.getColumnIndex(ACTIVE)) == 1));
             }
 
             cursor.close();
@@ -95,7 +95,7 @@ public abstract class PathDao {
             return this;
         }
 
-        public Builder active(Integer active){
+        public Builder active(Boolean active){
             values.put(ACTIVE, active);
             return this;
         }
