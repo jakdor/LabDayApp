@@ -27,4 +27,6 @@
     <string name="timetable_item_image">timetable item image</string>
     <string name="now_chip">Teraz</string>
     <string name="event_image">event image</string>
+    <string name="event_info_icon">event info icon</string>
+    <string name="room">Sala: %s</string>
 </resources>

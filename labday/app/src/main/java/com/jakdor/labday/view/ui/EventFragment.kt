@@ -25,6 +25,8 @@ import com.jakdor.labday.di.InjectableFragment
 import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.viewmodel.EventViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class EventFragment : Fragment(), InjectableFragment {
@@ -116,13 +118,21 @@ class EventFragment : Fragment(), InjectableFragment {
     }
 
     fun loadView(event: Event, speaker: Speaker) {
-        binding.title = event.name
+        binding.event = event
+        binding.speaker = speaker
 
         Glide.with(this)
                 .load(event.img)
                 .apply(RequestOptions().centerCrop())
                 .transition(withCrossFade())
                 .into(binding.imgToolbar)
+
+        val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.GERMAN)
+        simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT+1")
+        val start = Date((timetable.timeStart).toLong() * 1000)
+        val end = Date((timetable.timeEnd).toLong() * 1000)
+
+        binding.time = simpleDateFormat.format(start) + " - " + simpleDateFormat.format(end)
     }
 
     companion object {
