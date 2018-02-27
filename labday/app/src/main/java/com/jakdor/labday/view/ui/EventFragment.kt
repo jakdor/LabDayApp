@@ -12,7 +12,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.RequestOptions
 import com.jakdor.labday.R
@@ -24,6 +23,7 @@ import com.jakdor.labday.databinding.FragmentEventBinding
 import com.jakdor.labday.di.InjectableFragment
 import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
+import com.jakdor.labday.view.utils.GlideApp
 import com.jakdor.labday.viewmodel.EventViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -121,11 +121,17 @@ class EventFragment : Fragment(), InjectableFragment {
         binding.event = event
         binding.speaker = speaker
 
-        Glide.with(this)
+        GlideApp.with(this)
                 .load(event.img)
                 .apply(RequestOptions().centerCrop())
                 .transition(withCrossFade())
                 .into(binding.imgToolbar)
+
+        GlideApp.with(this)
+                .load(speaker.speakerImg)
+                .apply(RequestOptions().centerCrop().placeholder(R.drawable.flask))
+                .error(R.drawable.flask)
+                .into(binding.eventHostCard?.eventHostImage)
 
         val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.GERMAN)
         simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT+1")

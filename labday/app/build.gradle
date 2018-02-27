@@ -19,6 +19,7 @@ project.ext {
     rxAndroidVersion = "2.0.1"
     concealVersion = "2.0.1"
     sqlBriteVersion = "3.1.0"
+    circleImageViewVersion = "2.2.0"
 
     junitVersion = "4.12"
     mockitoVersion = "2.13.0"
@@ -130,6 +131,9 @@ dependencies {
 
     //SQLBrite
     implementation "com.squareup.sqlbrite3:sqlbrite:$project.sqlBriteVersion"
+
+    //Circle ImageView
+    implementation "de.hdodenhof:circleimageview:$project.circleImageViewVersion"
 
     //testing
     testImplementation "junit:junit:$project.junitVersion"

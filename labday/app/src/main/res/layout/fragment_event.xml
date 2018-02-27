@@ -93,6 +93,15 @@
                     app:icon = "@{@drawable/menu_clock}"
                     app:title = "@{time}" />
 
+                <include layout="@layout/event_host"
+                    android:id="@+id/event_host_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:name = "@{speaker.speakerName}"
+                    app:info = "@{speaker.speakerInfo}"/>
+
+
+
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
