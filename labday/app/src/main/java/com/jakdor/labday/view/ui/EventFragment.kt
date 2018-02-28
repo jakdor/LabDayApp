@@ -5,15 +5,22 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.transition.Transition
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.BaseTarget
+import com.bumptech.glide.request.target.ImageViewTarget
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.target.SizeReadyCallback
 import com.jakdor.labday.R
 import com.jakdor.labday.common.model.Event
 import com.jakdor.labday.common.model.Speaker
@@ -132,6 +139,16 @@ class EventFragment : Fragment(), InjectableFragment {
                 .apply(RequestOptions().centerCrop().placeholder(R.drawable.flask))
                 .error(R.drawable.flask)
                 .into(binding.eventHostCard?.eventHostImage)
+
+        if(!event.dor1Img.isEmpty())
+            GlideApp.with(this)
+                    .load(event.dor1Img)
+                    .into(binding.eventDoorsItem?.door1)
+
+        if(!event.dor2Img.isEmpty())
+            GlideApp.with(this)
+                    .load(event.dor2Img)
+                    .into(binding.eventDoorsItem?.door2)
 
         val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.GERMAN)
         simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT+1")

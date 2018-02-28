@@ -66,7 +66,8 @@
                 android:id="@+id/event_items_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="16dp"
                 android:orientation="vertical"
                 android:background="@color/materialGrey">
 
@@ -100,7 +101,14 @@
                     app:name = "@{speaker.speakerName}"
                     app:info = "@{speaker.speakerInfo}"/>
 
+                <include layout="@layout/event_doors"
+                    android:id="@+id/event_doors_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"/>
 
             </LinearLayout>
 
