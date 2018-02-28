@@ -22,12 +22,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.di.InjectableFragment;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxStatus;
+import com.jakdor.labday.view.utils.GlideApp;
 import com.jakdor.labday.viewmodel.LoginViewModel;
 
 import javax.inject.Inject;
@@ -107,9 +109,10 @@ public class LoginFragment extends Fragment implements InjectableFragment {
     }
 
     public void startAnimations(){
-        Glide.with(this)
+        GlideApp.with(this)
                 .load(getString(R.string.login_background_url))
-                .apply(new RequestOptions().centerCrop())
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .centerCrop()
                 .transition(withCrossFade())
                 .into(background);
 

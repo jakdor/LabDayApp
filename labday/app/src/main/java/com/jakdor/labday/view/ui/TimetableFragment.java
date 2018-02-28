@@ -27,6 +27,7 @@ import com.jakdor.labday.di.InjectableFragment;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxStatus;
 import com.jakdor.labday.view.adapter.TimetableAdapter;
+import com.jakdor.labday.view.utils.GlideApp;
 import com.jakdor.labday.viewmodel.TimetableViewModel;
 
 import javax.inject.Inject;
@@ -168,7 +169,7 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         TimetableAdapter timetableAdapter
                 = new TimetableAdapter(this, appData, activePathId,
-                Glide.with(this), getHeight());
+                GlideApp.with(this), getHeight());
         recyclerView.setAdapter(timetableAdapter);
     }
 

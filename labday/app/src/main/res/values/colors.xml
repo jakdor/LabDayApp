@@ -5,6 +5,7 @@
     <color name="colorAccent">#fff59d</color>
     <color name="colorAccentLight">#fff9c4</color>
     <color name="colorAuxiliary">#fbc02d</color>
+    <color name="colorImage">#fed817</color>
 
     <color name="materialGrey">#fafafa</color>
     <color name="shadow">#40000000</color>

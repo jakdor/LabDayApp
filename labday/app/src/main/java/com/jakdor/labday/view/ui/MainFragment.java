@@ -25,6 +25,7 @@ import com.jakdor.labday.databinding.FragmentMainBinding;
 import com.jakdor.labday.di.InjectableFragment;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxStatus;
+import com.jakdor.labday.view.utils.GlideApp;
 import com.jakdor.labday.viewmodel.MainViewModel;
 
 import javax.inject.Inject;
@@ -52,7 +53,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
 
-        Glide.with(this)
+        GlideApp.with(this)
                 .load(R.drawable.lab_day_logo_full)
                 .into(binding.menuLogo);
 
