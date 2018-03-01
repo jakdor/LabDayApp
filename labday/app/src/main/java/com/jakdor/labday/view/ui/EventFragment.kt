@@ -121,58 +121,34 @@ class EventFragment : Fragment(), InjectableFragment {
         binding.event = event
         binding.speaker = speaker
 
-        if(!event.img.isEmpty()) {
-            GlideApp.with(this)
-                    .load(event.img)
-                    .centerCrop()
-                    .transition(withCrossFade())
-                    .into(binding.imgToolbar)
+        GlideApp.with(this)
+                .load(event.img)
+                .centerCrop()
+                .transition(withCrossFade())
+                .into(binding.imgToolbar)
+        
+        GlideApp.with(this)
+                .load(speaker.speakerImg)
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_foreground)
+                .error(R.mipmap.ic_launcher_foreground)
+                .into(binding.eventHostCard?.eventHostImage)
 
-            binding.imgToolbar.setOnClickListener {
-                switchToImgFragment(event.img, event.name)
-            }
-        }
+        GlideApp.with(this)
+                .load(event.dor1Img)
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_foreground)
+                .error(R.mipmap.ic_launcher_foreground)
+                .transition(withCrossFade())
+                .into(binding.eventDoorsItem?.door1)
 
-        if(!speaker.speakerImg.isEmpty()) {
-            GlideApp.with(this)
-                    .load(speaker.speakerImg)
-                    .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_foreground)
-                    .error(R.mipmap.ic_launcher_foreground)
-                    .into(binding.eventHostCard?.eventHostImage)
-
-            binding.eventHostCard?.eventHostImage?.setOnClickListener { _ ->
-                switchToImgFragment(speaker.speakerImg, speaker.speakerName)
-            }
-        }
-
-        if(!event.dor1Img.isEmpty()) {
-            GlideApp.with(this)
-                    .load(event.dor1Img)
-                    .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_foreground)
-                    .error(R.mipmap.ic_launcher_foreground)
-                    .transition(withCrossFade())
-                    .into(binding.eventDoorsItem?.door1)
-
-            binding.eventDoorsItem?.doorCard1?.setOnClickListener { _ ->
-                switchToImgFragment(event.dor1Img, getString(R.string.entrence_info))
-            }
-        }
-
-        if(!event.dor2Img.isEmpty()) {
-            GlideApp.with(this)
-                    .load(event.dor2Img)
-                    .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_foreground)
-                    .error(R.mipmap.ic_launcher_foreground)
-                    .transition(withCrossFade())
-                    .into(binding.eventDoorsItem?.door2)
-
-            binding.eventDoorsItem?.doorCard2?.setOnClickListener { _ ->
-                switchToImgFragment(event.dor2Img, getString(R.string.entrence_info))
-            }
-        }
+        GlideApp.with(this)
+                .load(event.dor2Img)
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_foreground)
+                .error(R.mipmap.ic_launcher_foreground)
+                .transition(withCrossFade())
+                .into(binding.eventDoorsItem?.door2)
 
         val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.GERMAN)
         simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT+1")
@@ -180,6 +156,26 @@ class EventFragment : Fragment(), InjectableFragment {
         val end = Date((timetable.timeEnd).toLong() * 1000)
 
         binding.time = simpleDateFormat.format(start) + " - " + simpleDateFormat.format(end)
+
+        if(!event.img.isEmpty())
+            binding.imgToolbar.setOnClickListener {
+                switchToImgFragment(event.img, event.name)
+            }
+
+        if(!speaker.speakerImg.isEmpty())
+            binding.eventHostCard?.eventHostImage?.setOnClickListener { _ ->
+                switchToImgFragment(speaker.speakerImg, speaker.speakerName)
+            }
+
+        if(!event.dor1Img.isEmpty())
+            binding.eventDoorsItem?.doorCard1?.setOnClickListener { _ ->
+                switchToImgFragment(event.dor1Img, getString(R.string.entrence_info))
+            }
+
+        if(!event.dor2Img.isEmpty())
+            binding.eventDoorsItem?.doorCard2?.setOnClickListener { _ ->
+                switchToImgFragment(event.dor2Img, getString(R.string.entrence_info))
+            }
     }
 
     fun switchToImgFragment(imgUrl: String, title: String){
