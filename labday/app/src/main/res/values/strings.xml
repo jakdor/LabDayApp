@@ -31,4 +31,6 @@
     <string name="room">Sala: %s</string>
     <string name="door">door</string>
     <string name="entrences_info">Wejścia</string>
+    <string name="enlarged_image">Enlarged image</string>
+    <string name="entrence_info">Drzwi wejściowe</string>
 </resources>

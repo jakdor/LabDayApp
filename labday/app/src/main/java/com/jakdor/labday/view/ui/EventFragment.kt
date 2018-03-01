@@ -5,22 +5,14 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.transition.Transition
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.BaseTarget
-import com.bumptech.glide.request.target.ImageViewTarget
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.target.SizeReadyCallback
 import com.jakdor.labday.R
 import com.jakdor.labday.common.model.Event
 import com.jakdor.labday.common.model.Speaker
@@ -36,6 +28,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * Fragment displaying event info after
+ */
 class EventFragment : Fragment(), InjectableFragment {
 
     var viewModel: EventViewModel? = null
@@ -60,9 +55,7 @@ class EventFragment : Fragment(), InjectableFragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_event, container, false)
 
-        binding.eventTitleBar.setNavigationOnClickListener { _ ->
-            activity?.onBackPressed()
-        }
+        binding.eventTitleBar.setNavigationOnClickListener { _ -> activity?.onBackPressed() }
 
         return binding.root
     }
@@ -128,34 +121,58 @@ class EventFragment : Fragment(), InjectableFragment {
         binding.event = event
         binding.speaker = speaker
 
-        GlideApp.with(this)
-                .load(event.img)
-                .centerCrop()
-                .transition(withCrossFade())
-                .into(binding.imgToolbar)
+        if(!event.img.isEmpty()) {
+            GlideApp.with(this)
+                    .load(event.img)
+                    .centerCrop()
+                    .transition(withCrossFade())
+                    .into(binding.imgToolbar)
 
-        GlideApp.with(this)
-                .load(speaker.speakerImg)
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_foreground)
-                .error(R.mipmap.ic_launcher_foreground)
-                .into(binding.eventHostCard?.eventHostImage)
+            binding.imgToolbar.setOnClickListener {
+                switchToImgFragment(event.img, event.name)
+            }
+        }
 
-        if(!event.dor1Img.isEmpty())
+        if(!speaker.speakerImg.isEmpty()) {
+            GlideApp.with(this)
+                    .load(speaker.speakerImg)
+                    .centerCrop()
+                    .placeholder(R.mipmap.ic_launcher_foreground)
+                    .error(R.mipmap.ic_launcher_foreground)
+                    .into(binding.eventHostCard?.eventHostImage)
+
+            binding.eventHostCard?.eventHostImage?.setOnClickListener { _ ->
+                switchToImgFragment(speaker.speakerImg, speaker.speakerName)
+            }
+        }
+
+        if(!event.dor1Img.isEmpty()) {
             GlideApp.with(this)
                     .load(event.dor1Img)
                     .centerCrop()
                     .placeholder(R.mipmap.ic_launcher_foreground)
                     .error(R.mipmap.ic_launcher_foreground)
+                    .transition(withCrossFade())
                     .into(binding.eventDoorsItem?.door1)
 
-        if(!event.dor2Img.isEmpty())
+            binding.eventDoorsItem?.doorCard1?.setOnClickListener { _ ->
+                switchToImgFragment(event.dor1Img, getString(R.string.entrence_info))
+            }
+        }
+
+        if(!event.dor2Img.isEmpty()) {
             GlideApp.with(this)
                     .load(event.dor2Img)
                     .centerCrop()
                     .placeholder(R.mipmap.ic_launcher_foreground)
                     .error(R.mipmap.ic_launcher_foreground)
+                    .transition(withCrossFade())
                     .into(binding.eventDoorsItem?.door2)
+
+            binding.eventDoorsItem?.doorCard2?.setOnClickListener { _ ->
+                switchToImgFragment(event.dor2Img, getString(R.string.entrence_info))
+            }
+        }
 
         val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.GERMAN)
         simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT+1")
@@ -163,6 +180,15 @@ class EventFragment : Fragment(), InjectableFragment {
         val end = Date((timetable.timeEnd).toLong() * 1000)
 
         binding.time = simpleDateFormat.format(start) + " - " + simpleDateFormat.format(end)
+    }
+
+    fun switchToImgFragment(imgUrl: String, title: String){
+        if (activity != null) {
+            activity!!.supportFragmentManager.beginTransaction()
+                    .addToBackStack(ImageFragment.CLASS_TAG)
+                    .replace(R.id.fragmentLayout, ImageFragment.newInstance(imgUrl, title))
+                    .commit()
+        }
     }
 
     companion object {

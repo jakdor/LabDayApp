@@ -10,6 +10,7 @@
     <color name="materialGrey">#fafafa</color>
     <color name="shadow">#40000000</color>
     <color name="shadow2">#80000000</color>
+    <color name="shadow3">#212121</color>
     <color name="menuIcon">#ffffff</color>
     <color name="colorMenu1">#F57C00</color>
     <color name="colorMenu2">#FF5722</color>
