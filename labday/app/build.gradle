@@ -138,6 +138,7 @@ dependencies {
 
     //GMS
     implementation "com.google.android.gms:play-services-maps:$project.gmsMapsVersion"
+    implementation "com.google.android.gms:play-services-location:$project.gmsMapsVersion"
 
     //testing
     testImplementation "junit:junit:$project.junitVersion"

@@ -7,12 +7,39 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.gms.maps.SupportMapFragment
 import com.jakdor.labday.R
+import android.support.v4.app.ActivityCompat
+import android.content.pm.PackageManager
+import android.location.Location
+import android.support.v4.content.ContextCompat
+import android.util.Log
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.MarkerOptions
+
+
 
 /**
  * MapFragment displays embedded google map with provided location marker
  * - no ViewModel required - lat/long provided in newInstance()
  */
-class MapFragment : SupportMapFragment() {
+class MapFragment : SupportMapFragment(), OnMapReadyCallback {
+
+    private var map: GoogleMap? = null
+
+    //entry point to the Fused Location Provider
+    private var fusedLocationProviderClient: FusedLocationProviderClient? = null
+
+    //location retrieved by the FusedLocationProvider
+    private var lastKnownLocation: Location? = null
+
+    //default location
+    private val defaultLocation = LatLng(51.1085411, 17.0593825)
+    private var locationPermissionGranted: Boolean = false
 
     private lateinit var oldBarTitle: String
 
@@ -24,8 +51,17 @@ class MapFragment : SupportMapFragment() {
         return rootView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    /**
+     * Begin setup, get fusedLocationProviderClient
+     */
+    override fun onCreate(p0: Bundle?) {
+        super.onCreate(p0)
+        if(activity == null){
+            Log.wtf(CLASS_TAG, "Unable to get Activity")
+            return
+        }
+        this.getMapAsync(this) //triggers onMapReadyCallback
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
     }
 
     override fun onResume() {
@@ -43,7 +79,117 @@ class MapFragment : SupportMapFragment() {
         actionBar?.hide()
     }
 
+    /**
+     * Request location permission
+     * The result of the permission request is handled by a callback, onRequestPermissionsResult()
+     */
+    private fun getLocationPermission() {
+        if(activity == null){
+            Log.wtf(CLASS_TAG, "Unable to get Activity")
+            return
+        }
+
+        if (ContextCompat.checkSelfPermission(activity!!.applicationContext,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationPermissionGranted = true
+        } else {
+            ActivityCompat.requestPermissions(activity!!,
+                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+        }
+    }
+
+    /**
+     * Handle received permission
+     */
+    override fun onRequestPermissionsResult(
+            requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        locationPermissionGranted = false
+        if(requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION){
+            //If request is cancelled, the result arrays are empty
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                locationPermissionGranted = true
+            }
+        }
+        updateLocationUI()
+    }
+
+    /**
+     * Handle mapReady event
+     */
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+        //Other setup activities here
+
+        updateLocationUI()
+        getDeviceLocation()
+    }
+
+    /**
+     * Turn on the My Location layer and the related control on the map
+     */
+    private fun updateLocationUI() {
+        if (map == null) {
+            return
+        }
+        try {
+            if (locationPermissionGranted) {
+                map?.isMyLocationEnabled = true
+                map?.uiSettings?.isMyLocationButtonEnabled = true
+            } else {
+                map?.isMyLocationEnabled = false
+                map?.uiSettings?.isMyLocationButtonEnabled = false
+                lastKnownLocation = null
+                getLocationPermission()
+            }
+        } catch (e: SecurityException) {
+            Log.e(CLASS_TAG, e.toString())
+        }
+    }
+
+    /**
+     * Get bast available device location, set position on the map
+     * - might be null if location is not available
+     */
+    private fun getDeviceLocation() {
+        try {
+            if (locationPermissionGranted) {
+                val locationResult = fusedLocationProviderClient?.lastLocation
+                locationResult?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        lastKnownLocation = task.result
+
+                        if(lastKnownLocation == null) {
+                            Log.wtf(CLASS_TAG, "LastKnownLocation was null")
+                        } else {
+                            //set the map's camera position to the current location of the device
+                            map?.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                    LatLng(lastKnownLocation!!.latitude,
+                                            lastKnownLocation!!.longitude), DEFAULT_ZOOM))
+                            //mark device location on the map
+                            map?.addMarker(MarkerOptions()
+                                    .position(LatLng(lastKnownLocation!!.latitude
+                                            , lastKnownLocation!!.longitude))
+                                    .title("marker title"))
+                                    //.icon(BitmapDescriptorFactory.fromResource())
+                        }
+                    } else {
+                        Log.d(CLASS_TAG, "Current location is null. Using defaults.")
+                        Log.e(CLASS_TAG, "Exception: %s", task.exception)
+                        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM))
+                        map?.uiSettings?.isMyLocationButtonEnabled = false
+                    }
+                }
+
+            }
+        } catch (e: SecurityException) {
+            Log.e(CLASS_TAG, e.toString())
+        }
+    }
+
     companion object {
         const val CLASS_TAG = "MapFragment"
+        private const val DEFAULT_ZOOM = 17.0f
+        private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
     }
 }
