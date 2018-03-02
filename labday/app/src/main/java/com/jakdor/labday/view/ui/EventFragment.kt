@@ -178,7 +178,7 @@ class EventFragment : Fragment(), InjectableFragment {
             }
 
         binding.eventMapFab.setOnClickListener { _ ->
-            switchToMapFragment()
+            switchToMapFragment(event.latitude, event.longitude, event.name)
         }
     }
 
@@ -191,11 +191,11 @@ class EventFragment : Fragment(), InjectableFragment {
         }
     }
 
-    fun switchToMapFragment(){
+    fun switchToMapFragment(lat: String, long: String, info: String){
         if (activity != null) {
             activity!!.supportFragmentManager.beginTransaction()
                     .addToBackStack(MapFragment.CLASS_TAG)
-                    .replace(R.id.fragmentLayout, MapFragment())
+                    .replace(R.id.fragmentLayout, MapFragment.newInstance(lat, long, info))
                     .commit()
         }
     }

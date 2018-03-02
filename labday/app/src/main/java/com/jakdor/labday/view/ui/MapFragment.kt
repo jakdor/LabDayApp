@@ -47,6 +47,10 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
     private lateinit var oldBarTitle: String
     private var viewModel: MapViewModel? = null
 
+    private lateinit var pointLatitude: String
+    private lateinit var pointLongitude: String
+    private lateinit var pointInfo: String
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -63,10 +67,18 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
      */
     override fun onCreate(p0: Bundle?) {
         super.onCreate(p0)
+
+        //get arguments
+        val argTriple = arguments?.get("mapData") as Triple<*,*,*>
+        pointLatitude = argTriple.first as String
+        pointLongitude = argTriple.second as String
+        pointInfo = argTriple.third as String
+
         if(activity == null){
             Log.wtf(CLASS_TAG, "Unable to get Activity")
             return
         }
+
         this.getMapAsync(this) //triggers onMapReadyCallback
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
     }
@@ -137,8 +149,18 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
         map = googleMap
         //Other setup activities here
 
+        setEventMarker()
         updateLocationUI()
         getDeviceLocation()
+    }
+
+    /**
+     * Sets event marker by provided location in fragment arguments
+     */
+    private fun setEventMarker() {
+        map?.addMarker(MarkerOptions()
+                .position(LatLng(pointLatitude.toDouble(), pointLongitude.toDouble()))
+                .title(pointInfo))
     }
 
     /**
@@ -190,7 +212,7 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
                                     //.icon(BitmapDescriptorFactory.fromResource())
                         }
                     } else {
-                        Log.d(CLASS_TAG, "Current location is null. Using defaults.")
+                        Log.i(CLASS_TAG, "Current location returned null - using default")
                         Log.e(CLASS_TAG, "Exception: %s", task.exception)
                         map?.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM))
                         map?.uiSettings?.isMyLocationButtonEnabled = false
@@ -207,5 +229,15 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
         const val CLASS_TAG = "MapFragment"
         private const val DEFAULT_ZOOM = 17.0f
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+
+        fun newInstance(lat: String, long: String, info: String): MapFragment{
+            val mapFragment = MapFragment()
+
+            val bundle = Bundle()
+            bundle.putSerializable("mapData", Triple(lat, long, info))
+            mapFragment.arguments = bundle
+
+            return mapFragment
+        }
     }
 }
