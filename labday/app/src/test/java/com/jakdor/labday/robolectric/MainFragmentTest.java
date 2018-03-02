@@ -58,6 +58,7 @@ public class MainFragmentTest {
         Mockito.when(mainViewModel.getResponse()).thenReturn(appData);
 
         mainFragment.setViewModel(mainViewModel);
+        mainFragment.setTestMode();
     }
 
     /**

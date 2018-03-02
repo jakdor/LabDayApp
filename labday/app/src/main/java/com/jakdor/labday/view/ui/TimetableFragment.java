@@ -1,6 +1,5 @@
 package com.jakdor.labday.view.ui;
 
-import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -18,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.model.Path;
@@ -102,7 +100,6 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         }
     }
 
-    @SuppressLint("RestrictedApi")
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -110,7 +107,6 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         if(getActivity() != null) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setShowHideAnimationEnabled(false);
                 actionBar.hide();
             }
         }

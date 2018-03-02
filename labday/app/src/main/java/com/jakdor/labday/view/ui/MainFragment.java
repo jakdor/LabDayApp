@@ -1,5 +1,6 @@
 package com.jakdor.labday.view.ui;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -10,6 +11,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +46,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
     private Path activePath;
 
     private MainViewModel viewModel;
+    private boolean testMode;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -82,6 +86,19 @@ public class MainFragment extends Fragment implements InjectableFragment {
 
         observeAppData();
         viewModel.loadAppData(getContext());
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(testMode) return;
+        if(getActivity() != null) {
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setShowHideAnimationEnabled(false);
+            }
+        }
     }
 
     @Override
@@ -183,5 +200,9 @@ public class MainFragment extends Fragment implements InjectableFragment {
 
     public FragmentMainBinding getBinding() {
         return binding;
+    }
+
+    public void setTestMode() {
+        this.testMode = true;
     }
 }

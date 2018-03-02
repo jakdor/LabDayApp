@@ -1,6 +1,5 @@
 package com.jakdor.labday.view.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -45,20 +44,16 @@ class ImageFragment : Fragment() {
         return view
     }
 
-    @SuppressLint("RestrictedApi")
     private fun setActionBar(title: String){
         val actionBar = (activity as AppCompatActivity).supportActionBar
-        actionBar?.setShowHideAnimationEnabled(false)
         actionBar?.show()
         oldBarTitle = actionBar?.title as String
         actionBar.title = title
     }
 
-    @SuppressLint("RestrictedApi")
     override fun onDestroy() {
         super.onDestroy()
         val actionBar = (activity as AppCompatActivity).supportActionBar
-        actionBar?.setShowHideAnimationEnabled(false)
         actionBar?.hide()
         actionBar?.title = oldBarTitle
     }

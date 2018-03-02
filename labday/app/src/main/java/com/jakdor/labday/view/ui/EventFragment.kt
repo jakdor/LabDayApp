@@ -1,6 +1,5 @@
 package com.jakdor.labday.view.ui
 
-import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
@@ -72,12 +71,10 @@ class EventFragment : Fragment(), InjectableFragment {
         viewModel?.loadAppData(context, timetable.eventId)
     }
 
-    @SuppressLint("RestrictedApi")
     override fun onResume() {
         super.onResume()
         if (testMode) return
         val actionBar = (activity as AppCompatActivity).supportActionBar
-        actionBar?.setShowHideAnimationEnabled(false)
         actionBar?.hide()
     }
 
