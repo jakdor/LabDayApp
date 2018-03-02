@@ -20,6 +20,7 @@ project.ext {
     concealVersion = "2.0.1"
     sqlBriteVersion = "3.1.0"
     circleImageViewVersion = "2.2.0"
+    gmsMapsVersion = "11.8.0"
 
     junitVersion = "4.12"
     mockitoVersion = "2.13.0"
@@ -134,6 +135,9 @@ dependencies {
 
     //Circle ImageView
     implementation "de.hdodenhof:circleimageview:$project.circleImageViewVersion"
+
+    //GMS
+    implementation "com.google.android.gms:play-services-maps:$project.gmsMapsVersion"
 
     //testing
     testImplementation "junit:junit:$project.junitVersion"
