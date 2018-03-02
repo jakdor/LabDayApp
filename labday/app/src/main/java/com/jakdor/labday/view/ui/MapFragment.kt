@@ -1,5 +1,7 @@
 package com.jakdor.labday.view.ui
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
@@ -18,16 +20,17 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
+import com.jakdor.labday.di.InjectableFragment
+import com.jakdor.labday.viewmodel.MapViewModel
 
-
+import javax.inject.Inject
 
 /**
  * MapFragment displays embedded google map with provided location marker
  * - no ViewModel required - lat/long provided in newInstance()
  */
-class MapFragment : SupportMapFragment(), OnMapReadyCallback {
+class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment {
 
     private var map: GoogleMap? = null
 
@@ -42,6 +45,10 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback {
     private var locationPermissionGranted: Boolean = false
 
     private lateinit var oldBarTitle: String
+    private var viewModel: MapViewModel? = null
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View? {
@@ -62,6 +69,15 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback {
         }
         this.getMapAsync(this) //triggers onMapReadyCallback
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
+    }
+
+    override fun onActivityCreated(p0: Bundle?) {
+        super.onActivityCreated(p0)
+
+        if(viewModel == null){
+            viewModel = ViewModelProviders.of(this, viewModelFactory)
+                    .get(MapViewModel::class.java)
+        }
     }
 
     override fun onResume() {
