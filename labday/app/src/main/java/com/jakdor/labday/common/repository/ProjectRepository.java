@@ -14,6 +14,8 @@ import com.jakdor.labday.R;
 import com.jakdor.labday.common.localdb.LocalDbHandler;
 import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
+import com.jakdor.labday.common.model.maps.MapPath;
+import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxSchedulersFacade;
 import com.jakdor.labday.rx.RxStatus;
@@ -323,6 +325,27 @@ public class ProjectRepository {
                         this.repositoryState = repositoryStates.ERROR;
                         return RxResponse.error(throwable);
                     });
+    }
+
+    //todo save last request in variable and return if same parameters - api calls limits preservation
+    /**
+     * Makes request to google map api with given parameters
+     * @param origin origin lat&lang String
+     * @param dest destination lat&lang String
+     * @param apiKey google api key
+     * @return {Observable<{@link RxResponse<MapPath>}}
+     */
+    public Observable<RxResponse<MapPath>> mapPathRequest(
+            final String origin, final String dest, final String apiKey){
+        networkManager.configMapService(LabService.GOOGLE_API);
+        return networkManager.getMapPath(origin, dest, apiKey)
+                .observeOn(rxSchedulersFacade.ui())
+                .subscribeOn(rxSchedulersFacade.io())
+                .map(RxResponse::success)
+                .onErrorReturn(throwable -> {
+                    Log.e(CLASS_TAG, "Map path request failed, " + throwable.toString());
+                    return RxResponse.error(throwable);
+                });
     }
 
     /**

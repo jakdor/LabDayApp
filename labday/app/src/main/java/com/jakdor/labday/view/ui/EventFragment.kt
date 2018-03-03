@@ -123,7 +123,7 @@ class EventFragment : Fragment(), InjectableFragment {
                 .centerCrop()
                 .transition(withCrossFade())
                 .into(binding.imgToolbar)
-        
+
         GlideApp.with(this)
                 .load(speaker.speakerImg)
                 .centerCrop()
@@ -173,6 +173,10 @@ class EventFragment : Fragment(), InjectableFragment {
             binding.eventDoorsItem?.doorCard2?.setOnClickListener { _ ->
                 switchToImgFragment(event.dor2Img, getString(R.string.entrence_info))
             }
+
+        binding.eventMapFab.setOnClickListener { _ ->
+            switchToMapFragment(event.latitude, event.longitude, event.name)
+        }
     }
 
     fun switchToImgFragment(imgUrl: String, title: String){
@@ -180,6 +184,15 @@ class EventFragment : Fragment(), InjectableFragment {
             activity!!.supportFragmentManager.beginTransaction()
                     .addToBackStack(ImageFragment.CLASS_TAG)
                     .replace(R.id.fragmentLayout, ImageFragment.newInstance(imgUrl, title))
+                    .commit()
+        }
+    }
+
+    fun switchToMapFragment(lat: String, long: String, info: String){
+        if (activity != null) {
+            activity!!.supportFragmentManager.beginTransaction()
+                    .addToBackStack(MapFragment.CLASS_TAG)
+                    .replace(R.id.fragmentLayout, MapFragment.newInstance(lat, long, info))
                     .commit()
         }
     }

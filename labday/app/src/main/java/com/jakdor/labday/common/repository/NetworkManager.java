@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
+import com.jakdor.labday.common.model.maps.MapPath;
 import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 
@@ -24,6 +25,7 @@ public class NetworkManager {
     private RetrofitBuilder retrofitBuilder;
     private LabService labService;
     private LabService loginLabService;
+    private LabService mapService;
 
     @Inject
     public NetworkManager(RetrofitBuilder retrofitBuilder){
@@ -90,6 +92,16 @@ public class NetworkManager {
     }
 
     /**
+     * Config service for Google map API
+     * @param apiUrl Google API
+     */
+    public void configMapService(String apiUrl){
+        if(mapService == null){
+            mapService = retrofitBuilder.createService(apiUrl, LabService.class);
+        }
+    }
+
+    /**
      * Main NetworkManager api call - get all appData bundled in single call
      * @return Observable with {@link AppData}
      */
@@ -107,10 +119,21 @@ public class NetworkManager {
 
     /**
      * Login api call - returns access token after successful login
-     * @return Observable AccessToken
+     * @return Observable {@link AccessToken}
      */
     public Observable<AccessToken> getAccessToken(){
         return loginLabService.getAccessToken();
+    }
+
+    /**
+     * Makes call to google map api to plot path between points
+     * @param origin origin lat&lang String
+     * @param dest destination lat&lang String
+     * @param apiKey google api key String
+     * @return Observable {@link MapPath}
+     */
+    public Observable<MapPath> getMapPath(String origin, String dest, String apiKey){
+        return mapService.getMapPath(origin, dest, apiKey);
     }
 
     /**
@@ -127,7 +150,4 @@ public class NetworkManager {
         return loginLabService;
     }
 
-    public String embeddedDaggerTest(){
-        return "hello embeddedStabo";
-    }
 }
