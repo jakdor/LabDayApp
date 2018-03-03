@@ -16,6 +16,7 @@ import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.model.maps.MapPath;
 import com.jakdor.labday.common.network.LabService;
+import com.jakdor.labday.common.network.MapService;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxSchedulersFacade;
 import com.jakdor.labday.rx.RxStatus;
@@ -337,7 +338,7 @@ public class ProjectRepository {
      */
     public Observable<RxResponse<MapPath>> mapPathRequest(
             final String origin, final String dest, final String apiKey){
-        networkManager.configMapService(LabService.GOOGLE_API);
+        networkManager.configMapService(MapService.GOOGLE_API);
         return networkManager.getMapPath(origin, dest, apiKey)
                 .observeOn(rxSchedulersFacade.ui())
                 .subscribeOn(rxSchedulersFacade.io())

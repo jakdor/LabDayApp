@@ -9,6 +9,7 @@ import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.model.maps.MapPath;
 import com.jakdor.labday.common.network.LabService;
+import com.jakdor.labday.common.network.MapService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ public class NetworkManager {
     private RetrofitBuilder retrofitBuilder;
     private LabService labService;
     private LabService loginLabService;
-    private LabService mapService;
+    private MapService mapService;
 
     @Inject
     public NetworkManager(RetrofitBuilder retrofitBuilder){
@@ -97,7 +98,7 @@ public class NetworkManager {
      */
     public void configMapService(String apiUrl){
         if(mapService == null){
-            mapService = retrofitBuilder.createService(apiUrl, LabService.class);
+            mapService = retrofitBuilder.createService(apiUrl, MapService.class);
         }
     }
 
