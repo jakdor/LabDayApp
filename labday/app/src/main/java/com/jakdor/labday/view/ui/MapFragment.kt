@@ -111,6 +111,18 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
         val actionBar = (activity as AppCompatActivity).supportActionBar
         actionBar?.title = oldBarTitle
         actionBar?.hide()
+
+        //cleanup
+        try{
+            map?.isMyLocationEnabled = false
+        } catch (e: SecurityException){
+            Log.wtf(CLASS_TAG, "SecurityException thrown during onDestroy, " + e.toString())
+        }
+    }
+
+    override fun onDestroyView() {
+        map?.clear()
+        super.onDestroyView()
     }
 
     /**
@@ -129,6 +141,7 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
     fun processResponse(response: RxResponse<MapPath>){
         if (response.status == RxStatus.SUCCESS) {
             Log.i(CLASS_TAG, "got MapPath from api!")
+            //todo draw path on map :)
         } else {
             if (response.error != null) {
                 Log.e(CLASS_TAG, response.error.toString())
@@ -137,7 +150,7 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
     }
 
     fun makePathApiCall(originLat: String, originLong: String){
-        val apiKey = getString(R.string.gsm_maps_key)
+        val apiKey = getString(R.string.gsm_maps_key) //todo api key safe storage on device
         viewModel?.makePathRequest(originLat, originLong, pointLatitude, pointLongitude, apiKey)
     }
 
