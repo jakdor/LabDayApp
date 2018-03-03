@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
 /**
@@ -182,8 +183,8 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback {
                             //mark device location on the map
                             map?.addMarker(MarkerOptions()
                                     .position(LatLng(userLat, userLong))
-                                    .title("marker title"))
-                                    //.icon(BitmapDescriptorFactory.fromResource())
+                                    .title("Ty"))!!
+                                    .showInfoWindow()
 
                             //handle other functions requiring user location
                             onUserLocation(userLat, userLong)

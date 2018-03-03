@@ -9,16 +9,12 @@ import com.jakdor.labday.R
 import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import com.jakdor.labday.common.model.maps.MapPath
 import com.jakdor.labday.di.InjectableFragment
 import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.viewmodel.MapViewModel
-import java.util.function.Consumer
 
 import javax.inject.Inject
 
@@ -168,7 +164,8 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
     private fun setEventMarker() {
         map?.addMarker(MarkerOptions()
                 .position(LatLng(pointLatitude.toDouble(), pointLongitude.toDouble()))
-                .title(pointInfo))
+                .title(pointInfo)
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_marker)))
     }
 
 
