@@ -1,5 +1,6 @@
 package com.jakdor.labday.view.ui
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -21,7 +22,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MarkerOptions
+import com.jakdor.labday.common.model.maps.MapPath
 import com.jakdor.labday.di.InjectableFragment
+import com.jakdor.labday.rx.RxResponse
+import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.viewmodel.MapViewModel
 
 import javax.inject.Inject
@@ -90,6 +94,8 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
             viewModel = ViewModelProviders.of(this, viewModelFactory)
                     .get(MapViewModel::class.java)
         }
+
+        observeData()
     }
 
     override fun onResume() {
@@ -105,6 +111,34 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
         val actionBar = (activity as AppCompatActivity).supportActionBar
         actionBar?.title = oldBarTitle
         actionBar?.hide()
+    }
+
+    /**
+     * Observer viewModel for [MapPath]
+     */
+    fun observeData(){
+        viewModel?.mapPath?.observe(this, Observer<RxResponse<MapPath>> { t ->
+            if(t != null){
+                processResponse(t)
+            } else {
+                Log.e(CLASS_TAG, "RxResponse returned null")
+            }
+        })
+    }
+
+    fun processResponse(response: RxResponse<MapPath>){
+        if (response.status == RxStatus.SUCCESS) {
+            Log.i(CLASS_TAG, "got MapPath from api!")
+        } else {
+            if (response.error != null) {
+                Log.e(CLASS_TAG, response.error.toString())
+            }
+        }
+    }
+
+    fun makePathApiCall(originLat: String, originLong: String){
+        val apiKey = getString(R.string.gsm_maps_key)
+        viewModel?.makePathRequest(originLat, originLong, pointLatitude, pointLongitude, apiKey)
     }
 
     /**
@@ -168,6 +202,7 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
      */
     private fun updateLocationUI() {
         if (map == null) {
+            Log.wtf(CLASS_TAG, "GoogleMap is null")
             return
         }
         try {
@@ -200,16 +235,20 @@ class MapFragment : SupportMapFragment(), OnMapReadyCallback, InjectableFragment
                         if(lastKnownLocation == null) {
                             Log.wtf(CLASS_TAG, "LastKnownLocation was null")
                         } else {
+                            val userLat = lastKnownLocation!!.latitude
+                            val userLong = lastKnownLocation!!.longitude
+
                             //set the map's camera position to the current location of the device
                             map?.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                    LatLng(lastKnownLocation!!.latitude,
-                                            lastKnownLocation!!.longitude), DEFAULT_ZOOM))
+                                    LatLng(userLat, userLong), DEFAULT_ZOOM))
                             //mark device location on the map
                             map?.addMarker(MarkerOptions()
-                                    .position(LatLng(lastKnownLocation!!.latitude
-                                            , lastKnownLocation!!.longitude))
+                                    .position(LatLng(userLat, userLong))
                                     .title("marker title"))
                                     //.icon(BitmapDescriptorFactory.fromResource())
+
+                            //make path api call with user location
+                            makePathApiCall(userLat.toString(), userLong.toString())
                         }
                     } else {
                         Log.i(CLASS_TAG, "Current location returned null - using default")
