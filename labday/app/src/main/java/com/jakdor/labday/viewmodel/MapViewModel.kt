@@ -33,6 +33,9 @@ class MapViewModel : AndroidViewModel {
         this.rxSchedulersFacade = rxSchedulersFacade
     }
 
+    /**
+     * Handle received google API response
+     */
     fun makePathRequest(
             startLat: String, startLong: String, endLat: String, endLong: String, apiKey: String){
 
