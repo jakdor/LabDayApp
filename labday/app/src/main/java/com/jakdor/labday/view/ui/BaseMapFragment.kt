@@ -3,9 +3,6 @@ package com.jakdor.labday.view.ui
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.google.android.gms.maps.SupportMapFragment
 import com.jakdor.labday.R
 import android.content.pm.PackageManager
@@ -47,15 +44,9 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
     private var locationManager: LocationManager? = null
     private var provider: String? = null
 
-    protected lateinit var oldBarTitle: String
-
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View? {
-        var rootView = super.onCreateView(inflater, container, bundle)
-        if (rootView == null)
-            rootView = inflater.inflate(R.layout.fragment_map, container, false)
-        return rootView
-    }
+    //action bar
+    protected lateinit var barTitle: String
+    private lateinit var oldBarTitle: String
 
     /**
      * Begin setup, get fusedLocationProviderClient
@@ -73,11 +64,17 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
         checkGps()
     }
 
+    //load bar title from resources
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        barTitle = getString(R.string.map_fragment_bar)
+    }
+
     override fun onResume() {
         super.onResume()
         val actionBar = (activity as AppCompatActivity).supportActionBar
         oldBarTitle = actionBar?.title as String
-        actionBar.title = getString(R.string.map_fragment_bar)
+        actionBar.title = barTitle
         actionBar.show()
         if(!locationUpdates && locationPermissionGranted){
 

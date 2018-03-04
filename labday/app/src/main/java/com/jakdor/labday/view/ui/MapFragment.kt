@@ -8,6 +8,9 @@ import android.location.Location
 import android.os.Bundle
 import com.jakdor.labday.R
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
@@ -18,6 +21,8 @@ import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.viewmodel.MapViewModel
 
 import javax.inject.Inject
+import android.widget.FrameLayout
+import android.widget.TextView
 
 /**
  * MapFragment extends [BaseMapFragment] - shows user location and path to position provided in
@@ -31,8 +36,23 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
     private lateinit var pointLongitude: String
     private lateinit var pointInfo: String
 
+    private lateinit var overalyText: TextView
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    /**
+     * Add custom overlay by programmatically inflating mapView as FrameLayout
+     * and adding overlay view as child view to it
+     */
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View? {
+        val mapView : FrameLayout = super.onCreateView(inflater, container, bundle) as FrameLayout
+        val overlay = inflater.inflate(R.layout.fragment_map_overlay, container, false)
+        overalyText = overlay.findViewById(R.id.map_overlay_info)
+        mapView.addView(overlay)
+        return mapView
+    }
 
     /**
      * get arguments
@@ -47,6 +67,9 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
         pointInfo = argTriple.third as String
     }
 
+    /**
+     * Get ViewModel start observing incoming data
+     */
     override fun onActivityCreated(p0: Bundle?) {
         super.onActivityCreated(p0)
 
@@ -59,7 +82,7 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
     }
 
     /**
-     * Observer viewModel for [MapPath]
+     * Observe viewModel for [MapPath]
      */
     private fun observeData(){
         viewModel?.mapPath?.observe(this, Observer<RxResponse<MapPath>> { t ->
@@ -76,6 +99,7 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
             Log.i(CLASS_TAG, "MapPath received from api!")
             drawPath(response.data)
             setCamPathBounds(response.data)
+            setInfoOverlay(response.data)
         } else {
             if (response.error != null) {
                 Log.e(CLASS_TAG, response.error.toString())
@@ -159,6 +183,31 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
 
         val latLngBounds = LatLngBounds(LatLng(swLat, swLong), LatLng(neLat, neLong))
         map?.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100))
+    }
+
+    /**
+     * Set text to info overlay
+     */
+    private fun setInfoOverlay(mapPath: MapPath?){
+        if(mapPath == null){
+            Log.wtf(CLASS_TAG, "MapPath is null")
+            return
+        }
+
+        if(mapPath.routes?.size == 0 || mapPath.routes?.get(0)?.legs?.size == 0){
+            Log.e(CLASS_TAG, "Unable to set info overlay")
+            return
+        }
+
+        var info = mapPath.routes?.get(0)?.legs?.get(0)?.distance?.text
+        if(info == null){
+            Log.e(CLASS_TAG, "Unable to set info overlay")
+            return
+        }
+
+        info = info.replace('.', ',')
+        overalyText.visibility = View.VISIBLE
+        overalyText.text = info
     }
 
     /**
