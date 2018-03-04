@@ -177,6 +177,10 @@ class EventFragment : Fragment(), InjectableFragment {
         binding.eventMapFab.setOnClickListener { _ ->
             switchToMapFragment(event.latitude, event.longitude, event.name)
         }
+
+        binding.eventAddressCard?.eventItem?.setOnClickListener { _ ->
+            switchToMapFragment(event.latitude, event.longitude, event.name)
+        }
     }
 
     fun switchToImgFragment(imgUrl: String, title: String){
