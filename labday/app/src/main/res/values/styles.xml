@@ -10,6 +10,7 @@
     <style name="ActionBarNoShadow" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="elevation">0dp</item>
         <item name="background">@color/colorPrimaryDark</item>
+        <item name="android:animateLayoutChanges">false</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">

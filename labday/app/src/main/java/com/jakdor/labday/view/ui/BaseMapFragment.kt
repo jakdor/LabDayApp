@@ -1,5 +1,6 @@
 package com.jakdor.labday.view.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
@@ -7,25 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.gms.maps.SupportMapFragment
 import com.jakdor.labday.R
-import android.support.v4.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.location.Location
 import android.support.v4.content.ContextCompat
 import android.util.Log
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import android.widget.Toast
+import android.location.LocationManager
+import android.content.Context.LOCATION_SERVICE
+import android.location.LocationListener
+import android.location.Criteria
 
 /**
  * BaseMapFragment displays embedded google map with provided location marker
  * Extended by [MapFragment] and PlacesFragment
  */
-abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback {
+abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, LocationListener {
 
     protected var map: GoogleMap? = null
 
@@ -36,8 +39,13 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback {
     private var lastKnownLocation: Location? = null
 
     //default location
-    protected val defaultLocation = LatLng(51.1085411, 17.0593825)
-    protected var locationPermissionGranted: Boolean = false
+    private val defaultLocation = LatLng(51.1085411, 17.0593825)
+    private var locationPermissionGranted: Boolean = false
+
+    //location updates
+    private var locationUpdates: Boolean = false
+    private var locationManager: LocationManager? = null
+    private var provider: String? = null
 
     protected lateinit var oldBarTitle: String
 
@@ -61,6 +69,8 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback {
             this.getMapAsync(this) //triggers onMapReadyCallback
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
         }
+
+        checkGps()
     }
 
     override fun onResume() {
@@ -69,6 +79,15 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback {
         oldBarTitle = actionBar?.title as String
         actionBar.title = getString(R.string.map_fragment_bar)
         actionBar.show()
+        if(!locationUpdates && locationPermissionGranted){
+
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        locationManager?.removeUpdates(this)
+        locationUpdates = false
     }
 
     override fun onDestroy() {
@@ -91,6 +110,17 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback {
     }
 
     /**
+     * Check GPS enabled, handle situation if gps offline
+     */
+    private fun checkGps(){
+        val locationManager = activity?.getSystemService(LOCATION_SERVICE) as LocationManager
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            //prompt user about gps turned off
+            Toast.makeText(context, getString(R.string.gps_off_prompt), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    /**
      * Request location permission
      * The result of the permission request is handled by a callback, onRequestPermissionsResult()
      */
@@ -103,9 +133,10 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback {
         if (ContextCompat.checkSelfPermission(activity!!.applicationContext,
                         android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationPermissionGranted = true
+            locationManagerSetup()
+            startLocationUpdates()
         } else {
-            ActivityCompat.requestPermissions(activity!!,
-                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
         }
     }
@@ -120,9 +151,52 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback {
             //If request is cancelled, the result arrays are empty
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 locationPermissionGranted = true
+                updateLocationUI()
+                locationManagerSetup()
+                startLocationUpdates()
+            } else { //location not permitted by user, move to event marker
+                map?.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM))
             }
+        } else { //sth went wrong, or dialog dismissed
+            map?.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM))
         }
-        updateLocationUI()
+    }
+
+    /**
+     * Config LocationManager
+     */
+    private fun locationManagerSetup() {
+        //get location updates
+        locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val criteria = Criteria()
+        provider = locationManager?.getBestProvider(criteria, false)
+    }
+
+    /**
+     * Start receiving location updates
+     */
+    private fun startLocationUpdates() {
+        try {
+            //location update if min 100m distance
+            locationManager?.requestLocationUpdates(provider, 2000, 100.0f, this)
+            locationUpdates = true
+        } catch (e: SecurityException){
+            Log.e(CLASS_TAG, "Unauthorised call for location updates request")
+        }
+    }
+
+    override fun onLocationChanged(p0: Location?) {
+        map?.clear()
+        useDeviceLocation()
+    }
+
+    override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
+    }
+
+    override fun onProviderEnabled(p0: String?) {
+    }
+
+    override fun onProviderDisabled(p0: String?) {
     }
 
     /**
@@ -133,7 +207,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback {
         //Other setup activities here
 
         updateLocationUI()
-        getDeviceLocation()
+        useDeviceLocation() //getting gps lock may take some time, run any way using cached location
     }
 
     /**
@@ -145,10 +219,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback {
             return
         }
         try {
-            if (locationPermissionGranted) {
-                map?.isMyLocationEnabled = true
-                map?.uiSettings?.isMyLocationButtonEnabled = true
-            } else {
+            if (!locationPermissionGranted) {
                 map?.isMyLocationEnabled = false
                 map?.uiSettings?.isMyLocationButtonEnabled = false
                 lastKnownLocation = null
@@ -163,7 +234,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback {
      * Get bast available device location, set position on the map
      * - might be null if location is not available
      */
-    private fun getDeviceLocation() {
+    private fun useDeviceLocation() {
         try {
             if (locationPermissionGranted) {
                 val locationResult = fusedLocationProviderClient?.lastLocation

@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
+import android.location.Location
 import android.os.Bundle
 import com.jakdor.labday.R
 import android.util.Log
@@ -91,6 +92,11 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
             return
         }
 
+        if(mapPath.routes?.size == 0 || mapPath.routes?.get(0)?.legs?.size == 0){
+            Log.e(CLASS_TAG, "Unable to plot path")
+            return
+        }
+
         val steps = mapPath.routes?.get(0)?.legs?.get(0)?.steps
         if(steps == null || !mapPath.status.equals("OK")){
             Log.e(CLASS_TAG, "Unable to plot path")
@@ -136,6 +142,11 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
             return
         }
 
+        if(mapPath.routes?.size == 0){
+            Log.e(CLASS_TAG, "Routes are empty")
+            return
+        }
+
         val neLat = mapPath.routes?.get(0)?.bounds?.northeast?.lat
         val neLong = mapPath.routes?.get(0)?.bounds?.northeast?.lng
         val swLat = mapPath.routes?.get(0)?.bounds?.southwest?.lat
@@ -155,6 +166,11 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         super.onMapReady(googleMap)
+        setEventMarker()
+    }
+
+    override fun onLocationChanged(p0: Location?) {
+        super.onLocationChanged(p0)
         setEventMarker()
     }
 
