@@ -175,11 +175,11 @@ class EventFragment : Fragment(), InjectableFragment {
             }
 
         binding.eventMapFab.setOnClickListener { _ ->
-            switchToMapFragment(event.latitude, event.longitude, event.name)
+            switchToMapFragment(event.latitude, event.longitude, event.address)
         }
 
         binding.eventAddressCard?.eventItem?.setOnClickListener { _ ->
-            switchToMapFragment(event.latitude, event.longitude, event.name)
+            switchToMapFragment(event.latitude, event.longitude, event.address)
         }
     }
 

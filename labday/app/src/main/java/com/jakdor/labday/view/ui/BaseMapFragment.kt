@@ -219,6 +219,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
             if (!locationPermissionGranted) {
                 map?.isMyLocationEnabled = false
                 map?.uiSettings?.isMyLocationButtonEnabled = false
+                map?.uiSettings?.isMapToolbarEnabled = false
                 lastKnownLocation = null
                 getLocationPermission()
             }
