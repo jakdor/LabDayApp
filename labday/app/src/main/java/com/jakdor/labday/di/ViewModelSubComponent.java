@@ -4,6 +4,7 @@ import com.jakdor.labday.viewmodel.EventViewModel;
 import com.jakdor.labday.viewmodel.LoginViewModel;
 import com.jakdor.labday.viewmodel.MainViewModel;
 import com.jakdor.labday.viewmodel.MapViewModel;
+import com.jakdor.labday.viewmodel.PlacesViewModel;
 import com.jakdor.labday.viewmodel.SplashViewModel;
 import com.jakdor.labday.viewmodel.TimetableViewModel;
 
@@ -27,4 +28,5 @@ public interface ViewModelSubComponent {
     TimetableViewModel timetableViewModel();
     EventViewModel eventViewModel();
     MapViewModel mapViewModel();
+    PlacesViewModel placesViewModel();
 }

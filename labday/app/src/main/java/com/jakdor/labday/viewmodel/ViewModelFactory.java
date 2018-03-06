@@ -35,6 +35,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         creators.put(TimetableViewModel.class, viewModelSubComponent::timetableViewModel);
         creators.put(EventViewModel.class, viewModelSubComponent::eventViewModel);
         creators.put(MapViewModel.class, viewModelSubComponent::mapViewModel);
+        creators.put(PlacesViewModel.class, viewModelSubComponent::placesViewModel);
     }
 
     /**

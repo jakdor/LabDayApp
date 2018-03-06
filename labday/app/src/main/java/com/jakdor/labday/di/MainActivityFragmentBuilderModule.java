@@ -4,6 +4,7 @@ import com.jakdor.labday.view.ui.EventFragment;
 import com.jakdor.labday.view.ui.LoginFragment;
 import com.jakdor.labday.view.ui.MainFragment;
 import com.jakdor.labday.view.ui.MapFragment;
+import com.jakdor.labday.view.ui.PlacesFragment;
 import com.jakdor.labday.view.ui.SplashFragment;
 import com.jakdor.labday.view.ui.TimetableFragment;
 
@@ -32,4 +33,7 @@ public abstract class MainActivityFragmentBuilderModule {
 
     @ContributesAndroidInjector
     abstract MapFragment contributeMapFragment();
+
+    @ContributesAndroidInjector
+    abstract PlacesFragment contributePlacesFragment();
 }

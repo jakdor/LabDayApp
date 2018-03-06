@@ -71,6 +71,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
         animateMenuItems();
 
         binding.menuTimetable.menuCard.setOnClickListener(view -> onTimetableCardClick());
+        binding.menuMap.menuCard.setOnClickListener(view -> onPlacesCardClick());
 
         return binding.getRoot();
     }
@@ -191,6 +192,16 @@ public class MainFragment extends Fragment implements InjectableFragment {
                 .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
                 .addToBackStack(TimetableFragment.CLASS_TAG)
                 .replace(R.id.fragmentLayout, TimetableFragment.newInstance(activePath.getId()))
+                .commit();
+    }
+
+    /**
+     * Transition to {@link PlacesFragment}
+     */
+    public void onPlacesCardClick(){
+        fragmentManager.beginTransaction()
+                .addToBackStack(PlacesFragment.CLASS_TAG)
+                .replace(R.id.fragmentLayout, new PlacesFragment())
                 .commit();
     }
 
