@@ -103,7 +103,7 @@ class EventFragment : Fragment(), InjectableFragment {
      * Checks received data
      */
     fun processResponse(response: RxResponse<Pair<Event?, Speaker?>>) {
-        if (response.status == RxStatus.SUCCESS) {
+        if (response.status == RxStatus.SUCCESS || response.status == RxStatus.SUCCESS_DB) {
             if(response.data?.first != null && response.data.second != null) {
                 loadView(response.data.first!!, response.data.second!!)
             }

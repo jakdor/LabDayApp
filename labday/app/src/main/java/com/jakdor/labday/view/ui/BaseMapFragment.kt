@@ -36,7 +36,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
     private var lastKnownLocation: Location? = null
 
     //default location
-    private val defaultLocation = LatLng(51.1085411, 17.0593825)
+    protected val defaultLocation = LatLng(51.1085411, 17.0593825)
     private var locationPermissionGranted: Boolean = false
 
     //location updates

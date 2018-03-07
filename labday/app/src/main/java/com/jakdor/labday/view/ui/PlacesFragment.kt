@@ -6,6 +6,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.jakdor.labday.R
 import com.jakdor.labday.common.model.AppData
 import com.jakdor.labday.common.model.MapOther
@@ -20,7 +25,9 @@ import javax.inject.Inject
  */
 class PlacesFragment : BaseMapFragment(), InjectableFragment {
 
-    var viewModel: PlacesViewModel? = null
+    private var viewModel: PlacesViewModel? = null
+    private var markers: List<MapOther>? = null
+    private var mapReady: Boolean = false
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -56,9 +63,11 @@ class PlacesFragment : BaseMapFragment(), InjectableFragment {
      * Checks received data
      */
     fun processResponse(response: RxResponse<AppData>) {
-        if (response.status == RxStatus.SUCCESS) {
+        if (response.status == RxStatus.SUCCESS || response.status == RxStatus.SUCCESS_DB) {
             if(response.data?.mapOthers != null) {
-                loadMarkers(response.data.mapOthers)
+                markers = response.data.mapOthers
+                if(mapReady)
+                    loadMarkers(markers!!)
             } else {
                 Log.e(CLASS_TAG, "Empty MapOthers list")
             }
@@ -69,13 +78,57 @@ class PlacesFragment : BaseMapFragment(), InjectableFragment {
         }
     }
 
+    /**
+     * Place markers on the map
+     */
     fun loadMarkers(places: List<MapOther>){
+        places.forEach { mapOther: MapOther ->
+            var drawableId : Int = R.mipmap.map_marker
+            when(mapOther.type){
+                1 -> drawableId = R.mipmap.info_marker
+                2 -> drawableId = R.mipmap.food_marker
+                3 -> drawableId = R.mipmap.rest_marker
+            }
 
+            map?.addMarker(MarkerOptions()
+                    .position(LatLng(mapOther.latitude.toDouble(), mapOther.longitude.toDouble()))
+                    .title(mapOther.name)
+                    .icon(BitmapDescriptorFactory.fromResource(drawableId)))
+        }
+
+        map?.setOnMarkerClickListener { marker ->
+            places.forEach { mapOther: MapOther ->
+                if(mapOther.name == marker.title)
+                    showMarkerInfo(mapOther)
+            }
+            true
+        }
     }
 
-    override fun onUserLocation(userLat: Double, userLong: Double) {}
+    /**
+     * Display place info dialog
+     */
+    fun showMarkerInfo(place: MapOther){
+        Log.i(CLASS_TAG, place.name)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        super.onMapReady(googleMap)
+        mapReady = true
+        if(markers != null){
+            loadMarkers(markers!!)
+        }
+    }
+
+    override fun onUserLocation(userLat: Double, userLong: Double) {
+        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM))
+        if(markers != null && mapReady){
+            loadMarkers(markers!!)
+        }
+    }
 
     companion object {
         const val CLASS_TAG = "PlacesFragment"
+        const val DEFAULT_ZOOM = 16.0f
     }
 }

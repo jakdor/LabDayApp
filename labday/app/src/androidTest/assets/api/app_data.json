@@ -36,26 +36,26 @@
             "name": "Bar Bazylia",
             "info": "some info and stuff",
             "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "latitude": "51.1307075",
-            "longitude": "17.052731"
+            "latitude": "51.107924",
+            "longitude": "17.058800"
         },
         {
             "id": 2,
-            "type": 1,
+            "type": 2,
             "name": "SKS",
             "info": "some info and stuff",
             "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "latitude": "51.1507075",
-            "longitude": "17.012731"
+            "latitude": "51.108825",
+            "longitude": "17.056778"
         },
         {
             "id": 3,
-            "type": 2,
+            "type": 3,
             "name": "some other place type",
             "info": "some info and stuff",
             "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "latitude": "51.4507075",
-            "longitude": "17.112731"
+            "latitude": "51.108585",
+            "longitude": "17.058932"
         }
     ],
     "paths": [
@@ -92,6 +92,13 @@
             "event_id": 2,
             "time_start": 1000000,
             "time_end": 10003600
+        },
+        {
+            "id": 3,
+            "path_id": 2,
+            "event_id": 2,
+            "time_start": 1518743127,
+            "time_end": 1518746127
         }
     ],
     "speakers:": [
