@@ -23,7 +23,7 @@ import android.location.Criteria
 
 /**
  * BaseMapFragment displays embedded google map with provided location marker
- * Extended by [MapFragment] and PlacesFragment
+ * Extended by [MapFragment] and [PlacesFragment]
  */
 abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, LocationListener {
 
@@ -77,7 +77,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
         actionBar.title = barTitle
         actionBar.show()
         if(!locationUpdates && locationPermissionGranted){
-
+            startLocationUpdates()
         }
     }
 
