@@ -8,6 +8,7 @@ import android.util.Log;
 import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.model.maps.MapPath;
+import com.jakdor.labday.common.model.LastUpdate;
 import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.MapService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
@@ -25,8 +26,8 @@ public class NetworkManager {
 
     private RetrofitBuilder retrofitBuilder;
     private LabService labService;
-    private LabService loginLabService;
     private MapService mapService;
+    private LabService updateLabService;
 
     @Inject
     public NetworkManager(RetrofitBuilder retrofitBuilder){
@@ -63,8 +64,8 @@ public class NetworkManager {
      * @param apiUrl API base url
      */
     public void configAuth(String apiUrl){
-        if(labService == null) {
-            labService = retrofitBuilder.createService(apiUrl, LabService.class);
+        if(updateLabService == null) {
+            updateLabService = retrofitBuilder.createService(apiUrl, LabService.class);
         }
     }
 
@@ -76,19 +77,6 @@ public class NetworkManager {
     public void configAuth(String apiUrl, String token){
         if(labService == null) {
             labService = retrofitBuilder.createService(apiUrl, LabService.class, token);
-        }
-    }
-
-    /**
-     * login&password authorization config
-     * @param apiUrl API base url
-     * @param login one-time login
-     * @param password one-time password
-     */
-    public void configAuth(String apiUrl, String login, String password){
-        if(loginLabService == null) {
-            loginLabService = retrofitBuilder.createService(apiUrl,
-                    LabService.class, login, password);
         }
     }
 
@@ -112,18 +100,18 @@ public class NetworkManager {
 
     /**
      * Last update api call - backend db update id/time in seconds from unix epoch;
-     * @return Observable String with update unique id
+     * @return Observable {@link LastUpdate} with update unique id
      */
-    public Observable<String> getLastUpdate(){
-        return labService.getLastUpdate();
+    public Observable<LastUpdate> getLastUpdate(){
+        return updateLabService.getLastUpdate();
     }
 
     /**
      * Login api call - returns access token after successful login
      * @return Observable {@link AccessToken}
      */
-    public Observable<AccessToken> getAccessToken(){
-        return loginLabService.getAccessToken();
+    public Observable<AccessToken> getAccessToken(String user, String password){
+        return updateLabService.getAccessToken(user, password);
     }
 
     /**
@@ -149,7 +137,6 @@ public class NetworkManager {
      * @return {@link LabService} instance with authorization header for checking in tests
      */
     public LabService getLoginLabService() {
-        return loginLabService;
+        return updateLabService;
     }
-
 }

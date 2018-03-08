@@ -3,6 +3,7 @@ package com.jakdor.labday;
 import com.google.gson.Gson;
 import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
+import com.jakdor.labday.common.model.LastUpdate;
 import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 
@@ -30,10 +31,10 @@ public class RetrofitAPICallsIntegrationTest {
     private final String lastUpdateJsonPath = "app/src/test/assets/api/last_update.json";
     private final String loginAccessTokenPath = "app/src/test/assets/api/login.json";
 
-    private final String dummyApiUrl = LabService.MOCK_API_URL;
-    private final String dummyToken = "dummyToken";
-    private final String dummyLogin = "user";
-    private final String dummyPassword = "password";
+    private final String dummyApiUrl = LabService.API_URL;
+    private final String dummyToken = "c6d74cec06f72f91b41666c9e289fc872a896e44";
+    private final String dummyLogin = "test";
+    private final String dummyPassword = "1234asdf";
 
     @Before
     public void setUp() throws Exception {
@@ -46,12 +47,13 @@ public class RetrofitAPICallsIntegrationTest {
     @Test
     public void loginTest() throws Exception {
         LabService labService = retrofitBuilder.createService(
-                dummyApiUrl, LabService.class, dummyLogin, dummyPassword);
+                dummyApiUrl, LabService.class);
 
         Gson gson = new Gson();
         AccessToken accessToken = gson.fromJson(readFile(loginAccessTokenPath), AccessToken.class);
 
-        TestObserver<AccessToken> testObserver = labService.getAccessToken().test();
+        TestObserver<AccessToken> testObserver
+                = labService.getAccessToken(dummyLogin, dummyPassword).test();
         testObserver.assertSubscribed();
         testObserver.awaitCount(1);
         testObserver.assertNoErrors();
@@ -71,40 +73,16 @@ public class RetrofitAPICallsIntegrationTest {
     @Test
     public void lastUpdateTest() throws Exception {
         LabService labService = retrofitBuilder.createService(dummyApiUrl, LabService.class);
-        String expectedLastUpdate = readFile(lastUpdateJsonPath);
+        Gson gson = new Gson();
+        LastUpdate expectedLastUpdate = gson.fromJson(readFile(lastUpdateJsonPath), LastUpdate.class);
 
-        TestObserver<String> testObserver = labService.getLastUpdate().test();
+        TestObserver<LastUpdate> testObserver = labService.getLastUpdate().test();
         testObserver.assertSubscribed();
         testObserver.awaitCount(1);
         testObserver.assertNoErrors();
 
         testObserver.assertValue(s -> {
             Assert.assertEquals(expectedLastUpdate, s);
-            return true;
-        });
-
-        testObserver.onComplete();
-    }
-
-    /**
-     * Tests response from AppData API call with login&password authorization
-     */
-    @Test
-    public void appDataLoginTest() throws Exception {
-        Gson gson = new Gson();
-        AppData appData = gson.fromJson(readFile(appDataJsonPath), AppData.class);
-
-        LabService labService = retrofitBuilder.createService(
-                dummyApiUrl, LabService.class, dummyLogin, dummyPassword);
-
-        TestObserver<AppData> testObserver = labService.getAppData().test();
-        testObserver.assertSubscribed();
-        testObserver.awaitCount(1);
-        testObserver.assertNoErrors();
-
-        testObserver.assertValue(appData1 -> {
-            Assert.assertEquals(appData, appData1);
-            Assert.assertEquals(appData.hashCode(), appData1.hashCode());
             return true;
         });
 

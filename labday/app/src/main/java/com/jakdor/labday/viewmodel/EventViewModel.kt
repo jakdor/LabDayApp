@@ -36,7 +36,7 @@ constructor(projectRepository: ProjectRepository,
             appData.value = projectRepository.data as RxResponse<AppData>?
             getEventAndSpeaker(projectRepository.data.data as AppData, eventId)
         } else {
-            disposable.add(projectRepository.getUpdate(LabService.MOCK_API_URL, context)
+            disposable.add(projectRepository.getUpdate(LabService.API_URL, context)
                     .subscribeOn(rxSchedulersFacade.io())
                     .observeOn(rxSchedulersFacade.ui())
                     .doOnSubscribe { _ -> loadingStatus.value = true }

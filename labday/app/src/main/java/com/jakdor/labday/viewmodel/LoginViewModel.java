@@ -23,7 +23,7 @@ public class LoginViewModel extends BaseViewModel {
     }
 
     public void login(Context context, String login, String password){
-        disposable.add(projectRepository.login(LabService.MOCK_API_URL, context, login, password)
+        disposable.add(projectRepository.login(LabService.API_URL, context, login, password)
                 .subscribeOn(rxSchedulersFacade.io())
                 .observeOn(rxSchedulersFacade.ui())
                 .doOnSubscribe(disposable1 -> loadingStatus.setValue(true))

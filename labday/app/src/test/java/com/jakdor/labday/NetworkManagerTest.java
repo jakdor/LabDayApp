@@ -35,14 +35,14 @@ public class NetworkManagerTest {
 
     private LabService labService;
 
-    Retrofit.Builder retrofit = new Retrofit.Builder()
+    private Retrofit.Builder retrofit = new Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create());
 
-    private final String dummyApiUrl = LabService.MOCK_API_URL;
-    private final String dummyToken = "dummyToken";
-    private final String dummyLogin = "user";
-    private final String dummyPassword = "password";
+    private final String dummyApiUrl = LabService.API_URL;
+    private final String dummyToken = "c6d74cec06f72f91b41666c9e289fc872a896e44";
+    private final String dummyLogin = "test";
+    private final String dummyPassword = "1234asdf";
 
     @Before
     public void setUp() throws Exception {
@@ -52,17 +52,14 @@ public class NetworkManagerTest {
 
         Mockito.when(retrofitBuilder.createService(dummyApiUrl, LabService.class, dummyToken))
                 .thenReturn(labService);
-
-        Mockito.when(retrofitBuilder.createService(
-                dummyApiUrl, LabService.class, dummyLogin, dummyPassword)).thenReturn(labService);
     }
 
     @Test
     public void configAuthNoneTest() throws Exception {
         networkManager.configAuth(dummyApiUrl);
 
-        Assert.assertEquals(labService.hashCode(), networkManager.getLabService().hashCode());
-        Assert.assertNull(networkManager.getLoginLabService());
+        Assert.assertEquals(labService.hashCode(), networkManager.getLoginLabService().hashCode());
+        Assert.assertNull(networkManager.getLabService());
     }
 
     @Test
@@ -71,13 +68,5 @@ public class NetworkManagerTest {
 
         Assert.assertEquals(labService.hashCode(), networkManager.getLabService().hashCode());
         Assert.assertNull(networkManager.getLoginLabService());
-    }
-
-    @Test
-    public void configAuthLoginTest() throws Exception {
-        networkManager.configAuth(dummyApiUrl, dummyLogin, dummyPassword);
-
-        Assert.assertEquals(labService.hashCode(), networkManager.getLoginLabService().hashCode());
-        Assert.assertNull(networkManager.getLabService());
     }
 }

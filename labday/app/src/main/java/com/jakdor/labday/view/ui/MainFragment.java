@@ -119,7 +119,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
         if(response.status == RxStatus.SUCCESS || response.status == RxStatus.SUCCESS_DB){
             if(response.data != null) {
                 for(Path path : response.data.getPaths()){
-                    if(path.getActive() == 1){
+                    if(path.getActive()){
                         activePath = path;
                         binding.setPath(activePath.getName());
                         break;

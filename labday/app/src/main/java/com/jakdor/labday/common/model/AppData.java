@@ -15,7 +15,7 @@ public class AppData implements Serializable
     @SerializedName("events")
     @Expose
     private List<Event> events = null;
-    @SerializedName("map_others")
+    @SerializedName("places")
     @Expose
     private List<MapOther> mapOthers = null;
     @SerializedName("paths")
@@ -24,7 +24,7 @@ public class AppData implements Serializable
     @SerializedName("timetables")
     @Expose
     private List<Timetable> timetables = null;
-    @SerializedName("speakers:")
+    @SerializedName("speakers")
     @Expose
     private List<Speaker> speakers = null;
     private final static long serialVersionUID = 9098698317824998873L;

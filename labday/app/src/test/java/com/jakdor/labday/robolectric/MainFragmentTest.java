@@ -43,8 +43,8 @@ public class MainFragmentTest {
         appData = new MutableLiveData<>();
         AppData data = new AppData();
         ArrayList<Path> paths = new ArrayList<>();
-        paths.add(new Path(1,"dummyNameWrong", "PathInfoWrong", 0));
-        paths.add(new Path(2,"dummyName", "PathInfo", 1));
+        paths.add(new Path(1,"dummyNameWrong", "PathInfoWrong", false));
+        paths.add(new Path(2,"dummyName", "PathInfo", true));
         data.setPaths(paths);
         appData.setValue(RxResponse.success(data));
     }

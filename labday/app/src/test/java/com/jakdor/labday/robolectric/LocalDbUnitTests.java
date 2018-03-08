@@ -134,7 +134,7 @@ public class LocalDbUnitTests {
         Random random = new Random();
         for(int i = 0; i < random.nextInt(10) + 1; ++i){
             paths.add(new Path(random.nextInt(100), TestUtils.randomString(),
-                    TestUtils.randomString(), random.nextInt()));
+                    TestUtils.randomString(), random.nextBoolean()));
         }
 
         PathDao.insertPathList(localDbHandler.getDb(), paths);
@@ -148,7 +148,7 @@ public class LocalDbUnitTests {
             Assert.assertEquals(path.getId().intValue(), cursor.getInt(cursor.getColumnIndex(PathDao.ID)));
             Assert.assertEquals(path.getName(), cursor.getString(cursor.getColumnIndex(PathDao.NAME)));
             Assert.assertEquals(path.getInfo(), cursor.getString(cursor.getColumnIndex(PathDao.INFO)));
-            Assert.assertEquals(path.getActive().intValue(), cursor.getInt(cursor.getColumnIndex(PathDao.ACTIVE)));
+            Assert.assertEquals(path.getActive(), cursor.getInt(cursor.getColumnIndex(PathDao.ACTIVE)) == 1);
         }
 
         Assert.assertFalse(cursor.moveToNext());
@@ -160,7 +160,7 @@ public class LocalDbUnitTests {
         Random random = new Random();
         for(int i = 0; i < random.nextInt(10) + 1; ++i){
             paths.add(new Path(random.nextInt(100), TestUtils.randomString(),
-                    TestUtils.randomString(), random.nextInt()));
+                    TestUtils.randomString(), random.nextBoolean()));
         }
 
         for(Path path : paths) {

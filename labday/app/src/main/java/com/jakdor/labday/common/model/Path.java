@@ -19,7 +19,7 @@ public class Path implements Serializable
     private String info;
     @SerializedName("active")
     @Expose
-    private Integer active;
+    private Boolean active;
     private final static long serialVersionUID = 1552605528728563098L;
 
     /**
@@ -35,7 +35,7 @@ public class Path implements Serializable
      * @param active is active for user
      * @param info short description
      */
-    public Path(Integer id, String name, String info, Integer active) {
+    public Path(Integer id, String name, String info, Boolean active) {
         super();
         this.id = id;
         this.name = name;
@@ -67,11 +67,11 @@ public class Path implements Serializable
         this.info = info;
     }
 
-    public Integer getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(Integer active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
