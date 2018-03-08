@@ -5,7 +5,9 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.util.Log
+import android.view.ViewGroup
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -18,6 +20,7 @@ import com.jakdor.labday.di.InjectableFragment
 import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.viewmodel.PlacesViewModel
+import com.jakdor.labday.view.utils.PlaceDialog
 import javax.inject.Inject
 
 /**
@@ -109,7 +112,8 @@ class PlacesFragment : BaseMapFragment(), InjectableFragment {
      * Display place info dialog
      */
     fun showMarkerInfo(place: MapOther){
-        Log.i(CLASS_TAG, place.name)
+        if(context != null && activity != null)
+            PlaceDialog(context!!, activity as FragmentActivity, place).show()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
