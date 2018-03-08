@@ -16,5 +16,6 @@ public interface MapService {
     @GET("json")
     Observable<MapPath> getMapPath(@Query("origin") String origin,
                                    @Query("destination") String destination,
-                                   @Query("key") String apiKey);
+                                   @Query("key") String apiKey,
+                                   @Query("mode") String mode);
 }

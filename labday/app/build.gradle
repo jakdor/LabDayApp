@@ -8,7 +8,7 @@ project.ext {
     archExt = "1.1.0"
     archDb = "1.0.0"
     databindingCompilerVersion = "3.0.1"
-    supportLibsVersion = "27.0.2"
+    supportLibsVersion = "27.1.0"
     constraintLayoutVersion = "1.0.2"
     butterKnifeVersion = "8.8.1"
     glideVersion = "4.4.0"

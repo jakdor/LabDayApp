@@ -128,13 +128,14 @@ public class NetworkManager {
 
     /**
      * Makes call to google map api to plot path between points
+     * travel mode parameter - walking
      * @param origin origin lat&lang String
      * @param dest destination lat&lang String
      * @param apiKey google api key String
      * @return Observable {@link MapPath}
      */
     public Observable<MapPath> getMapPath(String origin, String dest, String apiKey){
-        return mapService.getMapPath(origin, dest, apiKey);
+        return mapService.getMapPath(origin, dest, apiKey, "walking");
     }
 
     /**
