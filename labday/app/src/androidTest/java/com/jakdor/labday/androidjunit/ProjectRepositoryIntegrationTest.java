@@ -10,6 +10,7 @@ import com.jakdor.labday.R;
 import com.jakdor.labday.TestApp;
 import com.jakdor.labday.common.localdb.LocalDbHandler;
 import com.jakdor.labday.common.model.AppData;
+import com.jakdor.labday.common.model.LastUpdate;
 import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 import com.jakdor.labday.common.repository.NetworkManager;
@@ -263,9 +264,13 @@ public class ProjectRepositoryIntegrationTest {
             Assert.assertNotNull(projectRepository.getData());
             Assert.assertEquals(projectRepository.getData().data, appData);
 
-            Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
+            LastUpdate expectedLastUpdate = gson.fromJson(
+                    readAssetFile(testContext, "api/last_update.json"), LastUpdate.class);
+            Assert.assertNotNull(expectedLastUpdate.getUpdatedAt());
+            Assert.assertEquals(new String(expectedLastUpdate.getUpdatedAt().toCharArray()),
                     sharedPreferences.getString(targetContext.getString(
                             R.string.pref_api_last_update_id), null));
+
             return true;
         });
 
@@ -284,9 +289,12 @@ public class ProjectRepositoryIntegrationTest {
         SharedPreferences sharedPreferences = targetContext.getSharedPreferences(
                 targetContext.getString(R.string.pref_file_name), Context.MODE_PRIVATE);
 
+        Gson gson = new Gson();
+        LastUpdate expectedLastUpdate = gson.fromJson(
+                readAssetFile(testContext, "api/last_update.json"), LastUpdate.class);
         sharedPreferences.edit().putString(
                 targetContext.getString(R.string.pref_api_last_update_id),
-                readAssetFile(testContext, "api/last_update.json")).commit();
+                expectedLastUpdate.getUpdatedAt()).commit();
 
         Assert.assertEquals(projectRepository.getRepositoryState(),
                 ProjectRepository.repositoryStates.INIT);
@@ -294,7 +302,6 @@ public class ProjectRepositoryIntegrationTest {
 
         projectRepository.setAccessToken(dummyToken);
 
-        Gson gson = new Gson();
         AppData appData = gson.fromJson(
                 readAssetFile(testContext, "api/app_data.json"), AppData.class);
 
@@ -324,9 +331,11 @@ public class ProjectRepositoryIntegrationTest {
             Assert.assertNotNull(projectRepository.getData());
             Assert.assertEquals(appData, projectRepository.getData().data);
 
-            Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
+            Assert.assertNotNull(expectedLastUpdate.getUpdatedAt());
+            Assert.assertEquals(new String(expectedLastUpdate.getUpdatedAt().toCharArray()),
                     sharedPreferences.getString(targetContext.getString(
                             R.string.pref_api_last_update_id), null));
+
             return true;
         });
 
@@ -428,11 +437,14 @@ public class ProjectRepositoryIntegrationTest {
             Assert.assertNotNull(projectRepository.getData());
             Assert.assertEquals(projectRepository.getData().data, appData);
 
-            Assert.assertEquals(readAssetFile(testContext, "api/last_update.json"),
+            LastUpdate expectedLastUpdate = gson.fromJson(
+                    readAssetFile(testContext, "api/last_update.json"), LastUpdate.class);
+            Assert.assertNotNull(expectedLastUpdate.getUpdatedAt());
+            Assert.assertEquals(new String(expectedLastUpdate.getUpdatedAt().toCharArray()),
                     sharedPreferences.getString(targetContext.getString(
                             R.string.pref_api_last_update_id), null));
 
-            Assert.assertTrue(projectRepository.isLoggedIn(targetContext)); //todo Conceal unable to save in provided targetContext - reason unknown
+            Assert.assertTrue(projectRepository.isLoggedIn(targetContext));
             return true;
         });
 
