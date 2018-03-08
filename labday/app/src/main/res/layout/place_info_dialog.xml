@@ -3,76 +3,79 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="place"
             type="com.jakdor.labday.common.model.MapOther" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/Places_Dialog">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/place_img"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/place_image"
-            app:layout_constraintDimensionRatio="16:9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/place_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:text="@{place.name}"
-            android:textColor="@color/textBlack"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/place_img" />
+            <ImageView
+                android:id="@+id/place_img"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/place_image"
+                app:layout_constraintDimensionRatio="16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/place_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:text="@{place.name}"
+                android:textColor="@color/textBlack"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/place_img" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/place_map_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/menu_map"
+                    app:backgroundTint="@color/card1"
+                    app:borderWidth="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/place_img"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/place_img" />
+
+        </android.support.constraint.ConstraintLayout>
 
         <ScrollView
             android:id="@+id/place_scroll"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:paddingBottom="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/place_name">
+            android:layout_marginStart="8dp">
 
-            <TextView
-                android:id="@+id/place_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:paddingBottom="10dp"
-                android:text="@{place.info}" />
+                <TextView
+                    android:id="@+id/place_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="@{place.info}" />
 
         </ScrollView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/place_map_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_marginEnd="32dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/menu_map"
-            app:backgroundTint="@color/card1"
-            app:borderWidth="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/place_img"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/place_img" />
+    </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
 </layout>
