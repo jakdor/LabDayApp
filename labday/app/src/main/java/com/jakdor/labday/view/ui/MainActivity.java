@@ -80,8 +80,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
                 || fragment instanceof SplashFragment){
 
             if(doubleBackToExit) {
-                finish();
-                return;
+                finishAndRemoveTask();
             }
 
             doubleBackToExit = true;
