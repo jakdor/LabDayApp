@@ -18,8 +18,6 @@ import com.jakdor.labday.view.utils.GlideApp
  */
 class ImageFragment : Fragment() {
 
-    private lateinit var oldBarTitle: String
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view: View = layoutInflater.inflate(R.layout.fragment_img, container, false)
@@ -46,16 +44,16 @@ class ImageFragment : Fragment() {
 
     private fun setActionBar(title: String){
         val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar?.elevation = resources.getDimension(R.dimen.app_bar_elevation)
         actionBar?.show()
-        oldBarTitle = actionBar?.title as String
-        actionBar.title = title
+        actionBar?.title = title
     }
 
     override fun onDestroy() {
         super.onDestroy()
         val actionBar = (activity as AppCompatActivity).supportActionBar
         actionBar?.hide()
-        actionBar?.title = oldBarTitle
+        actionBar?.elevation = 0.0f
     }
 
     companion object {

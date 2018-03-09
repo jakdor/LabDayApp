@@ -36,7 +36,7 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
     private lateinit var pointLongitude: String
     private lateinit var pointInfo: String
 
-    private lateinit var overalyText: TextView
+    private lateinit var overlayText: TextView
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -49,7 +49,7 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
             inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View? {
         val mapView : FrameLayout = super.onCreateView(inflater, container, bundle) as FrameLayout
         val overlay = inflater.inflate(R.layout.fragment_map_overlay, container, false)
-        overalyText = overlay.findViewById(R.id.map_overlay_info)
+        overlayText = overlay.findViewById(R.id.map_overlay_info)
         mapView.addView(overlay)
         return mapView
     }
@@ -206,8 +206,8 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
         }
 
         info = info.replace('.', ',')
-        overalyText.visibility = View.VISIBLE
-        overalyText.text = info
+        overlayText.visibility = View.VISIBLE
+        overlayText.text = info
     }
 
     /**

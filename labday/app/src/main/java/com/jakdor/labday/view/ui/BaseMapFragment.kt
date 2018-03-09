@@ -46,7 +46,6 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
 
     //action bar
     protected lateinit var barTitle: String
-    private lateinit var oldBarTitle: String
 
     /**
      * Begin setup, get fusedLocationProviderClient
@@ -73,14 +72,17 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
     override fun onResume() {
         super.onResume()
         val actionBar = (activity as AppCompatActivity).supportActionBar
-        oldBarTitle = actionBar?.title as String
-        actionBar.title = barTitle
-        actionBar.show()
+        actionBar?.title = barTitle
+        actionBar?.elevation = resources.getDimension(R.dimen.app_bar_elevation)
+        actionBar?.show()
         if(!locationUpdates && locationPermissionGranted){
             startLocationUpdates()
         }
     }
 
+    /**
+     * Pause location updates onPause
+     */
     override fun onPause() {
         super.onPause()
         locationManager?.removeUpdates(this)
@@ -90,8 +92,8 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
     override fun onDestroy() {
         super.onDestroy()
         val actionBar = (activity as AppCompatActivity).supportActionBar
-        actionBar?.title = oldBarTitle
         actionBar?.hide()
+        actionBar?.elevation = 0.0f
 
         //cleanup
         try{
