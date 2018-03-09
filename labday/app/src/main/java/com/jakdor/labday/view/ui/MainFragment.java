@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.bumptech.glide.Glide;
 import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.model.Path;
@@ -72,6 +71,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
 
         binding.menuTimetable.menuCard.setOnClickListener(view -> onTimetableCardClick());
         binding.menuMap.menuCard.setOnClickListener(view -> onPlacesCardClick());
+        binding.menuMedia.menuCard.setOnClickListener(view -> onMediaCardClick());
 
         return binding.getRoot();
     }
@@ -189,7 +189,6 @@ public class MainFragment extends Fragment implements InjectableFragment {
      */
     public void onTimetableCardClick(){
         fragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.fragment_fade_in, R.anim.fragment_fade_out)
                 .addToBackStack(TimetableFragment.CLASS_TAG)
                 .replace(R.id.fragmentLayout, TimetableFragment.newInstance(activePath.getId()))
                 .commit();
@@ -202,6 +201,16 @@ public class MainFragment extends Fragment implements InjectableFragment {
         fragmentManager.beginTransaction()
                 .addToBackStack(PlacesFragment.CLASS_TAG)
                 .replace(R.id.fragmentLayout, new PlacesFragment())
+                .commit();
+    }
+
+    /**
+     * Transition to {@link MediaFragment}
+     */
+    public void onMediaCardClick(){
+        fragmentManager.beginTransaction()
+                .addToBackStack(MediaFragment.CLASS_TAG)
+                .replace(R.id.fragmentLayout, new MediaFragment())
                 .commit();
     }
 

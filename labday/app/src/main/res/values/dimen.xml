@@ -2,4 +2,5 @@
 <resources>
     <dimen name="zero">0px</dimen>
     <dimen name="wrap">-2</dimen>
+    <dimen name="app_bar_elevation">4dp</dimen>
 </resources>

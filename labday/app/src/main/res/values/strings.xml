@@ -37,4 +37,5 @@
     <string name="places_fragment_bar">POI na kampusie PWR</string>
     <string name="gps_off_prompt">Włącz GPS żebyśmy mogli poprowadzić Cię do celu :)</string>
     <string name="place_image">place image</string>
+    <string name="media_fragment_title">Media</string>
 </resources>
