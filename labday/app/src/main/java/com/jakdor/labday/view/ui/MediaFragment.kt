@@ -73,11 +73,11 @@ class MediaFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        animationHandler.removeCallbacksAndMessages(null) //remove all callbacks
         if (testMode) return
         val actionBar = (activity as AppCompatActivity).supportActionBar
         actionBar?.elevation = 0.0f
         actionBar?.hide()
-        animationHandler.removeCallbacksAndMessages(null) //remove all callbacks
     }
 
     /**

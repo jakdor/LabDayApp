@@ -72,6 +72,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
         binding.menuTimetable.menuCard.setOnClickListener(view -> onTimetableCardClick());
         binding.menuMap.menuCard.setOnClickListener(view -> onPlacesCardClick());
         binding.menuMedia.menuCard.setOnClickListener(view -> onMediaCardClick());
+        binding.menuInfo.menuCard.setOnClickListener(view -> onInfoCardClick());
 
         return binding.getRoot();
     }
@@ -211,6 +212,16 @@ public class MainFragment extends Fragment implements InjectableFragment {
         fragmentManager.beginTransaction()
                 .addToBackStack(MediaFragment.CLASS_TAG)
                 .replace(R.id.fragmentLayout, new MediaFragment())
+                .commit();
+    }
+
+    /**
+     * Transition to {@link InfoFragment}
+     */
+    public void onInfoCardClick(){
+        fragmentManager.beginTransaction()
+                .addToBackStack(InfoFragment.CLASS_TAG)
+                .replace(R.id.fragmentLayout, new InfoFragment())
                 .commit();
     }
 

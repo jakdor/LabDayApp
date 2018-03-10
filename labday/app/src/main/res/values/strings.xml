@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">LabDay</string>
-    <string name="logoDescription">logo</string>
+    <string name="logoDescription" translatable="false">logo</string>
     <string name="double_back_info">Naciśnij ponownie by wyjść</string>
     <string name="pref_file_name">pref</string>
     <string name="pref_api_last_update_id">apiLastUpdateID</string>
@@ -44,4 +44,5 @@
     <string name="link_fb_user">labdaypwr/</string>
     <string name="link_intagram_user">samorzadw3</string>
     <string name="link_yt_id">AfPgl_JgL-Q</string>
+    <string name="info_fragment_title">Informacje o aplikacji</string>
 </resources>
