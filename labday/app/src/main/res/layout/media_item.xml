@@ -5,16 +5,18 @@
     <data>
         <variable name="background" type="int"/>
         <variable name="title" type="String"/>
+        <variable name="img" type="android.graphics.drawable.Drawable"/>
     </data>
 
     <com.jakdor.labday.view.utils.SquareCardView
+        android:id="@+id/media_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:backgroundTint="@{background}"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="16dp"
         app:cardElevation="4dp">
 
         <android.support.constraint.ConstraintLayout
@@ -26,7 +28,8 @@
                 android:id="@+id/media_item_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/media_item_image"/>
+                android:contentDescription="@string/media_item_image"
+                android:src="@{img}"/>
 
             <TextView
                 android:id="@+id/media_item_text"
@@ -38,6 +41,7 @@
                 android:text="@{title}"
                 android:textSize="14sp"
                 android:textAllCaps="true"
+                android:textColor="@color/textBlack"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

@@ -10,7 +10,7 @@
         android:id="@+id/media_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/materialGrey">
+        android:background="@drawable/background1">
 
         <GridLayout
             android:id="@+id/media_grid"
@@ -32,7 +32,7 @@
                 android:layout_rowWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="6dp"
-                app:background="@{@color/colorAccentLight}"
+                app:background="@{@color/card1}"
                 app:title="@{@string/media_item_title_site}"/>
 
             <include layout="@layout/media_item"
@@ -43,7 +43,8 @@
                 android:layout_rowWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="6dp"
-                app:background="@{@color/fb_blue}" />
+                app:background="@{@color/textWhite}"
+                app:img="@{@drawable/ic_facebook_logo}"/>
 
             <include layout="@layout/media_item"
                 android:id="@+id/media_instagram_card"
@@ -53,7 +54,8 @@
                 android:layout_rowWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="6dp"
-                app:background="@{@color/instagram_purple}" />
+                app:background="@{@color/instagramPurple}"
+                app:img="@{@drawable/ic_instagram_logo}"/>
 
             <include layout="@layout/media_item"
                 android:id="@+id/media_yt_card"
@@ -63,7 +65,7 @@
                 android:layout_rowWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="6dp"
-                app:background="@{@color/yt_black}" />
+                app:background="@{@color/ytBlack}" />
 
         </GridLayout>
 
