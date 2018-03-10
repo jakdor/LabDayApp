@@ -37,4 +37,11 @@
     <string name="places_fragment_bar">POI na kampusie PWR</string>
     <string name="gps_off_prompt">Włącz GPS żebyśmy mogli poprowadzić Cię do celu :)</string>
     <string name="place_image">place image</string>
+    <string name="media_fragment_title">Media</string>
+    <string name="media_item_image">media item image</string>
+    <string name="media_item_title_site">Strona www</string>
+    <string name="link_lab_site">http://labday.pwr.edu.pl/</string>
+    <string name="link_fb">https://www.facebook.com/labdaypwr/</string>
+    <string name="link_intagram_user">samorzadw3</string>
+    <string name="link_yt_id">AfPgl_JgL-Q</string>
 </resources>
