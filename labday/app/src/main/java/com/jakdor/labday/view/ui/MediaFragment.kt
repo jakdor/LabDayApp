@@ -45,7 +45,7 @@ class MediaFragment : Fragment() {
             openWebsite(getString(R.string.link_lab_site))
         }
         binding.mediaFbCard?.mediaCard?.setOnClickListener {
-            openWebsite(getString(R.string.link_fb))
+            openFacebook(getString(R.string.link_fb_user))
         }
         binding.mediaInstagramCard?.mediaCard?.setOnClickListener {
             openInstagram(getString(R.string.link_intagram_user))
@@ -83,6 +83,29 @@ class MediaFragment : Fragment() {
     }
 
     /**
+     * Try opening Facebook app, or if activity not found in web browser
+     * @param user - facebook page
+     */
+    private fun openFacebook(user: String) {
+        val appIntent = Intent(Intent.ACTION_VIEW)
+        appIntent.data = Uri.parse("fb://facewebmodal/f?href=$user")
+
+        try {
+            appIntent.`package` = "com.facebook.katana"
+            startActivity(appIntent)
+        } catch (e: Exception) {
+            appIntent.`package` = "com.facebook.lite"
+        }
+
+        try {
+            startActivity(appIntent)
+        } catch (e: Exception) {
+            Log.i(CLASS_TAG, "Facebook app not installed")
+            openWebsite("https://www.facebook.com/$user")
+        }
+    }
+
+    /**
      * Try opening instagram profile in app, or if activity not found in web browser
      * @param user - instagram user profile
      */
@@ -97,14 +120,13 @@ class MediaFragment : Fragment() {
             Log.i(CLASS_TAG, "Instagram app not found")
             openWebsite("http://www.instagram.com/$user")
         }
-
     }
 
     /**
      * Try opening youtube video in app, or if activity not found in web browser
      * @param videoId - yt file id
      */
-    private fun openYoutube(videoId: String){
+    private fun openYoutube(videoId: String) {
         val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
 
         try {
@@ -113,7 +135,6 @@ class MediaFragment : Fragment() {
             Log.i(CLASS_TAG, "Youtube app not found")
             openWebsite("http://www.youtube.com/watch?v=$videoId")
         }
-
     }
 
     companion object {
