@@ -38,4 +38,6 @@
     <string name="gps_off_prompt">Włącz GPS żebyśmy mogli poprowadzić Cię do celu :)</string>
     <string name="place_image">place image</string>
     <string name="media_fragment_title">Media</string>
+    <string name="media_item_image">media item image</string>
+    <string name="media_item_title_site">Strona www</string>
 </resources>

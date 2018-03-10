@@ -19,6 +19,10 @@
     <color name="card1">#ffb74d</color>
     <color name="card2">#FFCC80</color>
 
+    <color name="fb_blue">#4665ae</color>
+    <color name="instagram_purple">#a52b78</color>
+    <color name="yt_black">#282828</color>
+
     <color name="textBlack">#000000</color>
     <color name="textWhite">#FFFFFF</color>
     <color name="textGrey">#616161</color>

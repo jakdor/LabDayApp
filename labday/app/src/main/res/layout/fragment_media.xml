@@ -1,19 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <ScrollView
+        android:id="@+id/media_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/materialGrey">
 
-        <TextView
+        <GridLayout
+            android:id="@+id/media_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="hello"/>
+            android:layout_margin="8dp"
+            android:orientation="horizontal"
+            android:alignmentMode="alignBounds"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:rowOrderPreserved="false"
+            android:useDefaultMargins="true">
 
-    </android.support.constraint.ConstraintLayout>
+            <include layout="@layout/media_item"
+                android:id="@+id/media_site_card"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="6dp"
+                app:background="@{@color/colorAccentLight}"
+                app:title="@{@string/media_item_title_site}"/>
+
+            <include layout="@layout/media_item"
+                android:id="@+id/media_fb_card"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="6dp"
+                app:background="@{@color/fb_blue}" />
+
+            <include layout="@layout/media_item"
+                android:id="@+id/media_instagram_card"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="6dp"
+                app:background="@{@color/instagram_purple}" />
+
+            <include layout="@layout/media_item"
+                android:id="@+id/media_yt_card"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_rowWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="6dp"
+                app:background="@{@color/yt_black}" />
+
+        </GridLayout>
+
+    </ScrollView>
+
 
 </layout>

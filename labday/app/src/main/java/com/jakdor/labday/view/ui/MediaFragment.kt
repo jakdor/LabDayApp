@@ -18,7 +18,7 @@ class MediaFragment : Fragment() {
 
     lateinit var binding: FragmentMediaBinding
 
-    private var testMode = false
+    var testMode = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
