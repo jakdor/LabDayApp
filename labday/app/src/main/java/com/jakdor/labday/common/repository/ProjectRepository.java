@@ -43,7 +43,7 @@ public class ProjectRepository {
     private LocalDbHandler localDbHandler;
     private RxSchedulersFacade rxSchedulersFacade;
 
-    private RxResponse data;
+    private RxResponse<AppData> data;
     private String apiUpdateId;
     private boolean apiUpdateCurrent = false;
     private repositoryStates repositoryState = repositoryStates.INIT;
@@ -354,7 +354,7 @@ public class ProjectRepository {
      * Access to AppData if repository is in READY state
      * @return {RxResponse<AppData>}
      */
-    public RxResponse getData() {
+    public RxResponse<AppData> getData() {
         Log.i(CLASS_TAG, "repository data available locally");
         return data;
     }

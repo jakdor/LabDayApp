@@ -33,7 +33,7 @@ constructor(projectRepository: ProjectRepository,
      */
     fun loadAppData(context: Context?, eventId: Int) {
         if (projectRepository.repositoryState == ProjectRepository.repositoryStates.READY) {
-            appData.value = projectRepository.data as RxResponse<AppData>?
+            appData.value = projectRepository.data
             getEventAndSpeaker(projectRepository.data.data as AppData, eventId)
         } else {
             disposable.add(projectRepository.getUpdate(LabService.API_URL, context)

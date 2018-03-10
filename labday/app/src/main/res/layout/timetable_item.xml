@@ -16,7 +16,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@{isNow ? @color/colorAccent : @android:color/transparent}">
+        android:background="@{safeUnbox(isNow) ? @color/colorAccent : @android:color/transparent}">
 
         <TextView
             android:id="@+id/timetable_item_time_start"
@@ -81,7 +81,7 @@
             android:textAllCaps="true"
             android:textColor="@color/textWhite"
             android:textSize="12sp"
-            android:visibility="@{isNow ? View.VISIBLE : View.GONE}"
+            android:visibility="@{safeUnbox(isNow) ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -108,7 +108,7 @@
                 android:id="@+id/timetable_item_card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@{isDarkColor ? @color/card2 : @color/card1}">
+                android:background="@{safeUnbox(isDarkColor) ? @color/card2 : @color/card1}">
 
                 <ImageView
                     android:id="@+id/timetable_item_image"
