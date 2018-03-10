@@ -4,7 +4,9 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.view.animation.FastOutLinearInInterpolator
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +24,7 @@ import android.util.Log
 class MediaFragment : Fragment() {
 
     lateinit var binding: FragmentMediaBinding
+    private val animationHandler = Handler()
 
     var testMode = false
 
@@ -40,6 +43,8 @@ class MediaFragment : Fragment() {
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(binding.mediaYtCard?.mediaItemImg)
+
+        animateMenuItems()
 
         binding.mediaSiteCard?.mediaCard?.setOnClickListener {
             openWebsite(getString(R.string.link_lab_site))
@@ -72,6 +77,7 @@ class MediaFragment : Fragment() {
         val actionBar = (activity as AppCompatActivity).supportActionBar
         actionBar?.elevation = 0.0f
         actionBar?.hide()
+        animationHandler.removeCallbacksAndMessages(null) //remove all callbacks
     }
 
     /**
@@ -135,6 +141,63 @@ class MediaFragment : Fragment() {
             Log.i(CLASS_TAG, "Youtube app not found")
             openWebsite("http://www.youtube.com/watch?v=$videoId")
         }
+    }
+
+    /**
+     * Animate items entry
+     */
+    private fun animateMenuItems() {
+        val menuItems = arrayOf(binding.mediaSiteCard?.root!!,
+                binding.mediaFbCard?.root!!,
+                binding.mediaInstagramCard?.root!!,
+                binding.mediaYtCard?.root!!)
+
+        for (view in menuItems) {
+            view.translationY = -50.0f
+            view.translationX = -50.0f
+            view.scaleX = 0.65f
+            view.scaleY = 0.65f
+            view.alpha = 0.0f
+        }
+
+        animationHandler.postDelayed(getNextAnimator(menuItems, 0), 5)
+    }
+
+    /**
+     * Animate item
+     * @param views card array
+     * @param position current view to animate
+     * @return Runnable
+     */
+    private fun getNextAnimator(views:Array<View>, position:Int): (() -> Unit)? {
+        if (position >= views.size) return null
+        var pos = position
+
+        if(pos == 2){ //animate axis items simultaneously - material design guideline
+            views[pos]
+                    .animate()
+                    .scaleX(1.0f)
+                    .scaleY(1.0f)
+                    .alpha(1.0f)
+                    .translationX(0.0f)
+                    .translationY(0.0f)
+                    .setInterpolator(FastOutLinearInInterpolator())
+                    .setDuration(200)
+                    .start()
+            ++pos
+        }
+
+        return { views[pos]
+        .animate()
+        .scaleX(1.0f)
+        .scaleY(1.0f)
+        .alpha(1.0f)
+        .translationX(0.0f)
+        .translationY(0.0f)
+        .setInterpolator(FastOutLinearInInterpolator())
+        .setDuration(200)
+        .withEndAction(getNextAnimator(views, pos + 1))
+        .start() }
     }
 
     companion object {
