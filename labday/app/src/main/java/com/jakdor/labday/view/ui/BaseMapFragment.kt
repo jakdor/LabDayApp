@@ -1,5 +1,6 @@
 package com.jakdor.labday.view.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -89,9 +90,11 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
         locationUpdates = false
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onDestroy() {
         super.onDestroy()
         val actionBar = (activity as AppCompatActivity).supportActionBar
+        actionBar?.setShowHideAnimationEnabled(false)
         actionBar?.hide()
         actionBar?.elevation = 0.0f
 
