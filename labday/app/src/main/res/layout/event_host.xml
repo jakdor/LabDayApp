@@ -89,15 +89,28 @@
             android:id="@+id/host_icon"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/event_info_icon"
             android:src="@drawable/person"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="@id/host_divider_guideline"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/host_icon_guideline2"
+            app:layout_constraintStart_toStartOf="@+id/host_icon_guideline"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/host_icon_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.07" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/host_icon_guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.14" />
 
     </android.support.constraint.ConstraintLayout>
 
