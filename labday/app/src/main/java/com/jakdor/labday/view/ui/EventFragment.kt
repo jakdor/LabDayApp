@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.RequestOptions
 import com.jakdor.labday.R
 import com.jakdor.labday.common.model.Event
 import com.jakdor.labday.common.model.Speaker
@@ -129,6 +130,7 @@ class EventFragment : Fragment(), InjectableFragment {
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher_foreground)
                 .error(R.mipmap.ic_launcher_foreground)
+                .apply(RequestOptions.circleCropTransform())
                 .into(binding.eventHostCard?.eventHostImage)
 
         GlideApp.with(this)

@@ -60,4 +60,5 @@
     <string name="link_asi">https://www.facebook.com/ASI.PWr/</string>
     <string name="link_gh_kuba">https://github.com/jakdor</string>
     <string name="link_gh_jan">https://github.com/JanStoltman</string>
+    <string name="event_host_image_desc">event host image</string>
 </resources>

@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/event_host_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="24dp"
             android:clickable="true"
             android:focusable="true"
-            app:civ_fill_color="@color/colorImage"
+            android:contentDescription="@string/event_host_image_desc"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toStartOf="@+id/host_image_guideline2"
             app:layout_constraintStart_toStartOf="@+id/host_image_guideline"
