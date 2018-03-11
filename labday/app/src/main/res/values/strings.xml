@@ -45,4 +45,19 @@
     <string name="link_intagram_user">samorzadw3</string>
     <string name="link_yt_id">AfPgl_JgL-Q</string>
     <string name="info_fragment_title">Informacje o aplikacji</string>
+    <string name="asi_logo">ASI logo</string>
+    <string name="link_asi_logo">http://15.sesja.linuksowa.pl/img/loga/logo-asi.png</string>
+    <string name="author_image">author image</string>
+    <string name="link_img_kuba">http://gdurl.com/raZZ</string>
+    <string name="link_img_jan">http://gdurl.com/fs7y</string>
+    <string name="info_asi">Aplikacja stworzona przez:</string>
+    <string name="info_authors">Autorzy</string>
+    <string name="author_kuba_name">Jakub Dorda</string>
+    <string name="author_kuba_info">Android</string>
+    <string name="author_jan_name">Jan Stoltman</string>
+    <string name="author_jan_info">Backend</string>
+    <string name="gh_logo">github logo</string>
+    <string name="link_asi">https://www.facebook.com/ASI.PWr/</string>
+    <string name="link_gh_kuba">https://github.com/jakdor</string>
+    <string name="link_gh_jan">https://github.com/JanStoltman</string>
 </resources>

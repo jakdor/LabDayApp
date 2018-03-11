@@ -1,14 +1,18 @@
 package com.jakdor.labday.view.ui
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.request.RequestOptions
 import com.jakdor.labday.R
 import com.jakdor.labday.databinding.FragmentInfoBinding
+import com.jakdor.labday.view.utils.GlideApp
 
 /**
  * Fragment displaying authors info
@@ -23,6 +27,33 @@ class InfoFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_info, container, false)
+
+        GlideApp.with(this)
+                .load(getString(R.string.link_asi_logo))
+                .placeholder(R.drawable.lab_day_logo_full)
+                .fitCenter()
+                .into(binding.infoLogo)
+
+        GlideApp.with(this)
+                .load(getString(R.string.link_img_kuba))
+                .placeholder(R.mipmap.ic_launcher_foreground)
+                .apply(RequestOptions.circleCropTransform())
+                .into(binding.authorKuba?.infoItemImg)
+
+        GlideApp.with(this)
+                .load(getString(R.string.link_img_jan))
+                .placeholder(R.mipmap.ic_launcher_foreground)
+                .apply(RequestOptions.circleCropTransform())
+                .into(binding.authorJan?.infoItemImg)
+
+        binding.infoLogo.setOnClickListener { openWebsite(getString(R.string.link_asi)) }
+        binding.authorKuba?.infoItemGh?.setOnClickListener {
+            openWebsite(getString(R.string.link_gh_kuba))
+        }
+        binding.authorJan?.infoItemGh?.setOnClickListener {
+            openWebsite(getString(R.string.link_gh_jan))
+        }
+
         return binding.root
     }
 
@@ -41,6 +72,14 @@ class InfoFragment : Fragment() {
         val actionBar = (activity as AppCompatActivity).supportActionBar
         actionBar?.elevation = 0.0f
         actionBar?.hide()
+    }
+
+    /**
+     * Lunch open website intent
+     * @param url - website url
+     */
+    private fun openWebsite(url: String) {
+        context?.startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)))
     }
 
     companion object {
