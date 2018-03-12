@@ -41,7 +41,8 @@ android {
         versionCode 1
         versionName "beta 1.0.0"
         testInstrumentationRunner 'com.jakdor.labday.InstrumentationTestRunner'
-    }
+        //testInstrumentationRunner "com.jakdor.labday.EspressoRunner"
+    } //todo find way to automatically switch between testInstrumentationRunners
     buildTypes {
         release {
             minifyEnabled true
