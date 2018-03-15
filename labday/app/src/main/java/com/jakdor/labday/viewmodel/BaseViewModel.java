@@ -42,20 +42,29 @@ public abstract class BaseViewModel extends AndroidViewModel {
     }
 
     /**
-     * Setups observer for data from {@link ProjectRepository}
+     * Check if data already available before requesting an update
      */
     public void loadAppData(Context context){
         if(projectRepository.getRepositoryState() == ProjectRepository.repositoryStates.READY){
             appData.setValue(projectRepository.getData());
+            loadingStatus.setValue(false);
         }
         else {
-            disposable.add(projectRepository.getUpdate(LabService.API_URL, context)
-                    .subscribeOn(rxSchedulersFacade.io())
-                    .observeOn(rxSchedulersFacade.ui())
-                    .doOnSubscribe(disposable1 -> loadingStatus.setValue(true))
-                    .doAfterTerminate(() -> loadingStatus.setValue(false))
-                    .subscribe(appData::setValue));
+            getUpdate(context);
         }
+    }
+
+    /**
+     * Setups observer for data from {@link ProjectRepository}
+     */
+    public void getUpdate(Context context){
+        disposable.add(projectRepository.getUpdate(LabService.API_URL, context)
+                .subscribeOn(rxSchedulersFacade.io())
+                .observeOn(rxSchedulersFacade.ui())
+                .doOnSubscribe(disposable1 -> loadingStatus.setValue(true))
+                .doAfterNext(appDataRxResponse -> loadingStatus.setValue(false))
+                .doAfterTerminate(() -> loadingStatus.setValue(false))
+                .subscribe(appData::setValue));
     }
 
     public MutableLiveData<RxResponse<AppData>> getResponse() {
