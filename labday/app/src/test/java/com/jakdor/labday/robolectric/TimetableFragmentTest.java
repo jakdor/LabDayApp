@@ -50,14 +50,15 @@ public class TimetableFragmentTest {
     private TimetableFragment timetableFragment;
 
     private TimetableViewModel viewModel;
-    private MutableLiveData<RxResponse<AppData>> appData;
+    private MutableLiveData<RxResponse<AppData>> appData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> loadingStatus = new MutableLiveData<>();
     private AppData data;
 
     private void initMocks() throws Exception{
-        appData = new MutableLiveData<>();
         Gson gson = new Gson();
         data = gson.fromJson(TestUtils.readFile(appDataJsonPath), AppData.class);
         appData.setValue(RxResponse.success(data));
+        loadingStatus.setValue(false);
     }
 
     @Before
@@ -68,6 +69,7 @@ public class TimetableFragmentTest {
 
         viewModel = Mockito.mock(TimetableViewModel.class);
         Mockito.when(viewModel.getResponse()).thenReturn(appData);
+        Mockito.when(viewModel.getLoadingStatus()).thenReturn(loadingStatus);
 
         timetableFragment.setViewModel(viewModel);
     }
