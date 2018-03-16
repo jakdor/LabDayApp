@@ -44,6 +44,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
     private Handler animationHandler = new Handler();
     private Path activePath;
     private boolean blockWhileLoading = false;
+    private boolean playAnimOnFirstLoad = true;
 
     private MainViewModel viewModel;
     private boolean testMode;
@@ -68,7 +69,9 @@ public class MainFragment extends Fragment implements InjectableFragment {
             fragmentManager = getActivity().getSupportFragmentManager();
         }
 
-        animateMenuItems();
+        if(playAnimOnFirstLoad) {
+            animateMenuItems();
+        }
 
         binding.menuTimetable.menuCard.setOnClickListener(view -> onTimetableCardClick());
         binding.menuMap.menuCard.setOnClickListener(view -> onPlacesCardClick());
@@ -109,6 +112,15 @@ public class MainFragment extends Fragment implements InjectableFragment {
                 actionBar.setShowHideAnimationEnabled(false);
             }
         }
+    }
+
+    /**
+     * animation only plays while entering the app from SplashScreen
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        playAnimOnFirstLoad = false;
     }
 
     @Override
@@ -178,7 +190,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
             view.setAlpha(0.0f);
         }
 
-        animationHandler.postDelayed(getNextAnimator(menuItems, 0), 5);
+        animationHandler.postDelayed(getNextAnimator(menuItems, 0), 100);
     }
 
     /**
