@@ -10,8 +10,9 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ui.MainActivity"
-        android:background="@color/materialGrey">
+        android:paddingTop="?attr/actionBarSize"
+        android:background="@color/materialGrey"
+        tools:context=".view.ui.MainActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar_container"

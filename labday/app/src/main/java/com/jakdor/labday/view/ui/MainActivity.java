@@ -2,9 +2,12 @@ package com.jakdor.labday.view.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.jakdor.labday.R;
@@ -38,6 +41,10 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
         setContentView(R.layout.activity_main);
 
+        // Set the padding to match the Status Bar height
+        ConstraintLayout mainLayout = findViewById(R.id.main_activity_layout);
+        mainLayout.setPadding(0, getStatusBarHeight(), 0, 0);
+
         if(savedInstanceState == null) {
             SplashFragment splashFragment = new SplashFragment();
 
@@ -67,6 +74,20 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    /**
+     * Get device specific status bar height
+     * @return int status bar height
+     */
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources()
+                .getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     /**

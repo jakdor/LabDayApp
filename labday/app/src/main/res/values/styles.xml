@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarStyle">@style/ActionBarNoShadow</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="ActionBarNoShadow" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
