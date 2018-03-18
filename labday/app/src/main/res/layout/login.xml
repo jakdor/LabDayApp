@@ -10,6 +10,7 @@
     android:background="@android:color/transparent"
     android:gravity="center"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:layout_editor_absoluteY="25dp">
 
     <ImageView
