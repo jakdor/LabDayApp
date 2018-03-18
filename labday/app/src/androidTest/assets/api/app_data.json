@@ -27,6 +27,20 @@
             "dor2_img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
             "latitude": "51.1107075",
             "longitude": "17.042731"
+        },
+        {
+            "id": 5,
+            "name": "Rejestracja",
+            "img": "https://www.pkt.pl/wiz/LOD1/4520043/1/3_LOD1_4520043_1_.jpg",
+            "address": "Nie wiem",
+            "room": "C-99 9.99",
+            "info": "",
+            "topic": "Rejestracja uczestników",
+            "speaker_id": 3,
+            "dor1_img": "",
+            "dor2_img": "",
+            "latitude": "",
+            "longitude": ""
         }
     ],
     "places": [
@@ -78,6 +92,26 @@
             "active": false
         }
     ],
+    "speakers": [
+        {
+            "id": 1,
+            "name": "Name Surname",
+            "info": "short speaker info",
+            "img": "https://www.wykop.pl/cdn/c3201142/comment_LfNZtBbrA6zGMC5a8ocADPcOXUcVbPIj.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Jakub Dorda",
+            "info": "short speaker info",
+            "img": "https://www.wykop.pl/cdn/c3201142/comment_LfNZtBbrA6zGMC5a8ocADPcOXUcVbPIj.jpg"
+        },
+        {
+            "id": 3,
+            "name": "NaS",
+            "info": "Not a Speaker - for registry and opening",
+            "img": ""
+        }
+    ],
     "timetables": [
         {
             "id": 1,
@@ -99,20 +133,13 @@
             "event_id": 2,
             "time_start": 1518743127,
             "time_end": 1518746127
-        }
-    ],
-    "speakers": [
-        {
-            "id": 1,
-            "name": "Name Surname",
-            "info": "short speaker info",
-            "img": "https://www.wykop.pl/cdn/c3201142/comment_LfNZtBbrA6zGMC5a8ocADPcOXUcVbPIj.jpg"
         },
         {
-            "id": 2,
-            "name": "Jakub Dorda",
-            "info": "short speaker info",
-            "img": "https://www.wykop.pl/cdn/c3201142/comment_LfNZtBbrA6zGMC5a8ocADPcOXUcVbPIj.jpg"
+            "id": 4,
+            "path_id": 2,
+            "event_id": 5,
+            "time_start": 1000,
+            "time_end": 9000
         }
     ]
 }

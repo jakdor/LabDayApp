@@ -139,7 +139,7 @@ class EventFragment : Fragment(), InjectableFragment {
                 .placeholder(R.mipmap.ic_launcher_foreground)
                 .error(R.mipmap.ic_launcher_foreground)
                 .transition(withCrossFade())
-                .into(binding.eventDoorsItem?.door1)
+                .into(binding.eventDoorsCard?.door1)
 
         GlideApp.with(this)
                 .load(event.dor2Img)
@@ -147,7 +147,7 @@ class EventFragment : Fragment(), InjectableFragment {
                 .placeholder(R.mipmap.ic_launcher_foreground)
                 .error(R.mipmap.ic_launcher_foreground)
                 .transition(withCrossFade())
-                .into(binding.eventDoorsItem?.door2)
+                .into(binding.eventDoorsCard?.door2)
 
         val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.GERMAN)
         simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT+1")
@@ -167,12 +167,12 @@ class EventFragment : Fragment(), InjectableFragment {
             }
 
         if(!event.dor1Img.isEmpty())
-            binding.eventDoorsItem?.doorCard1?.setOnClickListener { _ ->
+            binding.eventDoorsCard?.doorCard1?.setOnClickListener { _ ->
                 switchToImgFragment(event.dor1Img, getString(R.string.entrence_info))
             }
 
         if(!event.dor2Img.isEmpty())
-            binding.eventDoorsItem?.doorCard2?.setOnClickListener { _ ->
+            binding.eventDoorsCard?.doorCard2?.setOnClickListener { _ ->
                 switchToImgFragment(event.dor2Img, getString(R.string.entrence_info))
             }
 
@@ -182,6 +182,14 @@ class EventFragment : Fragment(), InjectableFragment {
 
         binding.eventAddressCard?.eventItem?.setOnClickListener { _ ->
             switchToMapFragment(event.latitude, event.longitude, event.address)
+        }
+
+        if(speaker.speakerName == "NaS"){ //Not-a-Speaker hide speaker view
+           binding.eventHostCard?.eventHostView?.visibility = View.GONE
+        }
+
+        if(event.dor1Img.isEmpty() && event.dor1Img.isEmpty()){
+            binding.eventDoorsCard?.eventDoorsView?.visibility = View.GONE
         }
     }
 
@@ -195,6 +203,9 @@ class EventFragment : Fragment(), InjectableFragment {
     }
 
     fun switchToMapFragment(lat: String, long: String, info: String){
+        if(lat.isEmpty() || long.isEmpty())
+            return
+
         if (activity != null) {
             activity!!.supportFragmentManager.beginTransaction()
                     .addToBackStack(MapFragment.CLASS_TAG)
