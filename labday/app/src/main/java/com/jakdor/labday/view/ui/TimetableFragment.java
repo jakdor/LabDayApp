@@ -36,6 +36,7 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
 
     private TimetableViewModel viewModel;
     private int activePathId;
+    private boolean blockWhileLoading = false;
 
     private FragmentTimetableBinding binding;
 
@@ -71,6 +72,12 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
 
         binding.getRoot().measure(View.MeasureSpec.EXACTLY, View.MeasureSpec.EXACTLY);
 
+        //force update check on swipe-to-refresh
+        binding.swiperefreshTimetable.setOnRefreshListener(() -> {
+            if(!blockWhileLoading)
+                viewModel.getUpdate(getContext());
+        });
+
         return binding.getRoot();
     }
 
@@ -84,6 +91,7 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         }
 
         observeAppData();
+        observeLoadingStatus();
         viewModel.loadAppData(getContext());
     }
 
@@ -116,10 +124,16 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         viewModel.getResponse().observe(this, this::processResponse);
     }
 
+    public void observeLoadingStatus(){
+        viewModel.getLoadingStatus().observe(this, this::handleLoadingStatus);
+    }
+
     /**
      * Set path name in timetable card
      */
     public void processResponse(RxResponse<AppData> response) {
+        binding.swiperefreshTimetable.setRefreshing(false); //stop swipe to refresh anim
+
         if(response.status == RxStatus.SUCCESS || response.status == RxStatus.SUCCESS_DB){
             loadRecyclerView(response.data, activePathId);
         }
@@ -128,6 +142,10 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
                 Log.e(CLASS_TAG, response.error.toString());
             }
         }
+    }
+
+    public void handleLoadingStatus(Boolean status){
+        blockWhileLoading = status;
     }
 
     /**
@@ -175,6 +193,10 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
 
     public FragmentTimetableBinding getBinding() {
         return binding;
+    }
+
+    public boolean isBlockWhileLoading() {
+        return blockWhileLoading;
     }
 
     public void setTestMode() {

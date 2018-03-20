@@ -6,106 +6,113 @@
         <variable name="path" type="String" />
     </data>
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background1">
+        android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:clipToPadding="false"
-            android:background="@android:color/transparent">
+            android:layout_height="match_parent"
+            android:background="@drawable/background1">
 
-            <ImageView
-                android:id="@+id/menu_logo"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:contentDescription="@string/lab_day_logo"
-                app:layout_constraintDimensionRatio="21:9"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="spread_inside" />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:clipToPadding="false"
+                android:background="@android:color/transparent">
 
-            <include
-                android:id="@+id/menu_timetable"
-                layout="@layout/menu_card"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                app:background="@{@color/colorAuxiliary}"
-                app:icon="@{@drawable/menu_clock}"
-                app:image="@{@drawable/atom}"
-                app:layout_constraintDimensionRatio="w,17:60"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/menu_logo"
-                app:path="@{path}"
-                app:title="@{@string/menu_title_timetable}" />
+                <ImageView
+                    android:id="@+id/menu_logo"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:contentDescription="@string/lab_day_logo"
+                    app:layout_constraintDimensionRatio="21:9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread_inside" />
 
-            <include
-                android:id="@+id/menu_map"
-                layout="@layout/menu_card"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                app:background="@{@color/colorMenu2}"
-                app:icon="@{@drawable/menu_map}"
-                app:image="@{@drawable/arrows}"
-                app:layout_constraintDimensionRatio="w,17:60"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/menu_timetable"
-                app:title="@{@string/menu_title_map}" />
+                <include
+                    android:id="@+id/menu_timetable"
+                    layout="@layout/menu_card"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    app:background="@{@color/colorAuxiliary}"
+                    app:icon="@{@drawable/menu_clock}"
+                    app:image="@{@drawable/atom}"
+                    app:layout_constraintDimensionRatio="w,17:60"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/menu_logo"
+                    app:path="@{path}"
+                    app:title="@{@string/menu_title_timetable}" />
 
-            <include
-                android:id="@+id/menu_media"
-                layout="@layout/menu_card"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                app:background="@{@color/colorMenu1}"
-                app:icon="@{@drawable/menu_media}"
-                app:image="@{@drawable/sparks}"
-                app:layout_constraintDimensionRatio="w,17:60"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/menu_map"
-                app:title="@{@string/menu_title_media}" />
+                <include
+                    android:id="@+id/menu_map"
+                    layout="@layout/menu_card"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    app:background="@{@color/colorMenu2}"
+                    app:icon="@{@drawable/menu_map}"
+                    app:image="@{@drawable/arrows}"
+                    app:layout_constraintDimensionRatio="w,17:60"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/menu_timetable"
+                    app:title="@{@string/menu_title_map}" />
 
-            <include
-                android:id="@+id/menu_info"
-                layout="@layout/menu_card"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                app:background="@{@color/colorMenu3}"
-                app:icon="@{@drawable/menu_about}"
-                app:image="@{@drawable/gear}"
-                app:layout_constraintDimensionRatio="w,17:60"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/menu_media"
-                app:title="@{@string/menu_title_info}" />
+                <include
+                    android:id="@+id/menu_media"
+                    layout="@layout/menu_card"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    app:background="@{@color/colorMenu1}"
+                    app:icon="@{@drawable/menu_media}"
+                    app:image="@{@drawable/sparks}"
+                    app:layout_constraintDimensionRatio="w,17:60"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/menu_map"
+                    app:title="@{@string/menu_title_media}" />
 
-        </android.support.constraint.ConstraintLayout>
+                <include
+                    android:id="@+id/menu_info"
+                    layout="@layout/menu_card"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    app:background="@{@color/colorMenu3}"
+                    app:icon="@{@drawable/menu_about}"
+                    app:image="@{@drawable/gear}"
+                    app:layout_constraintDimensionRatio="w,17:60"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/menu_media"
+                    app:title="@{@string/menu_title_info}" />
 
-    </android.support.v4.widget.NestedScrollView>
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </layout>

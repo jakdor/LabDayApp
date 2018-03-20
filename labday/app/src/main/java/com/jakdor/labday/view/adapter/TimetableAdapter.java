@@ -90,7 +90,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
     }
 
     public void onCardClick(Timetable timetable){
-        if (fragment.getActivity() != null) {
+        if (fragment.getActivity() != null && !fragment.isBlockWhileLoading()) {
             fragment.getActivity().getSupportFragmentManager().beginTransaction()
                     .addToBackStack(EventFragment.CLASS_TAG)
                     .replace(R.id.fragmentLayout, EventFragment.Companion.newInstance(timetable))

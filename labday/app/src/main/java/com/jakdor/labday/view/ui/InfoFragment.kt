@@ -36,13 +36,13 @@ class InfoFragment : Fragment() {
 
         GlideApp.with(this)
                 .load(getString(R.string.link_img_kuba))
-                .placeholder(R.mipmap.ic_launcher_foreground)
+                .placeholder(R.drawable.placeholder)
                 .apply(RequestOptions.circleCropTransform())
                 .into(binding.authorKuba?.infoItemImg)
 
         GlideApp.with(this)
                 .load(getString(R.string.link_img_jan))
-                .placeholder(R.mipmap.ic_launcher_foreground)
+                .placeholder(R.drawable.placeholder)
                 .apply(RequestOptions.circleCropTransform())
                 .into(binding.authorJan?.infoItemImg)
 

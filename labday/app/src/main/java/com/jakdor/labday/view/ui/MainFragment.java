@@ -43,6 +43,8 @@ public class MainFragment extends Fragment implements InjectableFragment {
     private FragmentManager fragmentManager = getFragmentManager();
     private Handler animationHandler = new Handler();
     private Path activePath;
+    private boolean blockWhileLoading = false;
+    private boolean playAnimOnFirstLoad = true;
 
     private MainViewModel viewModel;
     private boolean testMode;
@@ -67,12 +69,20 @@ public class MainFragment extends Fragment implements InjectableFragment {
             fragmentManager = getActivity().getSupportFragmentManager();
         }
 
-        animateMenuItems();
+        if(playAnimOnFirstLoad) {
+            animateMenuItems();
+        }
 
         binding.menuTimetable.menuCard.setOnClickListener(view -> onTimetableCardClick());
         binding.menuMap.menuCard.setOnClickListener(view -> onPlacesCardClick());
         binding.menuMedia.menuCard.setOnClickListener(view -> onMediaCardClick());
         binding.menuInfo.menuCard.setOnClickListener(view -> onInfoCardClick());
+
+        //force update check on swipe-to-refresh
+        binding.swiperefreshMain.setOnRefreshListener(() -> {
+            if(!blockWhileLoading)
+                viewModel.getUpdate(getContext());
+        });
 
         return binding.getRoot();
     }
@@ -87,6 +97,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
         }
 
         observeAppData();
+        observeLoadingStatus();
         viewModel.loadAppData(getContext());
     }
 
@@ -103,6 +114,15 @@ public class MainFragment extends Fragment implements InjectableFragment {
         }
     }
 
+    /**
+     * animation only plays while entering the app from SplashScreen
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        playAnimOnFirstLoad = false;
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -113,10 +133,16 @@ public class MainFragment extends Fragment implements InjectableFragment {
         viewModel.getResponse().observe(this, this::processResponse);
     }
 
+    public void observeLoadingStatus(){
+        viewModel.getLoadingStatus().observe(this, this::handleLoadingStatus);
+    }
+
     /**
      * Set path name in timetable card
      */
-    private void processResponse(RxResponse<AppData> response) {
+    public void processResponse(RxResponse<AppData> response) {
+        binding.swiperefreshMain.setRefreshing(false); //stop swipe to refresh anim
+
         if(response.status == RxStatus.SUCCESS || response.status == RxStatus.SUCCESS_DB){
             if(response.data != null) {
                 for(Path path : response.data.getPaths()){
@@ -136,10 +162,14 @@ public class MainFragment extends Fragment implements InjectableFragment {
         }
     }
 
+    public void handleLoadingStatus(Boolean status){
+        blockWhileLoading = status;
+    }
+
     /**
      * Animate logo and menu cards
      */
-    private void animateMenuItems(){
+    public void animateMenuItems(){
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.main_logo_anim);
         animation.setInterpolator(new FastOutLinearInInterpolator());
         animation.start();
@@ -160,7 +190,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
             view.setAlpha(0.0f);
         }
 
-        animationHandler.postDelayed(getNextAnimator(menuItems, 0), 5);
+        animationHandler.postDelayed(getNextAnimator(menuItems, 0), 100);
     }
 
     /**
@@ -189,20 +219,22 @@ public class MainFragment extends Fragment implements InjectableFragment {
      * Transition to {@link TimetableFragment}
      */
     public void onTimetableCardClick(){
-        fragmentManager.beginTransaction()
-                .addToBackStack(TimetableFragment.CLASS_TAG)
-                .replace(R.id.fragmentLayout, TimetableFragment.newInstance(activePath.getId()))
-                .commit();
+        if(!blockWhileLoading)
+            fragmentManager.beginTransaction()
+                    .addToBackStack(TimetableFragment.CLASS_TAG)
+                    .replace(R.id.fragmentLayout, TimetableFragment.newInstance(activePath.getId()))
+                    .commit();
     }
 
     /**
      * Transition to {@link PlacesFragment}
      */
     public void onPlacesCardClick(){
-        fragmentManager.beginTransaction()
-                .addToBackStack(PlacesFragment.CLASS_TAG)
-                .replace(R.id.fragmentLayout, new PlacesFragment())
-                .commit();
+        if(!blockWhileLoading)
+            fragmentManager.beginTransaction()
+                    .addToBackStack(PlacesFragment.CLASS_TAG)
+                    .replace(R.id.fragmentLayout, new PlacesFragment())
+                    .commit();
     }
 
     /**

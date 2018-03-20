@@ -10,8 +10,9 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ui.MainActivity"
-        android:background="@color/materialGrey">
+        android:paddingTop="?attr/actionBarSize"
+        android:background="@color/materialGrey"
+        tools:context=".view.ui.MainActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar_container"
@@ -37,10 +38,19 @@
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/timetable_recycler_view"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swiperefresh_timetable"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/timetable_recycler_view"
+                    android:paddingBottom="?attr/actionBarSize"
+                    android:clipToPadding="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
 
         </android.support.v4.widget.NestedScrollView>
 

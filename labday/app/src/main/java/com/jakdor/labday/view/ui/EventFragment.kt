@@ -125,29 +125,37 @@ class EventFragment : Fragment(), InjectableFragment {
                 .transition(withCrossFade())
                 .into(binding.imgToolbar)
 
-        GlideApp.with(this)
-                .load(speaker.speakerImg)
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_foreground)
-                .error(R.mipmap.ic_launcher_foreground)
-                .apply(RequestOptions.circleCropTransform())
-                .into(binding.eventHostCard?.eventHostImage)
+        if(speaker.speakerName == "NaS"){ //Not-a-Speaker hide speaker view
+            binding.eventHostCard?.eventHostView?.visibility = View.GONE
+        } else {
+            GlideApp.with(this)
+                    .load(speaker.speakerImg)
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(binding.eventHostCard?.eventHostImage)
+        }
 
-        GlideApp.with(this)
-                .load(event.dor1Img)
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_foreground)
-                .error(R.mipmap.ic_launcher_foreground)
-                .transition(withCrossFade())
-                .into(binding.eventDoorsItem?.door1)
+        if(event.dor1Img.isEmpty() && event.dor1Img.isEmpty()){
+            binding.eventDoorsCard?.eventDoorsView?.visibility = View.GONE
+        } else {
+            GlideApp.with(this)
+                    .load(event.dor1Img)
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .transition(withCrossFade())
+                    .into(binding.eventDoorsCard?.door1)
 
-        GlideApp.with(this)
-                .load(event.dor2Img)
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_foreground)
-                .error(R.mipmap.ic_launcher_foreground)
-                .transition(withCrossFade())
-                .into(binding.eventDoorsItem?.door2)
+            GlideApp.with(this)
+                    .load(event.dor2Img)
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .transition(withCrossFade())
+                    .into(binding.eventDoorsCard?.door2)
+        }
 
         val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.GERMAN)
         simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT+1")
@@ -167,12 +175,12 @@ class EventFragment : Fragment(), InjectableFragment {
             }
 
         if(!event.dor1Img.isEmpty())
-            binding.eventDoorsItem?.doorCard1?.setOnClickListener { _ ->
+            binding.eventDoorsCard?.doorCard1?.setOnClickListener { _ ->
                 switchToImgFragment(event.dor1Img, getString(R.string.entrence_info))
             }
 
         if(!event.dor2Img.isEmpty())
-            binding.eventDoorsItem?.doorCard2?.setOnClickListener { _ ->
+            binding.eventDoorsCard?.doorCard2?.setOnClickListener { _ ->
                 switchToImgFragment(event.dor2Img, getString(R.string.entrence_info))
             }
 
@@ -195,6 +203,9 @@ class EventFragment : Fragment(), InjectableFragment {
     }
 
     fun switchToMapFragment(lat: String, long: String, info: String){
+        if(lat.isEmpty() || long.isEmpty())
+            return
+
         if (activity != null) {
             activity!!.supportFragmentManager.beginTransaction()
                     .addToBackStack(MapFragment.CLASS_TAG)

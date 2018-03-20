@@ -57,7 +57,7 @@
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/event_nested_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -102,13 +102,13 @@
                     app:info = "@{speaker.speakerInfo}"/>
 
                 <include layout="@layout/event_doors"
-                    android:id="@+id/event_doors_item"
+                    android:id="@+id/event_doors_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="16dp"/>
+                    android:layout_height="?attr/actionBarSize" />
 
             </LinearLayout>
 

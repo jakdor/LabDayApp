@@ -37,16 +37,17 @@ public class MainFragmentTest {
     private MainFragment mainFragment;
 
     private MainViewModel mainViewModel;
-    private MutableLiveData<RxResponse<AppData>> appData;
+    private MutableLiveData<RxResponse<AppData>> appData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> loadingStatus = new MutableLiveData<>();
 
     private void initMockData(){
-        appData = new MutableLiveData<>();
         AppData data = new AppData();
         ArrayList<Path> paths = new ArrayList<>();
         paths.add(new Path(1,"dummyNameWrong", "PathInfoWrong", false));
         paths.add(new Path(2,"dummyName", "PathInfo", true));
         data.setPaths(paths);
         appData.setValue(RxResponse.success(data));
+        loadingStatus.setValue(false);
     }
 
     @Before
@@ -56,6 +57,7 @@ public class MainFragmentTest {
 
         mainViewModel = Mockito.mock(MainViewModel.class);
         Mockito.when(mainViewModel.getResponse()).thenReturn(appData);
+        Mockito.when(mainViewModel.getLoadingStatus()).thenReturn(loadingStatus);
 
         mainFragment.setViewModel(mainViewModel);
         mainFragment.setTestMode();

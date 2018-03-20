@@ -4,10 +4,10 @@
     <alpha
         android:fromAlpha = "0.0"
         android:toAlpha = "1.0"
-        android:duration = "600"/>
+        android:duration = "700"/>
 
     <translate
-        android:duration="600"
+        android:duration="700"
         android:toXDelta="0%"
         android:toYDelta="0%"
         android:fromYDelta="-15%p" />
