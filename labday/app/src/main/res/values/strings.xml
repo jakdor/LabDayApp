@@ -48,8 +48,8 @@
     <string name="asi_logo">ASI logo</string>
     <string name="link_asi_logo">http://15.sesja.linuksowa.pl/img/loga/logo-asi.png</string>
     <string name="author_image">author image</string>
-    <string name="link_img_kuba">http://gdurl.com/raZZ</string>
-    <string name="link_img_jan">http://gdurl.com/fs7y</string>
+    <string name="link_img_kuba">https://i.imgur.com/v9OFFPh.jpg</string>
+    <string name="link_img_jan">https://i.imgur.com/tBtS81y.jpg</string>
     <string name="info_asi">Aplikacja stworzona przez:</string>
     <string name="info_authors">Autorzy</string>
     <string name="author_kuba_name">Jakub Dorda</string>

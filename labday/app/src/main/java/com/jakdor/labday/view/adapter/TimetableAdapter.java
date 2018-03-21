@@ -2,6 +2,7 @@ package com.jakdor.labday.view.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -13,6 +14,8 @@ import com.jakdor.labday.common.model.Timetable;
 import com.jakdor.labday.databinding.TimetableItemBinding;
 import com.jakdor.labday.view.ui.EventFragment;
 import com.jakdor.labday.view.ui.TimetableFragment;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +62,8 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
      * @return binded item with scaled height
      */
     @Override
-    public TimetableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NotNull
+    public TimetableViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         TimetableItemBinding binding =
                 DataBindingUtil.inflate(layoutInflater, R.layout.timetable_item, parent, false);
@@ -73,7 +77,12 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(TimetableViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull TimetableViewHolder holder, int position) {
+        if(filteredTimetables.size() <= position || filteredEvents.size() <= position){
+            Log.wtf(EventFragment.CLASS_TAG, "ViewHolder invalid position");
+            return;
+        }
+
         Timetable timetable = filteredTimetables.get(position);
         Event event = filteredEvents.get(position);
         for (Event e : filteredEvents){

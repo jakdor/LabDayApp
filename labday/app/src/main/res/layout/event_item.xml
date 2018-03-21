@@ -63,7 +63,7 @@
             <TextView
                 android:id="@+id/event_text_big"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="8dp"
@@ -83,7 +83,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="8dp"
                 android:text="@{details}"
-                android:visibility="@{details != null ? View.VISIBLE : View.GONE}"
+                android:visibility="@{details == null || details.isEmpty() ? View.GONE : View.VISIBLE}"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/image_guideline"

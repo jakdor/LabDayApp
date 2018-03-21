@@ -1,4 +1,251 @@
 {
+    "timetables": [
+        {
+            "id": 4,
+            "path_id": 2,
+            "event_id": 5,
+            "time_start": 1521878400,
+            "time_end": 1521882000
+        },
+        {
+            "id": 5,
+            "path_id": 2,
+            "event_id": 6,
+            "time_start": 1521882000,
+            "time_end": 1521885600
+        },
+        {
+            "id": 6,
+            "path_id": 2,
+            "event_id": 7,
+            "time_start": 1521907200,
+            "time_end": 1521909300
+        },
+        {
+            "id": 7,
+            "path_id": 1,
+            "event_id": 15,
+            "time_start": 1521904800,
+            "time_end": 1521907200
+        },
+        {
+            "id": 8,
+            "path_id": 2,
+            "event_id": 9,
+            "time_start": 1521886800,
+            "time_end": 1521889200
+        },
+        {
+            "id": 9,
+            "path_id": 2,
+            "event_id": 10,
+            "time_start": 1521889800,
+            "time_end": 1521892200
+        },
+        {
+            "id": 10,
+            "path_id": 1,
+            "event_id": 11,
+            "time_start": 1521889800,
+            "time_end": 1521892200
+        },
+        {
+            "id": 11,
+            "path_id": 1,
+            "event_id": 12,
+            "time_start": 1521892800,
+            "time_end": 1521895200
+        },
+        {
+            "id": 12,
+            "path_id": 1,
+            "event_id": 13,
+            "time_start": 1521898800,
+            "time_end": 1521901200
+        },
+        {
+            "id": 13,
+            "path_id": 1,
+            "event_id": 14,
+            "time_start": 1521901800,
+            "time_end": 1521904200
+        },
+        {
+            "id": 15,
+            "path_id": 1,
+            "event_id": 5,
+            "time_start": 1521878400,
+            "time_end": 1521882000
+        },
+        {
+            "id": 16,
+            "path_id": 1,
+            "event_id": 6,
+            "time_start": 1521882000,
+            "time_end": 1521885600
+        },
+        {
+            "id": 17,
+            "path_id": 1,
+            "event_id": 7,
+            "time_start": 1521907200,
+            "time_end": 1521909300
+        },
+        {
+            "id": 18,
+            "path_id": 2,
+            "event_id": 16,
+            "time_start": 1521904800,
+            "time_end": 1521907200
+        },
+        {
+            "id": 19,
+            "path_id": 3,
+            "event_id": 17,
+            "time_start": 1521886800,
+            "time_end": 1521889200
+        },
+        {
+            "id": 20,
+            "path_id": 2,
+            "event_id": 18,
+            "time_start": 1521901800,
+            "time_end": 1521904200
+        },
+        {
+            "id": 21,
+            "path_id": 2,
+            "event_id": 19,
+            "time_start": 1521898800,
+            "time_end": 1521901200
+        },
+        {
+            "id": 22,
+            "path_id": 2,
+            "event_id": 20,
+            "time_start": 1521892800,
+            "time_end": 1521895200
+        },
+        {
+            "id": 23,
+            "path_id": 3,
+            "event_id": 25,
+            "time_start": 1521901800,
+            "time_end": 1521904200
+        },
+        {
+            "id": 24,
+            "path_id": 3,
+            "event_id": 26,
+            "time_start": 1521904800,
+            "time_end": 1521907200
+        },
+        {
+            "id": 25,
+            "path_id": 4,
+            "event_id": 30,
+            "time_start": 1521904800,
+            "time_end": 1521907200
+        },
+        {
+            "id": 26,
+            "path_id": 4,
+            "event_id": 5,
+            "time_start": 1521878400,
+            "time_end": 1521882000
+        },
+        {
+            "id": 27,
+            "path_id": 4,
+            "event_id": 6,
+            "time_start": 1521882000,
+            "time_end": 1521885600
+        },
+        {
+            "id": 28,
+            "path_id": 4,
+            "event_id": 9,
+            "time_start": 1521886800,
+            "time_end": 1521889200
+        },
+        {
+            "id": 29,
+            "path_id": 4,
+            "event_id": 27,
+            "time_start": 1521889800,
+            "time_end": 1521892200
+        },
+        {
+            "id": 30,
+            "path_id": 4,
+            "event_id": 28,
+            "time_start": 1521892800,
+            "time_end": 1521895200
+        },
+        {
+            "id": 31,
+            "path_id": 4,
+            "event_id": 19,
+            "time_start": 1521898800,
+            "time_end": 1521901200
+        },
+        {
+            "id": 32,
+            "path_id": 4,
+            "event_id": 29,
+            "time_start": 1521901800,
+            "time_end": 1521904200
+        },
+        {
+            "id": 33,
+            "path_id": 1,
+            "event_id": 8,
+            "time_start": 1521886800,
+            "time_end": 1521889200
+        },
+        {
+            "id": 34,
+            "path_id": 3,
+            "event_id": 22,
+            "time_start": 1521889800,
+            "time_end": 1521892200
+        },
+        {
+            "id": 35,
+            "path_id": 3,
+            "event_id": 23,
+            "time_start": 1521892800,
+            "time_end": 1521895200
+        },
+        {
+            "id": 36,
+            "path_id": 3,
+            "event_id": 24,
+            "time_start": 1521898800,
+            "time_end": 1521901200
+        },
+        {
+            "id": 37,
+            "path_id": 3,
+            "event_id": 5,
+            "time_start": 1521878400,
+            "time_end": 1521882000
+        },
+        {
+            "id": 38,
+            "path_id": 3,
+            "event_id": 6,
+            "time_start": 1521882000,
+            "time_end": 1521885600
+        },
+        {
+            "id": 39,
+            "path_id": 3,
+            "event_id": 7,
+            "time_start": 1521907200,
+            "time_end": 1521909300
+        }
+    ],
     "events": [
         {
             "id": 1,
@@ -41,54 +288,381 @@
             "dor2_img": "",
             "latitude": "",
             "longitude": ""
-        }
-    ],
-    "places": [
-        {
-            "id": 1,
-            "type": 1,
-            "name": "Bar Bazylia",
-            "info": "some info and stuff",
-            "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "latitude": "51.107924",
-            "longitude": "17.058800"
         },
         {
-            "id": 2,
-            "type": 2,
-            "name": "SKS",
-            "info": "some info and stuff",
-            "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "latitude": "51.108825",
-            "longitude": "17.056778"
+            "id": 6,
+            "name": "Oficjalne rozpoczęcie",
+            "img": "",
+            "address": "Nie wiem",
+            "room": "C-99 9.99",
+            "info": "",
+            "topic": "Oficjalne rozpoczęcie",
+            "speaker_id": 3,
+            "dor1_img": "",
+            "dor2_img": "",
+            "latitude": "",
+            "longitude": ""
         },
         {
-            "id": 3,
-            "type": 3,
-            "name": "some other place type",
-            "info": "some info and stuff",
-            "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "latitude": "51.108585",
-            "longitude": "17.058932"
+            "id": 7,
+            "name": "Oficjalne zakończenie",
+            "img": "",
+            "address": "Nie wiem",
+            "room": "C99-99",
+            "info": "Koniec LabDay",
+            "topic": "Oficjalne zakończenie",
+            "speaker_id": 3,
+            "dor1_img": "",
+            "dor2_img": "",
+            "latitude": "",
+            "longitude": ""
+        },
+        {
+            "id": 8,
+            "name": "Reakcje charakterystyczne cukrów i białek",
+            "img": "https://i.imgur.com/2AqmAem.jpg",
+            "address": "A2, Wybrzeże Stanisława Wyspiańskiego 29",
+            "room": "228",
+            "info": "",
+            "topic": "Reakcje charakterystyczne cukrów i białek",
+            "speaker_id": 7,
+            "dor1_img": "https://i.imgur.com/nYy7Fph.jpg",
+            "dor2_img": "https://i.imgur.com/p9CsOn3.jpg",
+            "latitude": "51.107307",
+            "longitude": "17.063686"
+        },
+        {
+            "id": 9,
+            "name": "Czy kośćmi możemy nakarmić świat?!",
+            "img": "https://i.imgur.com/YrppD43.jpg",
+            "address": "C-13, Wybrzeże Stanisława Wyspiańskiego 23/25",
+            "room": "1.27",
+            "info": "",
+            "topic": "Czy kośćmi możemy nakarmić świat?!",
+            "speaker_id": 8,
+            "dor1_img": "https://i.imgur.com/mxUwf7i.jpg",
+            "dor2_img": "https://i.imgur.com/McCLjh8.jpg",
+            "latitude": "51.107400",
+            "longitude": "17.059465"
+        },
+        {
+            "id": 10,
+            "name": "Termowizja – świat widziany nieco inaczej",
+            "img": "https://i.imgur.com/YrppD43.jpg",
+            "address": "C13, Wybrzeże Stanisława Wyspiańskiego 23/25",
+            "room": "1.28",
+            "info": "",
+            "topic": "Termowizja – świat widziany nieco inaczej",
+            "speaker_id": 9,
+            "dor1_img": "https://i.imgur.com/2acHIVF.jpg",
+            "dor2_img": "https://i.imgur.com/McCLjh8.jpg",
+            "latitude": "51.107761",
+            "longitude": "17.058878"
+        },
+        {
+            "id": 11,
+            "name": "Spektroskopia NMR od podszewki",
+            "img": "https://i.imgur.com/mZh7QR4.jpg",
+            "address": "A9, Smoluchowskiego 23",
+            "room": "-",
+            "info": "",
+            "topic": "Spektroskopia NMR od podszewki",
+            "speaker_id": 10,
+            "dor1_img": "https://i.imgur.com/HYUbd7k.jpg",
+            "dor2_img": "https://i.imgur.com/l6Yb7kP.jpg",
+            "latitude": "51.107804",
+            "longitude": "17.063796"
+        },
+        {
+            "id": 12,
+            "name": "Nowe farmakopealne metody badań zanieczyszczeń leków i ich składników pierwiastkami chemicznymi",
+            "img": "https://i.imgur.com/LVST4D9.jpg",
+            "address": "A2, wybrzeże Stanisława Wyspiańskiego 29",
+            "room": "310",
+            "info": "",
+            "topic": "Nowe farmakopealne metody badań zanieczyszczeń leków i ich składników pierwiastkami chemicznymi",
+            "speaker_id": 11,
+            "dor1_img": "https://i.imgur.com/nYy7Fph.jpg",
+            "dor2_img": "https://i.imgur.com/ULE0fV7.jpg",
+            "latitude": "51.107308",
+            "longitude": "17.063629"
+        },
+        {
+            "id": 13,
+            "name": "Inżynieria Genetyczna, wszystko co chciałbyś wiedzieć w niecałą godzinę",
+            "img": "https://i.imgur.com/x6KRNhi.jpg",
+            "address": "A2, wybrzeże Stanisława Wyspiańskiego 29",
+            "room": "213a",
+            "info": "",
+            "topic": "Inżynieria Genetyczna, wszystko co chciałbyś wiedzieć w niecałą godzinę",
+            "speaker_id": 12,
+            "dor1_img": "https://i.imgur.com/nYy7Fph.jpg",
+            "dor2_img": "https://i.imgur.com/zvF2DSj.jpg",
+            "latitude": "51.107308",
+            "longitude": "17.063629"
+        },
+        {
+            "id": 14,
+            "name": "Podstawy współczesnej chemii: czy chemia jest nauką autonomiczną",
+            "img": "https://i.imgur.com/LVST4D9.jpg",
+            "address": "A2, wybrzeże Stanisława Wyspiańskiego 29",
+            "room": "310",
+            "info": "",
+            "topic": "Podstawy współczesnej chemii: czy chemia jest nauką autonomiczną",
+            "speaker_id": 13,
+            "dor1_img": "https://i.imgur.com/nYy7Fph.jpg",
+            "dor2_img": "https://i.imgur.com/ULE0fV7.jpg",
+            "latitude": "51.107308",
+            "longitude": "17.063629"
+        },
+        {
+            "id": 15,
+            "name": "Wykład o modelowaniu molekularnym",
+            "img": "https://i.imgur.com/OJiHUEL.jpg",
+            "address": "C6, Cypriana Kamila Norwida 4/6",
+            "room": "127b",
+            "info": "",
+            "topic": "Wykład o modelowaniu molekularnym",
+            "speaker_id": 14,
+            "dor1_img": "https://i.imgur.com/vXKGOo5.jpg",
+            "dor2_img": "https://i.imgur.com/Ldnna6O.jpg",
+            "latitude": "51,06298",
+            "longitude": "17,03379"
+        },
+        {
+            "id": 16,
+            "name": "Funkcjonalne materiały hydrożelowe w biotechnologii",
+            "img": "https://i.imgur.com/OJiHUEL.jpg",
+            "address": "C6, Cypriana Kamila Norwida 4/6",
+            "room": "27",
+            "info": "",
+            "topic": "Funkcjonalne materiały hydrożelowe w biotechnologii",
+            "speaker_id": 15,
+            "dor1_img": "https://i.imgur.com/vXKGOo5.jpg",
+            "dor2_img": "https://i.imgur.com/Ldnna6O.jpg",
+            "latitude": "51,06298",
+            "longitude": "17,03379"
+        },
+        {
+            "id": 17,
+            "name": "Nowoczesna inżynieria materiałowa",
+            "img": "",
+            "address": "C-13, Wybrzeże Stanisława Wyspiańskiego 23/25",
+            "room": "1.28",
+            "info": "-",
+            "topic": "-",
+            "speaker_id": 16,
+            "dor1_img": "https://i.imgur.com/McCLjh8.jpg",
+            "dor2_img": "https://i.imgur.com/2acHIVF.jpg",
+            "latitude": "51.107400",
+            "longitude": "17.059465"
+        },
+        {
+            "id": 18,
+            "name": "Nanozłoto w walce z chorobą Alzheimer’a",
+            "img": "https://i.imgur.com/YrppD43.jpg",
+            "address": "C13, Wybrzeże Stanisława Wyspiańskiego 23/25",
+            "room": "1.27",
+            "info": "",
+            "topic": "Nanozłoto w walce z chorobą Alzheimer’a",
+            "speaker_id": 17,
+            "dor1_img": "https://i.imgur.com/mxUwf7i.jpg",
+            "dor2_img": "https://i.imgur.com/McCLjh8.jpg",
+            "latitude": "51.107761",
+            "longitude": "17.058878"
+        },
+        {
+            "id": 19,
+            "name": "Sztuczny liść - materiały i procesy w sztucznej fotosyntezie",
+            "img": "https://i.imgur.com/YrppD43.jpg",
+            "address": "C13, Wybrzeże Stanisława Wyspiańskiego 23/25",
+            "room": "1.28",
+            "info": "",
+            "topic": "Sztuczny liść - materiały i procesy w sztucznej fotosyntezie",
+            "speaker_id": 18,
+            "dor1_img": "https://i.imgur.com/2acHIVF.jpg",
+            "dor2_img": "https://i.imgur.com/McCLjh8.jpg",
+            "latitude": "51.107761",
+            "longitude": "17.058878"
+        },
+        {
+            "id": 20,
+            "name": "Krem dla każdego",
+            "img": "https://i.imgur.com/XRAMww7.jpg",
+            "address": "C6, Cypriana Kamila Norwida 4/6",
+            "room": "32",
+            "info": "",
+            "topic": "Krem dla każdego",
+            "speaker_id": 20,
+            "dor1_img": "https://i.imgur.com/QyDVR0R.jpg",
+            "dor2_img": "https://i.imgur.com/OJiHUEL.jpg",
+            "latitude": "51,06298",
+            "longitude": "17,03379"
+        },
+        {
+            "id": 21,
+            "name": "Nowoczesna inżynieria materiałowa",
+            "img": "https://i.imgur.com/YrppD43.jpg",
+            "address": "C13, Wybrzeże Stanisława Wyspiańskiego 23/25",
+            "room": "1.28",
+            "info": "",
+            "topic": "Nowoczesna inżynieria materiałowa",
+            "speaker_id": 16,
+            "dor1_img": "https://i.imgur.com/2acHIVF.jpg",
+            "dor2_img": "https://i.imgur.com/McCLjh8.jpg",
+            "latitude": "51.107761",
+            "longitude": "17.058878"
+        },
+        {
+            "id": 22,
+            "name": "Produkcja nawozów mikroelementowych",
+            "img": "https://i.imgur.com/2viljLv.jpg",
+            "address": "B1, Mariana Smoluchowskiego 25",
+            "room": "512",
+            "info": "",
+            "topic": "Produkcja nawozów mikroelementowych",
+            "speaker_id": 22,
+            "dor1_img": "https://i.imgur.com/s5SUEZN.jpg",
+            "dor2_img": "https://i.imgur.com/2viljLv.jpg",
+            "latitude": "51,06280",
+            "longitude": "17,03529"
+        },
+        {
+            "id": 23,
+            "name": "Tajemniczy świat mikrobów",
+            "img": "https://i.imgur.com/NczYPID.jpg",
+            "address": "A2, wybrzeże Stanisława Wyspiańskiego 29",
+            "room": "21",
+            "info": "",
+            "topic": "Tajemniczy świat mikrobów",
+            "speaker_id": 23,
+            "dor1_img": "https://i.imgur.com/NczYPID.jpg",
+            "dor2_img": "https://i.imgur.com/nYy7Fph.jpg",
+            "latitude": "51.107308",
+            "longitude": "17.063686"
+        },
+        {
+            "id": 24,
+            "name": "Jak się to robi z polimerów?",
+            "img": "https://i.imgur.com/YrppD43.jpg",
+            "address": "C-13, Wybrzeże Stanisława Wyspiańskiego 23/25",
+            "room": "1.27",
+            "info": "",
+            "topic": "Jak się to robi z polimerów?",
+            "speaker_id": 24,
+            "dor1_img": "https://i.imgur.com/mxUwf7i.jpg",
+            "dor2_img": "https://i.imgur.com/McCLjh8.jpg",
+            "latitude": "51.107400",
+            "longitude": "17.059465"
+        },
+        {
+            "id": 25,
+            "name": "Reakcje katalitycznego rozkładu i strącania, czyli jak z jodku potasu zrobić kolorową pianę i złoty",
+            "img": "https://i.imgur.com/eVUt7Ms.jpg",
+            "address": "A3, Mariana Smoluchowskiego 23",
+            "room": "222",
+            "info": "",
+            "topic": "Reakcje katalitycznego rozkładu i strącania, czyli jak z jodku potasu zrobić kolorową pianę i złoty deszcz",
+            "speaker_id": 25,
+            "dor1_img": "https://i.imgur.com/xp4O9jy.jpg",
+            "dor2_img": "https://i.imgur.com/28ikIp9.jpg",
+            "latitude": "51.108007",
+            "longitude": "17.064060"
+        },
+        {
+            "id": 26,
+            "name": "Technologie związane z otrzymywaniem i oceną jakości nawozów azotowych",
+            "img": "https://i.imgur.com/pD6Udz5.jpg",
+            "address": "H6, Wybrzeże Stanisława Wyspiańskiego 42",
+            "room": "20",
+            "info": "-",
+            "topic": "-",
+            "speaker_id": 21,
+            "dor1_img": "https://i.imgur.com/fTB0n2q.jpg",
+            "dor2_img": "https://i.imgur.com/WdnU7Zh.jpg",
+            "latitude": "51.106852",
+            "longitude": "17.0568917"
+        },
+        {
+            "id": 27,
+            "name": "Zjawiska fotochromowe w nano- i makroskali. Potencjalne zastosowania.",
+            "img": "https://i.imgur.com/YrppD43.jpg",
+            "address": "C-13, Wybrzeże Stanisława Wyspiańskiego 23/25",
+            "room": "1.27",
+            "info": "",
+            "topic": "Zjawiska fotochromowe w nano- i makroskali. Potencjalne zastosowania.",
+            "speaker_id": 26,
+            "dor1_img": "https://i.imgur.com/mxUwf7i.jpg",
+            "dor2_img": "https://i.imgur.com/McCLjh8.jpg",
+            "latitude": "51.107400",
+            "longitude": "17.059465"
+        },
+        {
+            "id": 28,
+            "name": "Tworzywa wokół nas",
+            "img": "",
+            "address": "B9, I. Łukasiewicza 7/9",
+            "room": "23",
+            "info": "",
+            "topic": "Tworzywa wokół nas",
+            "speaker_id": 27,
+            "dor1_img": "",
+            "dor2_img": "",
+            "latitude": "51.1084900",
+            "longitude": "17.066305"
+        },
+        {
+            "id": 29,
+            "name": "Metody wykrywania cech metabolicznych u bakterii",
+            "img": "https://i.imgur.com/NczYPID.jpg",
+            "address": "A2, wybrzeże Stanisława Wyspiańskiego 29",
+            "room": "19",
+            "info": "",
+            "topic": "Metody wykrywania cech metabolicznych u bakterii",
+            "speaker_id": 28,
+            "dor1_img": "https://i.imgur.com/NczYPID.jpg",
+            "dor2_img": "https://i.imgur.com/nYy7Fph.jpg",
+            "latitude": "51.107308",
+            "longitude": "17.063686"
+        },
+        {
+            "id": 30,
+            "name": "Kolorowa chemia - co kryje w sobie blok d?",
+            "img": "",
+            "address": "A3, Mariana Smoluchowskiego 23",
+            "room": "325",
+            "info": "",
+            "topic": "Kolorowa chemia - co kryje w sobie blok d?",
+            "speaker_id": 29,
+            "dor1_img": "",
+            "dor2_img": "https://i.imgur.com/28ikIp9.jpg",
+            "latitude": "51.108007",
+            "longitude": "17.064060"
         }
     ],
     "paths": [
         {
             "id": 1,
-            "name": "path1",
-            "info": "path info",
+            "name": "Scieżka 1",
+            "info": "Scieżka 1",
             "active": false
         },
         {
             "id": 2,
-            "name": "path2",
-            "info": "path info",
+            "name": "Scieżka 2",
+            "info": "Scieżka 2",
             "active": true
         },
         {
             "id": 3,
-            "name": "path3",
-            "info": "path info",
+            "name": "Scieżka 3",
+            "info": "Scieżka 3",
+            "active": false
+        },
+        {
+            "id": 4,
+            "name": "Ścieżka 4",
+            "info": "Ścieżka 4",
             "active": false
         }
     ],
@@ -110,36 +684,191 @@
             "name": "NaS",
             "info": "Not a Speaker - for registry and opening",
             "img": ""
-        }
-    ],
-    "timetables": [
-        {
-            "id": 1,
-            "path_id": 2,
-            "event_id": 1,
-            "time_start": 1003000,
-            "time_end": 10006600
-        },
-        {
-            "id": 2,
-            "path_id": 2,
-            "event_id": 2,
-            "time_start": 1000000,
-            "time_end": 10003600
-        },
-        {
-            "id": 3,
-            "path_id": 2,
-            "event_id": 2,
-            "time_start": 1518743127,
-            "time_end": 1518746127
         },
         {
             "id": 4,
-            "path_id": 2,
-            "event_id": 5,
-            "time_start": 1000,
-            "time_end": 9000
+            "name": "Dr inż. Marta Tsirigotis-Maniecka",
+            "info": "Pani Doktor poszukuje odpowiednich mikroukładów nośnikowych opartych na biopolimerach, a przeznaczonych do enkapsulacji biologicznie aktywnych związków pochodzenia naturalnego, tak aby poprawić ich możliwości aplikacyjne w terapii różnych chorób. Jest współautorem kilkunastu artykułów naukowych, w tym 10 znajdujących się na Liście Filadelfijskiej, a także licznych międzynarodowych i krajowych komunikatów konferencyjnych.",
+            "img": ""
+        },
+        {
+            "id": 5,
+            "name": "Dr inż. Marta Tsirigotis-Maniecka",
+            "info": "Pani Doktor poszukuje odpowiednich mikroukładów nośnikowych opartych na biopolimerach, a przeznaczonych do enkapsulacji biologicznie aktywnych związków pochodzenia naturalnego, tak aby poprawić ich możliwości aplikacyjne w terapii różnych chorób. Jest współautorem kilkunastu artykułów naukowych, w tym 10 znajdujących się na Liście Filadelfijskiej, a także licznych międzynarodowych i krajowych komunikatów konferencyjnych.",
+            "img": ""
+        },
+        {
+            "id": 6,
+            "name": "Dr inż. Marta Tsirigotis-Maniecka",
+            "info": "Pani Doktor poszukuje odpowiednich mikroukładów nośnikowych opartych na biopolimerach, a przeznaczonych do enkapsulacji biologicznie aktywnych związków pochodzenia naturalnego, tak aby poprawić ich możliwości aplikacyjne w terapii różnych chorób. Jest współautorem kilkunastu artykułów naukowych, w tym 10 znajdujących się na Liście Filadelfijskiej, a także licznych międzynarodowych i krajowych komunikatów konferencyjnych.",
+            "img": ""
+        },
+        {
+            "id": 7,
+            "name": "Dr inż. Marta Tsirigotis-Maniecka",
+            "info": "Pani Doktor poszukuje odpowiednich mikroukładów nośnikowych opartych na biopolimerach, a przeznaczonych do enkapsulacji biologicznie aktywnych związków pochodzenia naturalnego, tak aby poprawić ich możliwości aplikacyjne w terapii różnych chorób. Jest współautorem kilkunastu artykułów naukowych, w tym 10 znajdujących się na Liście Filadelfijskiej, a także licznych międzynarodowych i krajowych komunikatów konferencyjnych.",
+            "img": ""
+        },
+        {
+            "id": 8,
+            "name": "Dr inż. Agnieszka Saeid",
+            "info": "Zainteresowania naukowe: Waloryzacja odpadów; nawozy fosforowe; dodatki paszowe; solubilizacja mikrobiologiczna; bionawozy; biosorpcja; bioakumulacja; mikroalgi; mikroorganizmy glebowe; ocena cyklu życia.",
+            "img": ""
+        },
+        {
+            "id": 9,
+            "name": "Dr inż. Michał Araszkiewicz",
+            "info": "Zainteresowania naukowe: Zastosowanie mikrofal w procesach suszenia; suszenie fluidalne wspomagane ogrzewaniem mikrofalowym: analiza transportu ciepła i masy; modelowanie procesu suszenia wspomaganego ogrzewaniem mikrofalowym; wykorzystanie ogrzewania mikrofalowego w procesie remediacji gruntów.",
+            "img": ""
+        },
+        {
+            "id": 10,
+            "name": "Dr inż. Ewa Rudzińska-Szostak",
+            "info": "Zainteresowania naukowe Pani Doktor dotyczą enencjoseparacji związków organicznych za pomocą różnych metod analitycznych (w szczególności elektroforezy kapilarnej, wysokosprawnej chromatografii cieczowej, spektroskopii jądrowego rezonansu magnetycznego). W 2005 roku otrzymała nagrodę Rektora Politechniki Wrocławskiej za swoją rozprawę doktorską.",
+            "img": ""
+        },
+        {
+            "id": 11,
+            "name": "Dr hab. inż. Paweł Pohl, prof. nadzw.",
+            "info": "Zainteresowania naukowe Profesora obejmuje opracowywanie nowych metod i procedur analitycznych stosowanych w analityce nieorganicznej próbek. Autor ponad 150 artykułów naukowych z dziedziny chemii analitycznej, spektrometrii atomowej i spektrometrii mas.",
+            "img": ""
+        },
+        {
+            "id": 12,
+            "name": "KN BioTop",
+            "info": "",
+            "img": ""
+        },
+        {
+            "id": 13,
+            "name": "Prof. dr hab. inż. Wojciech Bartkowiak",
+            "info": "Profesor Bartkowiak interesuje się chemią teoretyczną, chemią kwantową oraz obliczniową. Jego problemy naukowe dotyczą obliczeń właściwości elektrycznych (momentów dipolowych i polaryzowalności) układów molekularnych oraz teoretycznych opisów atomów i molekuł znajdujących się w organiczonych przestrzeniach modelowanych przy użyciu zewnętrznych potencjałó ograniczających.",
+            "img": ""
+        },
+        {
+            "id": 14,
+            "name": "KN BANG",
+            "info": "",
+            "img": ""
+        },
+        {
+            "id": 15,
+            "name": "Dr inż. Karolina Labus",
+            "info": "Wykorzystanie enzymów w kontrolowanej hydrolizie białek serwatkowych do peptydów o poszukiwanych właściwościach biologicznych. Wykorzystanie hydrożeli opartych o polimery naturalne do immobilizacji biokatalizatorów oraz jako nośników substancji bioaktywnych.",
+            "img": ""
+        },
+        {
+            "id": 16,
+            "name": "Dr hab. inż. Jarosław Myśliwiec",
+            "info": "Zainteresowania naukowe obejmuje inżynieria materiałowa i nanofotonika związków organicznych takich jak polimery, biopolimery, ciekłe kryształy, układy molekularne, nieliniowe efekty optyczne oraz zjawiska wzmacniania i rozpraszania światła w układach organicznych. Współautor kilkudziesięciu artykułów naukowych oraz zaproszonych wykładów konferencyjnych i seminariów w Polsce i za granicą.",
+            "img": ""
+        },
+        {
+            "id": 17,
+            "name": "Dr inż. Joanna Olesiak-Bańska",
+            "info": "Zainteresowania naukowe: Nanocząstki plazmoniczne i nanoklastery metali szlachetnych; mikroskopia wielofotonowa; nieliniowa spektroskopia optyczna; samoorganizacja biocząsteczek: DNA, amyloidy; efekty fototermiczne w nanomateriałach.",
+            "img": ""
+        },
+        {
+            "id": 18,
+            "name": "Dr Bartłomiej Szyja",
+            "info": "Zainteresowania naukowe: Utylizacja CO2; fotokataliza; teoretyczne aspekty katalizy; technologie czystej energii; synteza zeolitów.",
+            "img": ""
+        },
+        {
+            "id": 19,
+            "name": "Dr inż. Magdalena Lech",
+            "info": "Pani Doktor zajmuje się zagadnieniami związanymi z mikrobiologiczną produkcją surowców wykorzystywanych w przemyśle kosmetycznym (kwasów AHA i hialuronowego) oraz technikami ich oczyszczania.",
+            "img": ""
+        },
+        {
+            "id": 20,
+            "name": "Dr inż. Magdalena Lech",
+            "info": "Pani Doktor zajmuje się zagadnieniami związanymi z mikrobiologiczną produkcją surowców wykorzystywanych w przemyśle kosmetycznym (kwasów AHA i hialuronowego) oraz technikami ich oczyszczania.",
+            "img": ""
+        },
+        {
+            "id": 21,
+            "name": "Mgr inż. Dominik Nieweś",
+            "info": "Doktorant interesuje się technologią chemiczną, głównię analizą termiczną próbek paliwowych oraz oceną jakości różnych nawozów.",
+            "img": ""
+        },
+        {
+            "id": 22,
+            "name": "Mgr inż. Ewelina Klem-Marciniak",
+            "info": "Zainteresowania doktorantki dotyczą technologii chemicznej, głównie płynnych nawozów mikroelementów oraz chemii koordynacyjnej.",
+            "img": ""
+        },
+        {
+            "id": 23,
+            "name": "Dr hab. Irena Maliszewska",
+            "info": "",
+            "img": ""
+        },
+        {
+            "id": 24,
+            "name": "Prof. dr hab. inż. Ryszard Steller",
+            "info": "Profesor zajmuje się podstawami przetwórstwa polimerów oraz modyfikacją polimerów ze szczególnym uwypukleniem roli procesów przetwarzania. W zakresie podstaw przetwórstwa główny nacisk położony jest na problemach transportu polimerów podczas przetwarzania, efektywności procesów przetwórczych nowych technik przetwarzania. Modyfikacja polimerów związana z otrzymywaniem nowych materiałów polimerowych obejmuje takie zagadnienia jak: przetwarzanie reaktywne, procesy mieszania, kształtowanie morfologii podczas przetwarzania.",
+            "img": ""
+        },
+        {
+            "id": 25,
+            "name": "Dr inż. Maja Wełna",
+            "info": "Zainteresowania naukowe: Technika chemicznego generowania par (CVG); generowanie wodorków (HG) w połączeniu z detekcją metodami spektrometrycznymi; układy wprowadzania próbek w atomowej spektrometrii do oznaczeń pierwiastków tworzących i nie tworzących lotne wodorki; nie-chromatograficzna specjacja i frakcjonowanie As z wykorzystaniem techniki HG; problematyka As w ryżu i produktach ryżowych (opracowanie procedur przygotowanie próbek do oznaczeń i specjacji As).",
+            "img": ""
+        },
+        {
+            "id": 26,
+            "name": "Dr inż. Ewelina Ortyl",
+            "info": "",
+            "img": ""
+        },
+        {
+            "id": 27,
+            "name": "KN Hybryda",
+            "info": "",
+            "img": ""
+        },
+        {
+            "id": 28,
+            "name": "Dr Agnieszka Grabowiecka",
+            "info": "Zainteresowania naukowe obejmują możliwości ograniczania rozwoju mikroorganizmów patogennych poprzez hamowanie aktywności enzymów odpowiedzialnych za rozwój procesów chorobotwórczych.",
+            "img": ""
+        },
+        {
+            "id": 29,
+            "name": "Dr inż. Madalena Malik-Gajewska",
+            "info": "Zainteresowania naukowe: Chemia bionieorganiczna; synteza nowych kompleksów o potencjalnych właściwościach przeciwnowotworowych (Pt(II), Pd(II), Au(III)); spektroskopia oscylacyjna w teorii i zastosowaniu; mapowanie ramanowskie; obliczenia metodami DFT.",
+            "img": ""
+        }
+    ],
+    "places": [
+        {
+            "id": 1,
+            "type": 1,
+            "name": "Bar Bazylia",
+            "info": "some info and stuff",
+            "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
+            "latitude": "51.107402176013075",
+            "longitude": "17.05905854701996"
+        },
+        {
+            "id": 2,
+            "type": 2,
+            "name": "SKS",
+            "info": "some info and stuff",
+            "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
+            "latitude": "51.10886054765045",
+            "longitude": "17.056875228881836"
+        },
+        {
+            "id": 3,
+            "type": 3,
+            "name": "some other place type",
+            "info": "some info and stuff",
+            "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
+            "latitude": "51.108585",
+            "longitude": "17.058932"
         }
     ]
 }

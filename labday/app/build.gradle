@@ -39,8 +39,8 @@ android {
         applicationId "com.jakdor.labday"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 2
-        versionName "beta 1.1.0"
+        versionCode 4
+        versionName "1.0.1"
         testInstrumentationRunner 'com.jakdor.labday.InstrumentationTestRunner'
         //testInstrumentationRunner "com.jakdor.labday.EspressoRunner"
     } //todo find way to automatically switch between testInstrumentationRunners
