@@ -26,9 +26,9 @@ public class RetrofitBuilder {
             .addConverterFactory(GsonConverterFactory.create());
 
     private OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()
-            .readTimeout(5, TimeUnit.SECONDS)
-            .writeTimeout(5, TimeUnit.SECONDS)
-            .connectTimeout(5, TimeUnit.SECONDS);
+            .readTimeout(7, TimeUnit.SECONDS)
+            .writeTimeout(7, TimeUnit.SECONDS)
+            .connectTimeout(7, TimeUnit.SECONDS);
 
     /**
      * No authorization header
