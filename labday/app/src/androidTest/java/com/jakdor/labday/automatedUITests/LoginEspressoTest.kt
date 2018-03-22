@@ -405,6 +405,12 @@ class LoginEspressoTest {
                         isDisplayed()))
         appCompatEditText18.perform(closeSoftKeyboard())
 
+        try {
+            Thread.sleep(500)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
         val appCompatButton8 = onView(
                 allOf(withId(R.id.login_button), withText("rozpocznij"),
                         childAtPosition(

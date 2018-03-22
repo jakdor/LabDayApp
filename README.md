@@ -1,7 +1,8 @@
   # Lab Day App - project goal
   Guide Android App for Lab Day PWR Event. Application will provide event map, timetable and other informations.
 
-  Current status: beta
+  Current status: release 1.0.1
+  https://play.google.com/store/apps/details?id=com.jakdor.labday
 
   Backend repository available here
   https://github.com/JanStoltman/LabDayBackend

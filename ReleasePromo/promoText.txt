@@ -1,0 +1,15 @@
+Oficjalna aplikacja przewodnik na LabDay
+- innowacyjny projekt organizowany przez Samorząd Studencki Wydziału Chemicznego Politechniki Wrocławskiej. Jest to wydarzenie kierowane do licealistów i studentów zainteresowanych naukami z dziedzin chemii i biologii.
+
+Z aplikacją:
+- Masz dostęp do aktualnego, spersonalizowanego planu wykładów i laboratoriów
+- Dowiesz się czego spodziewać się na kolejnym wydarzeniu oraz kto go poprowadzi
+- Dotrzesz do wyznaczonych budynków i sal
+- Znajdziesz POI na kampusie PWR
+- Poznasz nasze kanały medialne
+
+Aplikacja stworzona przez Akademickie Stowarzyszenie Informatyczne
+Autorzy: Jakub Dorda, Jan Stoltman
+
+https://github.com/jakdor/LabDayApp
+https://github.com/JanStoltman/LabDayBackend
