@@ -185,6 +185,7 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
                 = new TimetableAdapter(this, appData, activePathId,
                 GlideApp.with(this), getHeight());
         recyclerView.setAdapter(timetableAdapter);
+        recyclerView.invalidate();
     }
 
     public void setViewModel(TimetableViewModel viewModel) {

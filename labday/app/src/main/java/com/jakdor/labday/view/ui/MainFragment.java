@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
@@ -219,11 +220,19 @@ public class MainFragment extends Fragment implements InjectableFragment {
      * Transition to {@link TimetableFragment}
      */
     public void onTimetableCardClick(){
-        if(!blockWhileLoading)
+        if(!blockWhileLoading) {
+
+            if(activePath == null){
+                Log.wtf(CLASS_TAG, "User doesn't have designed path");
+                Toast.makeText(getContext(), R.string.no_path_toast, Toast.LENGTH_LONG).show();
+                return;
+            }
+
             fragmentManager.beginTransaction()
                     .addToBackStack(TimetableFragment.CLASS_TAG)
                     .replace(R.id.fragmentLayout, TimetableFragment.newInstance(activePath.getId()))
                     .commit();
+        }
     }
 
     /**
