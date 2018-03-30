@@ -4,10 +4,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 project.ext {
-    arch = "1.1.0"
-    archExt = "1.1.0"
+    arch = "1.1.1"
+    archExt = "1.1.1"
     archDb = "1.0.0"
-    databindingCompilerVersion = "3.0.1"
+    databindingCompilerVersion = "3.1.0"
     supportLibsVersion = "27.1.0"
     constraintLayoutVersion = "1.0.2"
     butterKnifeVersion = "8.8.1"
@@ -19,7 +19,7 @@ project.ext {
     rxAndroidVersion = "2.0.1"
     concealVersion = "2.0.1"
     sqlBriteVersion = "3.1.0"
-    gmsMapsVersion = "11.8.0"
+    gmsMapsVersion = "12.0.1"
 
     junitVersion = "4.12"
     mockitoVersion = "2.13.0"
