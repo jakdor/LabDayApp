@@ -31,7 +31,7 @@ public class App extends Application implements HasActivityInjector {
         LeakCanary.install(this);
         AppInjector.init(this);
         SoLoader.init(this, false);
-        AppLogger.init();
+        AppLogger.init(this);
     }
 
     @Override
