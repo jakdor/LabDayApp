@@ -10,7 +10,7 @@ import android.widget.ImageView
 import butterknife.ButterKnife
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.jakdor.labday.R
-import com.jakdor.labday.view.utils.GlideApp
+import com.jakdor.labday.utils.GlideApp
 
 /**
  * Fragment displaying image from url provided in newInstance()

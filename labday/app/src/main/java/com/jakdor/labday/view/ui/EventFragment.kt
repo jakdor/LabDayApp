@@ -22,7 +22,7 @@ import com.jakdor.labday.databinding.FragmentEventBinding
 import com.jakdor.labday.di.InjectableFragment
 import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
-import com.jakdor.labday.view.utils.GlideApp
+import com.jakdor.labday.utils.GlideApp
 import com.jakdor.labday.viewmodel.EventViewModel
 import java.text.SimpleDateFormat
 import java.util.*

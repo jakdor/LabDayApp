@@ -2,7 +2,6 @@ package com.jakdor.labday.view.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -20,6 +19,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import timber.log.Timber;
 
 /**
  * RecyclerView adapter for {@link com.jakdor.labday.view.ui.TimetableFragment} items
@@ -79,7 +80,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableViewHolder> 
     @Override
     public void onBindViewHolder(@NotNull TimetableViewHolder holder, int position) {
         if(filteredTimetables.size() <= position || filteredEvents.size() <= position){
-            Log.wtf(EventFragment.CLASS_TAG, "ViewHolder invalid position");
+            Timber.wtf("ViewHolder invalid position");
             return;
         }
 

@@ -1,4 +1,4 @@
-package com.jakdor.labday.view.utils
+package com.jakdor.labday.view.other
 
 import android.content.Context
 import android.support.v7.widget.CardView
