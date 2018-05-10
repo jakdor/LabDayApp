@@ -1,4 +1,4 @@
-package com.jakdor.labday.view.utils
+package com.jakdor.labday.view.other
 
 import android.app.Dialog
 import android.content.Context
@@ -13,6 +13,7 @@ import com.jakdor.labday.common.model.MapOther
 import com.jakdor.labday.databinding.PlaceInfoDialogBinding
 import android.view.Gravity
 import com.jakdor.labday.view.ui.MapFragment
+import com.jakdor.labday.view.utils.GlideApp
 
 /**
  * Dialog displaying [MapOther] object
