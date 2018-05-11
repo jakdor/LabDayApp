@@ -202,7 +202,7 @@ public class LoginFragment extends Fragment implements InjectableFragment {
 
         }
         catch (Exception e){
-            Timber.wtf("Unable to hide softKeyboard, " + e.toString());
+            Timber.wtf("Unable to hide softKeyboard, %s", e.toString());
         }
     }
 

@@ -162,7 +162,7 @@ public class ProjectRepository {
             }
         }
         catch (Exception e){
-            Timber.e("Unable to read access token, " + e.toString());
+            Timber.e("Unable to read access token, %s", e.toString());
             return false;
         }
 
@@ -321,7 +321,7 @@ public class ProjectRepository {
                     })
                     .map(RxResponse::success)
                     .onErrorReturn(throwable -> {
-                        Timber.e("API request failed, " + throwable.toString());
+                        Timber.e("API request failed, %s", throwable.toString());
                         this.repositoryState = repositoryStates.ERROR;
                         return RxResponse.error(throwable);
                     });
@@ -343,7 +343,7 @@ public class ProjectRepository {
                 .subscribeOn(rxSchedulersFacade.io())
                 .map(RxResponse::success)
                 .onErrorReturn(throwable -> {
-                    Timber.e("Map path request failed, " + throwable.toString());
+                    Timber.e("Map path request failed, %s", throwable.toString());
                     return RxResponse.error(throwable);
                 });
     }

@@ -9,7 +9,6 @@ import com.jakdor.labday.R
 import android.content.pm.PackageManager
 import android.location.Location
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,6 +20,7 @@ import android.location.LocationManager
 import android.content.Context.LOCATION_SERVICE
 import android.location.LocationListener
 import android.location.Criteria
+import timber.log.Timber
 
 /**
  * BaseMapFragment displays embedded google map with provided location marker
@@ -54,7 +54,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
     override fun onCreate(p0: Bundle?) {
         super.onCreate(p0)
         if(activity == null){
-            Log.wtf(CLASS_TAG, "Unable to get Activity")
+            Timber.wtf("Unable to get Activity")
             return
         } else {
             this.getMapAsync(this) //triggers onMapReadyCallback
@@ -102,7 +102,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
         try{
             map?.isMyLocationEnabled = false
         } catch (e: SecurityException){
-            Log.wtf(CLASS_TAG, "SecurityException thrown during onDestroy, " + e.toString())
+            Timber.wtf("SecurityException thrown during onDestroy, %s", e.toString())
         }
     }
 
@@ -128,7 +128,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
      */
     private fun getLocationPermission() {
         if(activity == null){
-            Log.wtf(CLASS_TAG, "Unable to get Activity")
+            Timber.wtf("Unable to get Activity")
             return
         }
 
@@ -183,7 +183,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
             locationManager?.requestLocationUpdates(provider, 2000, 100.0f, this)
             locationUpdates = true
         } catch (e: SecurityException){
-            Log.e(CLASS_TAG, "Unauthorised call for location updates request")
+            Timber.e("Unauthorised call for location updates request")
         }
     }
 
@@ -217,7 +217,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
      */
     private fun updateLocationUI() {
         if (map == null) {
-            Log.wtf(CLASS_TAG, "GoogleMap is null")
+            Timber.wtf("GoogleMap is null")
             return
         }
         try {
@@ -229,7 +229,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
                 getLocationPermission()
             }
         } catch (e: SecurityException) {
-            Log.e(CLASS_TAG, e.toString())
+            Timber.e(e.toString())
         }
     }
 
@@ -246,7 +246,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
                         lastKnownLocation = task.result
 
                         if(lastKnownLocation == null) {
-                            Log.wtf(CLASS_TAG, "LastKnownLocation was null")
+                            Timber.wtf("LastKnownLocation was null")
                         } else {
                             val userLat = lastKnownLocation!!.latitude
                             val userLong = lastKnownLocation!!.longitude
@@ -264,8 +264,8 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
                             onUserLocation(userLat, userLong)
                         }
                     } else {
-                        Log.i(CLASS_TAG, "Current location returned null - using default")
-                        Log.e(CLASS_TAG, "Exception: %s", task.exception)
+                        Timber.i("Current location returned null - using default")
+                        Timber.e(task.exception)
                         map?.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM))
                         map?.uiSettings?.isMyLocationButtonEnabled = false
                     }
@@ -273,7 +273,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
 
             }
         } catch (e: SecurityException) {
-            Log.e(CLASS_TAG, e.toString())
+            Timber.e(e.toString())
         }
     }
 

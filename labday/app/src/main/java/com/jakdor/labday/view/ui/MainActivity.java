@@ -5,9 +5,7 @@ import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Window;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.jakdor.labday.R;
