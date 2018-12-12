@@ -1,111 +1,96 @@
 {
-    "events": [
-        {
-            "id": 1,
-            "name": "event1",
-            "img": "https://www.petmd.com/sites/default/files/cat-stroke-606267548.jpg",
-            "address": "human readable address",
-            "room": "room number",
-            "info": "event info",
-            "topic": "event topic",
-            "speaker_id": 1,
-            "dor1_img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "dor2_img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "latitude": "51.1107075",
-            "longitude": "17.042731"
-        },
-        {
-            "id": 2,
-            "name": "event2",
-            "img": "https://www.petmd.com/sites/default/files/cat-stroke-606267548.jpg",
-            "address": "human readable address",
-            "room": "room number",
-            "info": "event info",
-            "topic": "event topic",
-            "speaker_id": 2,
-            "dor1_img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "dor2_img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "latitude": "51.1107075",
-            "longitude": "17.042731"
-        }
-    ],
-    "map_others": [
-        {
-            "id": 1,
-            "type": 1,
-            "name": "Bar Bazylia",
-            "info": "some info and stuff",
-            "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "latitude": "51.1307075",
-            "longitude": "17.052731"
-        },
-        {
-            "id": 2,
-            "type": 1,
-            "name": "SKS",
-            "info": "some info and stuff",
-            "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "latitude": "51.1507075",
-            "longitude": "17.012731"
-        },
-        {
-            "id": 3,
-            "type": 2,
-            "name": "some other place type",
-            "info": "some info and stuff",
-            "img": "http://know.wroc.pl/wp-content/uploads/2014/08/Pwr_chemia.jpg",
-            "latitude": "51.4507075",
-            "longitude": "17.112731"
-        }
-    ],
     "paths": [
         {
             "id": 1,
-            "name": "path1",
-            "info": "path info",
-            "active": 0
+            "name": "Scieżka 1",
+            "info": "Scieżka 1",
+            "active": false
         },
         {
             "id": 2,
-            "name": "path2",
-            "info": "path info",
-            "active": 1
-        },
-        {
-            "id": 3,
-            "name": "path3",
-            "info": "path info",
-            "active": 0
+            "name": "Scieżka 2",
+            "info": "Scieżka 2",
+            "active": true
         }
     ],
     "timetables": [
         {
-            "id": 1,
+            "id": 4,
             "path_id": 2,
-            "event_id": 1,
-            "time_start": 1003000,
-            "time_end": 10006600
+            "event_id": 5,
+            "time_start": 1521878400,
+            "time_end": 1521882000
         },
         {
-            "id": 2,
+            "id": 5,
             "path_id": 2,
-            "event_id": 2,
-            "time_start": 1000000,
-            "time_end": 10003600
+            "event_id": 6,
+            "time_start": 1521882000,
+            "time_end": 1521885600
         }
     ],
-    "speakers:": [
+    "events": [
+        {
+            "id": 5,
+            "name": "Rejestracja",
+            "img": "https://i.imgur.com/McCLjh8.jpg",
+            "address": "C-13, Wybrzeże Stanisława Wyspiańskiego 23/25",
+            "room": "Parter",
+            "info": "",
+            "topic": "Rejestracja uczestników",
+            "speaker_id": 3,
+            "dor1_img": "https://i.imgur.com/McCLjh8.jpg",
+            "dor2_img": "",
+            "latitude": "51.10742743688339",
+            "longitude": "17.05923020839691"
+        },
+        {
+            "id": 6,
+            "name": "Oficjalne rozpoczęcie",
+            "img": "https://i.imgur.com/SXpzyaN.jpg",
+            "address": "A1, Wybrzeże Wyspiańskiego 27",
+            "room": "Aula główna PWR",
+            "info": "",
+            "topic": "Oficjalne rozpoczęcie",
+            "speaker_id": 3,
+            "dor1_img": "https://i.imgur.com/JcXOOEo.jpg",
+            "dor2_img": "https://i.imgur.com/SXpzyaN.jpg",
+            "latitude": "51.10736681077137",
+            "longitude": "17.06180512905121"
+        }
+    ],
+    "speakers": [
+        {
+            "id": 3,
+            "name": "NaS",
+            "info": "Not a Speaker - for registry and opening",
+            "img": ""
+        },
+        {
+            "id": 4,
+            "name": "Dr inż. Marta Tsirigotis-Maniecka",
+            "info": "Pani Doktor poszukuje odpowiednich mikroukładów nośnikowych opartych na biopolimerach, a przeznaczonych do enkapsulacji biologicznie aktywnych związków pochodzenia naturalnego, tak aby poprawić ich możliwości aplikacyjne w terapii różnych chorób. Jest współautorem kilkunastu artykułów naukowych, w tym 10 znajdujących się na Liście Filadelfijskiej, a także licznych międzynarodowych i krajowych komunikatów konferencyjnych.",
+            "img": ""
+        }
+    ],
+    "places": [
         {
             "id": 1,
-            "speaker_name": "Name Surname",
-            "speaker_info": "short speaker info",
-            "speaker_img": "https://www.wykop.pl/cdn/c3201142/comment_LfNZtBbrA6zGMC5a8ocADPcOXUcVbPIj.jpg"
+            "type": 2,
+            "name": "Bar Bazylia",
+            "info": "Bar Bazylia w budynku C-13 Politechniki Wroclawskiej to stołówka stworzona z myślą o studentach i specjalnie dla nich.\r\n\r\nStarannie dobrany, nowoczesny wystrój wnętrza sprawi, iż będziecie mogli oderwać się od uczelnianej rzeczywistości i choć na chwilę zapomnieć o stresach.\r\n\r\nRóżnorodność oferowanych dań, zawsze świeże potrawy, ich wyszukany smak, niewygórowana cena oraz szybka i miła obsługa sprawią, że od nas nigdy nie wyjdziecie głodni i zawsze chętnie wrócicie. Oprócz stałych pozycji w menu, każdego dnia staramy się Was zaskakiwać nowymi potrawami.\r\n\r\nPo pysznym obiedzie zapraszamy piętro wyżej do naszej kawiarni na aromatyczną kawę oraz domowe ciasto.",
+            "img": "https://i.imgur.com/fdaYDDh.jpg",
+            "latitude": "51.107402176013075",
+            "longitude": "17.05905854701996"
         },
         {
             "id": 2,
-            "speaker_name": "Jakub Dorda",
-            "speaker_info": "short speaker info",
-            "speaker_img": "https://www.wykop.pl/cdn/c3201142/comment_LfNZtBbrA6zGMC5a8ocADPcOXUcVbPIj.jpg"
+            "type": 2,
+            "name": "SKS",
+            "info": "Strefa Kultury Studenckiej\r\n- stołówka, kawiarnia, miejsce spotkań oraz wydarzeń kulturalnych",
+            "img": "https://i.imgur.com/ODm8OaI.jpg",
+            "latitude": "51.10886054765045",
+            "longitude": "17.056875228881836"
         }
     ]
 }
