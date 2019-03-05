@@ -32,9 +32,9 @@ public class RetrofitAPICallsIntegrationTest {
     private final String loginAccessTokenPath = "app/src/test/assets/api/login.json";
 
     private final String dummyApiUrl = LabService.API_URL;
-    private final String dummyToken = "c6d74cec06f72f91b41666c9e289fc872a896e44";
-    private final String dummyLogin = "test";
-    private final String dummyPassword = "1234asdf";
+    private final String dummyToken = "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6Ijk3IiwiaWF0IjoxNTUxMjA0MDc4LCJ1c2VybmFtZSI6InVzZXIyIn0.i_Ihq879bPQFeBFHM_FcqZZS-LQXn3ZRqjwN4RzQhLHGvs5diKSma2jGOu50pO2CdUeMfFmpJngBC91C1CEneQ";
+    private final String dummyLogin = "user2";
+    private final String dummyPassword = "user";
 
     @Before
     public void setUp() throws Exception {
@@ -49,9 +49,6 @@ public class RetrofitAPICallsIntegrationTest {
         LabService labService = retrofitBuilder.createService(
                 dummyApiUrl, LabService.class);
 
-        Gson gson = new Gson();
-        AccessToken accessToken = gson.fromJson(readFile(loginAccessTokenPath), AccessToken.class);
-
         TestObserver<AccessToken> testObserver
                 = labService.getAccessToken(dummyLogin, dummyPassword).test();
         testObserver.assertSubscribed();
@@ -59,8 +56,8 @@ public class RetrofitAPICallsIntegrationTest {
         testObserver.assertNoErrors();
 
         testObserver.assertValue(accessToken1 -> {
-            Assert.assertEquals(accessToken, accessToken1);
-            Assert.assertEquals(accessToken.hashCode(), accessToken1.hashCode());
+            Assert.assertNotNull(accessToken1);
+            Assert.assertNotNull(accessToken1.getAccessToken());
             return true;
         });
 
@@ -73,8 +70,6 @@ public class RetrofitAPICallsIntegrationTest {
     @Test
     public void lastUpdateTest() throws Exception {
         LabService labService = retrofitBuilder.createService(dummyApiUrl, LabService.class);
-        Gson gson = new Gson();
-        LastUpdate expectedLastUpdate = gson.fromJson(readFile(lastUpdateJsonPath), LastUpdate.class);
 
         TestObserver<LastUpdate> testObserver = labService.getLastUpdate().test();
         testObserver.assertSubscribed();
@@ -82,7 +77,9 @@ public class RetrofitAPICallsIntegrationTest {
         testObserver.assertNoErrors();
 
         testObserver.assertValue(s -> {
-            Assert.assertEquals(expectedLastUpdate, s);
+            Assert.assertNotNull(s);
+            Assert.assertNotNull(s.getUpdatedAt());
+            Assert.assertFalse(s.getUpdatedAt().isEmpty());
             return true;
         });
 
