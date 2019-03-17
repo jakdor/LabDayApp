@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +21,9 @@ import com.jakdor.labday.databinding.FragmentEventBinding
 import com.jakdor.labday.di.InjectableFragment
 import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
-import com.jakdor.labday.view.utils.GlideApp
+import com.jakdor.labday.utils.GlideApp
 import com.jakdor.labday.viewmodel.EventViewModel
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -95,7 +95,7 @@ class EventFragment : Fragment(), InjectableFragment {
             if (response != null) {
                 this.processResponse(response)
             } else {
-                Log.e(CLASS_TAG, "RxResponse returned null")
+                Timber.e("RxResponse returned null")
             }
         })
     }
@@ -110,7 +110,7 @@ class EventFragment : Fragment(), InjectableFragment {
             }
         } else {
             if (response.error != null) {
-                Log.e(CLASS_TAG, response.error.toString())
+                Timber.e(response.error.toString())
             }
         }
     }

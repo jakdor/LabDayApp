@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +24,12 @@ import com.jakdor.labday.di.InjectableFragment;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxStatus;
 import com.jakdor.labday.view.adapter.TimetableAdapter;
-import com.jakdor.labday.view.utils.GlideApp;
+import com.jakdor.labday.utils.GlideApp;
 import com.jakdor.labday.viewmodel.TimetableViewModel;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 public class TimetableFragment extends Fragment implements InjectableFragment {
 
@@ -139,7 +140,7 @@ public class TimetableFragment extends Fragment implements InjectableFragment {
         }
         else {
             if(response.error != null) {
-                Log.e(CLASS_TAG, response.error.toString());
+                Timber.e(response.error.toString());
             }
         }
     }

@@ -2,7 +2,6 @@ package com.jakdor.labday.common.repository;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.facebook.android.crypto.keychain.AndroidConceal;
 import com.facebook.android.crypto.keychain.SharedPrefsBackedKeyChain;
@@ -30,14 +29,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 /**
  * Main app data repository handler - manages data sources
  */
 @Singleton
 public class ProjectRepository {
-
-    private final String CLASS_TAG = "ProjectRepository";
 
     private NetworkManager networkManager;
     private LocalDbHandler localDbHandler;
@@ -90,7 +88,7 @@ public class ProjectRepository {
 
         if(token.equals("-1")){
             this.accessToken = token;
-            Log.e(CLASS_TAG, "bad access token");
+            Timber.e("bad access token");
             return;
         }
 
@@ -105,10 +103,10 @@ public class ProjectRepository {
             outputStream.write(encryptedToken);
             outputStream.close();
 
-            Log.i(CLASS_TAG, "Successful login, access token saved");
+            Timber.i("Successful login, access token saved");
         }
         catch (Exception e){
-            Log.wtf(CLASS_TAG, "unable to save access token");
+            Timber.wtf("unable to save access token");
         }
 
         this.accessToken = token;
@@ -127,20 +125,20 @@ public class ProjectRepository {
             byte[] encryptedToken = readFile(context,"lab");
 
             if(encryptedToken == null){
-                Log.e(CLASS_TAG,"Access token not found");
+                Timber.e("Access token not found");
                 return false;
             }
             else if(encryptedToken.length == 0){
-                Log.e(CLASS_TAG,"Access token not available");
+                Timber.e("Access token not available");
                 return false;
             }
 
             byte[] plainToken = crypto.decrypt(encryptedToken, Entity.create("token"));
             this.accessToken = new String(plainToken);
-            Log.i(CLASS_TAG, "Loaded and decrypted access token");
+            Timber.i("Loaded and decrypted access token");
         }
         catch (Exception e){
-            Log.wtf(CLASS_TAG, "unable to decipher access token");
+            Timber.wtf("unable to decipher access token");
             return false;
         }
 
@@ -155,16 +153,16 @@ public class ProjectRepository {
         try {
             byte[] encryptedToken = readFile(context,"lab");
             if(encryptedToken == null){
-                Log.e(CLASS_TAG,"Access token not available");
+                Timber.e("Access token not available");
                 return false;
             }
             else if(encryptedToken.length == 0){
-                Log.e(CLASS_TAG,"Access token not available");
+                Timber.e("Access token not available");
                 return false;
             }
         }
         catch (Exception e){
-            Log.e(CLASS_TAG, "Unable to read access token, " + e.toString());
+            Timber.e("Unable to read access token, %s", e.toString());
             return false;
         }
 
@@ -265,11 +263,11 @@ public class ProjectRepository {
 
         if(apiUpdateCurrent = sharedPreferences.getString(
                 context.getString(R.string.pref_api_last_update_id), "0").equals(updateId)){
-            Log.i(CLASS_TAG, "Local data - up-to-date with API db");
+            Timber.i("Local data - up-to-date with API db");
             return true;
         }
         else {
-            Log.i(CLASS_TAG, "Local data - update required");
+            Timber.i("Local data - update required");
             return false;
         }
     }
@@ -319,11 +317,11 @@ public class ProjectRepository {
                         this.data = RxResponse.success(appData);
                         this.repositoryState = repositoryStates.READY;
                         localDbHandler.pushAppDataToDb(appData); //save AppData to local db;
-                        Log.i(CLASS_TAG, "API request successful");
+                        Timber.i("API request successful");
                     })
                     .map(RxResponse::success)
                     .onErrorReturn(throwable -> {
-                        Log.e(CLASS_TAG, "API request failed, " + throwable.toString());
+                        Timber.e("API request failed, %s", throwable.toString());
                         this.repositoryState = repositoryStates.ERROR;
                         return RxResponse.error(throwable);
                     });
@@ -345,7 +343,7 @@ public class ProjectRepository {
                 .subscribeOn(rxSchedulersFacade.io())
                 .map(RxResponse::success)
                 .onErrorReturn(throwable -> {
-                    Log.e(CLASS_TAG, "Map path request failed, " + throwable.toString());
+                    Timber.e("Map path request failed, %s", throwable.toString());
                     return RxResponse.error(throwable);
                 });
     }
@@ -355,7 +353,7 @@ public class ProjectRepository {
      * @return {RxResponse<AppData>}
      */
     public RxResponse<AppData> getData() {
-        Log.i(CLASS_TAG, "repository data available locally");
+        Timber.i("repository data available locally");
         return data;
     }
 

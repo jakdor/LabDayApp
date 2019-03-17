@@ -1,7 +1,7 @@
   # Lab Day App - project goal
-  Guide Android App for Lab Day PWR Event. Application will provide event map, timetable and other informations.
+  Guide Android App for Lab Day PWR Event. Application provides event map, timetable and other informations.
 
-  Current status: release 1.0.1
+  Current status: release 1.0.2
   https://play.google.com/store/apps/details?id=com.jakdor.labday
 
   Backend repository available here
@@ -29,7 +29,7 @@
   | :--: | :---: |
   | API level | 21-27 |
   | Build tools | 27.0.3 |
-  | Support libs | 27.1.0 |
+  | Support libs | 27.1.1 |
   | Java | 1.8 |
   | Kotlin | 1.2 |
 
@@ -43,8 +43,10 @@
   | SQLBrite | 3.1.0 |
   | Conceal | 2.0.1 |
   | Glide | 4.4.0 |
-  | GMSmaps | 11.8.0 |
+  | GMSmaps | 15.0.1 |
   | ButterKnife | 8.8.1 |
+  | Timber | 4.7.0 |
+  | Crashlytics | 2.9.2 |
   | ... | |
 
   ### Testing

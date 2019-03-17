@@ -19,7 +19,7 @@ import com.jakdor.labday.di.InjectableFragment
 import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.viewmodel.PlacesViewModel
-import com.jakdor.labday.view.utils.PlaceDialog
+import com.jakdor.labday.view.other.PlaceDialog
 import javax.inject.Inject
 
 /**

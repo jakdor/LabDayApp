@@ -38,7 +38,7 @@
   public *;
 }
 
-#Dagger rules.
+#Dagger rules
 -dontwarn dagger.internal.codegen.**
 -keepclassmembers,allowobfuscation class * {
     @javax.inject.* *;
@@ -113,3 +113,7 @@
 
 # Marshmallow removed Notification.setLatestEventInfo()
 -dontwarn android.app.Notification
+
+#Craslytics rulse
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable

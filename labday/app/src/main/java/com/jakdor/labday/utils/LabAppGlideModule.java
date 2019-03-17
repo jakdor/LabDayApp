@@ -1,4 +1,4 @@
-package com.jakdor.labday.view.utils;
+package com.jakdor.labday.utils;
 
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.annotation.GlideModule;

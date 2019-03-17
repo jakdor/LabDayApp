@@ -5,6 +5,7 @@ import android.app.Application;
 
 import com.facebook.soloader.SoLoader;
 import com.jakdor.labday.di.AppInjector;
+import com.jakdor.labday.utils.AppLogger;
 import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
@@ -30,6 +31,7 @@ public class App extends Application implements HasActivityInjector {
         LeakCanary.install(this);
         AppInjector.init(this);
         SoLoader.init(this, false);
+        AppLogger.init(this);
     }
 
     @Override

@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,17 +27,17 @@ import com.jakdor.labday.databinding.FragmentMainBinding;
 import com.jakdor.labday.di.InjectableFragment;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxStatus;
-import com.jakdor.labday.view.utils.GlideApp;
+import com.jakdor.labday.utils.GlideApp;
 import com.jakdor.labday.viewmodel.MainViewModel;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 /**
  * MainActivity landing fragment
  */
 public class MainFragment extends Fragment implements InjectableFragment {
-
-    private final String CLASS_TAG = "MainFragment";
 
     private FragmentMainBinding binding;
     private FragmentManager fragmentManager = getFragmentManager();
@@ -64,7 +63,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
                 .into(binding.menuLogo);
 
         if(getActivity() == null){
-            Log.wtf(CLASS_TAG, "Unable to get Activity");
+            Timber.wtf("Unable to get Activity");
         }
         else {
             fragmentManager = getActivity().getSupportFragmentManager();
@@ -157,7 +156,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
         }
         else {
             if(response.error != null) {
-                Log.e(CLASS_TAG, response.error.toString());
+                Timber.e(response.error.toString());
             }
             binding.setPath("");
         }
@@ -223,7 +222,7 @@ public class MainFragment extends Fragment implements InjectableFragment {
         if(!blockWhileLoading) {
 
             if(activePath == null){
-                Log.wtf(CLASS_TAG, "User doesn't have designed path");
+                Timber.wtf("User doesn't have assigned path");
                 Toast.makeText(getContext(), R.string.no_path_toast, Toast.LENGTH_LONG).show();
                 return;
             }

@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,7 @@ import com.jakdor.labday.viewmodel.SplashViewModel;
 import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Loaded in MainActivity prepares {@link com.jakdor.labday.common.repository.ProjectRepository}
@@ -34,8 +34,6 @@ import butterknife.ButterKnife;
  * {@link SplashActivity} and {@link MainActivity}
  * */
 public class SplashFragment extends Fragment implements InjectableFragment {
-
-    private final String CLASS_TAG = "SplashFragment";
 
     @BindView(R.id.splash_logo)
     ImageView splashLogo;
@@ -72,7 +70,7 @@ public class SplashFragment extends Fragment implements InjectableFragment {
             viewModel.updateAppData(getContext());
         }
         else {
-            Log.i(CLASS_TAG, "No access token, switching to loginFragment");
+            Timber.i("No access token, switching to loginFragment");
             delayedTransactionHandler.postDelayed(runnable, 1000);
         }
     }
@@ -101,7 +99,7 @@ public class SplashFragment extends Fragment implements InjectableFragment {
             MainFragment mainFragment = new MainFragment();
 
             if(getActivity() == null){
-                Log.wtf(CLASS_TAG, "Unable to get Activity");
+                Timber.wtf("Unable to get Activity");
                 return;
             }
 
@@ -114,7 +112,7 @@ public class SplashFragment extends Fragment implements InjectableFragment {
                     .commit();
         }
         else {
-            Log.wtf(CLASS_TAG, "Unable to get repo data, fallback to login");
+            Timber.wtf("Unable to get repo data, fallback to login");
             switchToLoginFragment();
         }
     }
@@ -123,7 +121,7 @@ public class SplashFragment extends Fragment implements InjectableFragment {
         LoginFragment loginFragment = new LoginFragment();
 
         if(getActivity() == null){
-            Log.wtf(CLASS_TAG, "Unable to get Activity");
+            Timber.wtf("Unable to get Activity");
             return;
         }
 

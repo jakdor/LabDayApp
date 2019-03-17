@@ -3,7 +3,6 @@ package com.jakdor.labday.common.repository;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 import com.jakdor.labday.common.model.AccessToken;
 import com.jakdor.labday.common.model.AppData;
@@ -16,13 +15,12 @@ import com.jakdor.labday.common.network.RetrofitBuilder;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 /**
  * Handles API calls
  */
 public class NetworkManager {
-
-    private final String CLASS_TAG = "NetworkManager";
 
     private RetrofitBuilder retrofitBuilder;
     private LabService labService;
@@ -44,17 +42,17 @@ public class NetworkManager {
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if(connectivityManager == null){
-            Log.wtf(CLASS_TAG, "Internet status: failed to get status!");
+            Timber.wtf("Internet status: failed to get status!");
             return false;
         }
 
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if(networkInfo == null){
-            Log.e(CLASS_TAG, "Internet status: no service!");
+            Timber.e( "Internet status: no service!");
             return false;
         }
         else {
-            Log.i(CLASS_TAG, "Internet status: OK");
+            Timber.i("Internet status: OK");
             return true;
         }
     }

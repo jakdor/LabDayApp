@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +22,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.jakdor.labday.R;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.di.InjectableFragment;
 import com.jakdor.labday.rx.RxResponse;
 import com.jakdor.labday.rx.RxStatus;
-import com.jakdor.labday.view.utils.GlideApp;
+import com.jakdor.labday.utils.GlideApp;
 import com.jakdor.labday.viewmodel.LoginViewModel;
 
 import javax.inject.Inject;
@@ -37,6 +35,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -44,8 +43,6 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
  * First app-load login fragment
  */
 public class LoginFragment extends Fragment implements InjectableFragment {
-
-    private final String CLASS_TAG = "LoginFragment";
 
     /**
      * Might as well be using DataBinding here, just for sake of showing that I know how to use ButterKnife
@@ -82,7 +79,7 @@ public class LoginFragment extends Fragment implements InjectableFragment {
         ButterKnife.bind(this, view);
 
         if(getActivity() == null){
-            Log.wtf(CLASS_TAG, "Unable to get Activity");
+            Timber.wtf("Unable to get Activity");
         }
         else{
             getActivity().getWindow().setSoftInputMode(
@@ -205,7 +202,7 @@ public class LoginFragment extends Fragment implements InjectableFragment {
 
         }
         catch (Exception e){
-            Log.wtf(CLASS_TAG, "Unable to hide softKeyboard, " + e.toString());
+            Timber.wtf("Unable to hide softKeyboard, %s", e.toString());
         }
     }
 
@@ -223,7 +220,7 @@ public class LoginFragment extends Fragment implements InjectableFragment {
             MainFragment mainFragment = new MainFragment();
 
             if(getActivity() == null){
-                Log.wtf(CLASS_TAG, "Unable to get Activity");
+                Timber.wtf("Unable to get Activity");
                 return;
             }
 
