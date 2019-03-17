@@ -6,7 +6,7 @@
     <string name="pref_api_last_update_id">apiLastUpdateID</string>
     <string name="unable_to_login">Nie można zalogować</string>
     <string name="login_background">login_background</string>
-    <string name="login_background_url">http://labday.pwr.edu.pl/wp-content/uploads/Zegar-przed-C13-mauy.jpg</string>
+    <string name="login_background_url">https://nkn.gov.pl/wp-content/uploads/2016/11/bud_c-13_pwr.jpg</string>
     <string name="login_card_title">logowanie</string>
     <string name="login_card_login">login:</string>
     <string name="login_card_password">hasło:</string>
@@ -49,17 +49,17 @@
     <string name="link_asi_logo">http://15.sesja.linuksowa.pl/img/loga/logo-asi.png</string>
     <string name="author_image">author image</string>
     <string name="link_img_kuba">https://i.imgur.com/v9OFFPh.jpg</string>
-    <string name="link_img_jan">https://i.imgur.com/tBtS81y.jpg</string>
+    <string name="link_img_jan">https://i.imgur.com/JBVuCru.jpg</string>
     <string name="info_asi">Aplikacja stworzona przez:</string>
     <string name="info_authors">Autorzy</string>
     <string name="author_kuba_name">Jakub Dorda</string>
     <string name="author_kuba_info">Android</string>
-    <string name="author_jan_name">Jan Stoltman</string>
+    <string name="author_jan_name">Jakub Bosak</string>
     <string name="author_jan_info">Backend</string>
     <string name="gh_logo">github logo</string>
     <string name="link_asi">https://www.facebook.com/ASI.PWr/</string>
     <string name="link_gh_kuba">https://github.com/jakdor</string>
-    <string name="link_gh_jan">https://github.com/JanStoltman</string>
+    <string name="link_gh_jan">https://github.com/jBosak98</string>
     <string name="event_host_image_desc">event host image</string>
     <string name="no_path_toast">Nie jesteś zapisany na żadną ścieżkę, skontaktuj się z organizatorami</string>
 </resources>
