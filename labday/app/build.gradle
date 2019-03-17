@@ -42,8 +42,8 @@ android {
         applicationId "com.jakdor.labday"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 5
-        versionName "1.0.2"
+        versionCode 6
+        versionName "2.0.0"
         manifestPlaceholders = [crashlytics:getApiKey("crashlytics.key")]
         testInstrumentationRunner 'com.jakdor.labday.InstrumentationTestRunner'
         //testInstrumentationRunner "com.jakdor.labday.EspressoRunner"
