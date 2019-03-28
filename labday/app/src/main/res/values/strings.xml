@@ -62,4 +62,14 @@
     <string name="link_gh_jan">https://github.com/jBosak98</string>
     <string name="event_host_image_desc">event host image</string>
     <string name="no_path_toast">Nie jesteś zapisany na żadną ścieżkę, skontaktuj się z organizatorami</string>
+    <string name="orgs_header">Kontakt do organizatorów</string>
+    <string name="orgs1_name">Marta Lipka</string>
+    <string name="orgs1_info">Koordynator Główny</string>
+    <string name="orgs2_name">Katarzyna Legut</string>
+    <string name="orgs2_info">Koordynator ds. kontaktu \n- tel. 725210363</string>
+    <string name="orgs3_name">Marta Slaczałek</string>
+    <string name="orgs3_info">Koordynator ds. wolontariuszy \n- tel. 663852260</string>
+    <string name="link_img_org1">https://i.imgur.com/cVG58jz.jpg</string>
+    <string name="link_img_org2">https://i.imgur.com/Eex3clP.jpg</string>
+    <string name="link_img_org3">https://i.imgur.com/cymVcBe.jpg</string>
 </resources>
