@@ -46,6 +46,24 @@ class InfoFragment : Fragment() {
                 .apply(RequestOptions.circleCropTransform())
                 .into(binding.authorJan?.infoItemImg)
 
+        GlideApp.with(this)
+                .load(getString(R.string.link_img_org1))
+                .placeholder(R.drawable.placeholder)
+                .apply(RequestOptions.circleCropTransform())
+                .into(binding.org1?.infoItemImg)
+
+        GlideApp.with(this)
+                .load(getString(R.string.link_img_org2))
+                .placeholder(R.drawable.placeholder)
+                .apply(RequestOptions.circleCropTransform())
+                .into(binding.org2?.infoItemImg)
+
+        GlideApp.with(this)
+                .load(getString(R.string.link_img_org3))
+                .placeholder(R.drawable.placeholder)
+                .apply(RequestOptions.circleCropTransform())
+                .into(binding.org3?.infoItemImg)
+
         binding.infoLogo.setOnClickListener { openWebsite(getString(R.string.link_asi)) }
         binding.authorKuba?.infoItemGh?.setOnClickListener {
             openWebsite(getString(R.string.link_gh_kuba))

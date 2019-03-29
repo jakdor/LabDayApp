@@ -4,8 +4,11 @@
   Current status: release 1.0.2
   https://play.google.com/store/apps/details?id=com.jakdor.labday
 
-  Backend repository available here
+  v1 (2018) Backend repository
   https://github.com/JanStoltman/LabDayBackend
+
+  v2 Backend repository
+  https://github.com/asi-pwr/LabDayBackendSpring
 
   ## Technology goals
   Use as many professionally used frameworks, libraries and project patterns as saintly possible.
