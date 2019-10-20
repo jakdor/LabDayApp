@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.request.RequestOptions
+
 import com.jakdor.labday.R
 import com.jakdor.labday.databinding.FragmentInfoBinding
 import com.jakdor.labday.utils.GlideApp

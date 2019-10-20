@@ -12,17 +12,18 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.RequestOptions
+
 import com.jakdor.labday.R
 import com.jakdor.labday.common.model.Event
 import com.jakdor.labday.common.model.Speaker
 import com.jakdor.labday.common.model.Timetable
 import com.jakdor.labday.databinding.FragmentEventBinding
-
 import com.jakdor.labday.di.InjectableFragment
 import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.utils.GlideApp
 import com.jakdor.labday.viewmodel.EventViewModel
+
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -66,9 +67,10 @@ class EventFragment : Fragment(), InjectableFragment {
         if(viewModel == null){
             viewModel = ViewModelProviders.of(this, viewModelFactory)
                     .get(EventViewModel::class.java)
+
+            observeData()
         }
 
-        observeData()
         viewModel?.loadAppData(context, timetable.eventId)
     }
 

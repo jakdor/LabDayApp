@@ -12,10 +12,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+
 import com.jakdor.labday.R
 import com.jakdor.labday.databinding.FragmentMediaBinding
 import com.jakdor.labday.utils.GlideApp
-import android.util.Log
+
 import timber.log.Timber
 
 /**

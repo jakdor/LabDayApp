@@ -94,10 +94,11 @@ public class MainFragment extends Fragment implements InjectableFragment {
         if(viewModel == null) {
             viewModel = ViewModelProviders.of(this, viewModelFactory)
                     .get(MainViewModel.class);
+
+            observeAppData();
+            observeLoadingStatus();
         }
 
-        observeAppData();
-        observeLoadingStatus();
         viewModel.loadAppData(getContext());
     }
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+
 import com.jakdor.labday.R
 import com.jakdor.labday.utils.GlideApp
 

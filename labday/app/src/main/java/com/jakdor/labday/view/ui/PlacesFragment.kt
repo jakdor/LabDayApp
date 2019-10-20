@@ -7,11 +7,13 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import android.util.Log
+
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+
 import com.jakdor.labday.R
 import com.jakdor.labday.common.model.AppData
 import com.jakdor.labday.common.model.MapOther
@@ -20,6 +22,7 @@ import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.viewmodel.PlacesViewModel
 import com.jakdor.labday.view.other.PlaceDialog
+
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -46,9 +49,10 @@ class PlacesFragment : BaseMapFragment(), InjectableFragment {
         if(viewModel == null){
             viewModel = ViewModelProviders.of(this, viewModelFactory)
                     .get(PlacesViewModel::class.java)
+
+            observeData()
         }
 
-        observeData()
         viewModel?.loadAppData(context)
     }
 

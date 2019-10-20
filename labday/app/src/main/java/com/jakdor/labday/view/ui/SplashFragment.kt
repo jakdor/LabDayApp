@@ -17,6 +17,7 @@ import com.jakdor.labday.di.InjectableFragment
 import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.viewmodel.SplashViewModel
+
 import kotlinx.android.synthetic.main.splash.*
 
 import javax.inject.Inject

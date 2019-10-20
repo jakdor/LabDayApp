@@ -16,6 +16,8 @@ import androidx.lifecycle.Observer
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+
 import com.jakdor.labday.R
 import com.jakdor.labday.common.model.AppData
 import com.jakdor.labday.di.InjectableFragment
@@ -28,7 +30,6 @@ import javax.inject.Inject
 
 import timber.log.Timber
 
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import kotlinx.android.synthetic.main.login.*
 import kotlinx.android.synthetic.main.login_background.*
 import kotlinx.android.synthetic.main.login_card.*
@@ -71,10 +72,10 @@ class LoginFragment : Fragment(), InjectableFragment {
         if (viewModel == null) {
             viewModel = ViewModelProviders.of(this, viewModelFactory)
                     .get(LoginViewModel::class.java)
-        }
 
-        observeLogin()
-        observeLoadingStatus()
+            observeLogin()
+            observeLoadingStatus()
+        }
     }
 
     fun startAnimations() {

@@ -311,8 +311,8 @@ public class ProjectRepository {
      * @return {Observable<RxResponse<T>>}
      */
     public Observable<RxResponse<AppData>> apiRequest(final Observable<AppData> apiCall) {
-        return apiCall.subscribeOn(rxSchedulersFacade.io())
-                    .observeOn(rxSchedulersFacade.ui())
+        return apiCall.subscribeOn(rxSchedulersFacade.computation())
+                    .observeOn(rxSchedulersFacade.computation())
                     .doOnNext(appData -> {
                         this.data = RxResponse.success(appData);
                         this.repositoryState = repositoryStates.READY;
