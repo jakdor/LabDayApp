@@ -16,7 +16,7 @@ import retrofit2.http.POST;
 public interface LabService {
     //mock api address
     String MOCK_API_URL = "https://1ec1fcc6-6966-422c-8a1e-409c926f4f3e.mock.pstmn.io/";
-    String API_URL = "http://104.248.37.1:8081/";
+    String API_URL = "https://1ec1fcc6-6966-422c-8a1e-409c926f4f3e.mock.pstmn.io/"; //http://104.248.37.1:8081/
 
     @GET("api/app-data")
     Observable<AppData> getAppData();
