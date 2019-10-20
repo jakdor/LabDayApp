@@ -1,8 +1,8 @@
 package com.jakdor.labday.common.localdb;
 
 import android.app.Application;
-import android.arch.persistence.db.SupportSQLiteOpenHelper;
-import android.arch.persistence.db.framework.FrameworkSQLiteOpenHelperFactory;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
+import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 
 import com.jakdor.labday.common.dao.EventDao;
 import com.jakdor.labday.common.dao.MapOtherDao;

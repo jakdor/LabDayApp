@@ -3,7 +3,7 @@ package com.jakdor.labday.androidjunit;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.google.gson.Gson;
 import com.jakdor.labday.common.model.AccessToken;
@@ -20,7 +20,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import io.appflate.restmock.RESTMockServer;
 import io.reactivex.observers.TestObserver;
 
 import static com.jakdor.labday.androidjunit.TestUtils.readAssetFile;

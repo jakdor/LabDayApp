@@ -1,11 +1,11 @@
 package com.jakdor.labday.view.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.FragmentActivity
 import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,6 +20,7 @@ import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.viewmodel.PlacesViewModel
 import com.jakdor.labday.view.other.PlaceDialog
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -34,7 +35,7 @@ class PlacesFragment : BaseMapFragment(), InjectableFragment {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         barTitle = getString(R.string.places_fragment_bar)
     }
@@ -57,7 +58,7 @@ class PlacesFragment : BaseMapFragment(), InjectableFragment {
     fun observeData() {
         viewModel?.response?.observe(this, Observer {
             t -> if(t != null) processResponse(t)
-            else Log.e(CLASS_TAG, "RxResponse returned null")
+            else Timber.e("RxResponse returned null")
         })
     }
 

@@ -2,7 +2,7 @@ package com.jakdor.labday.androidjunit;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.facebook.soloader.SoLoader;
 import com.google.gson.Gson;
@@ -29,7 +29,6 @@ import org.junit.rules.ExpectedException;
 import java.io.FileOutputStream;
 import java.nio.charset.Charset;
 
-import io.appflate.restmock.RESTMockServer;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.Schedulers;
 

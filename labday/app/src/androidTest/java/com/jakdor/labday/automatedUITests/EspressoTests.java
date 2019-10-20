@@ -2,7 +2,7 @@ package com.jakdor.labday.automatedUITests;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.jakdor.labday.R;
 

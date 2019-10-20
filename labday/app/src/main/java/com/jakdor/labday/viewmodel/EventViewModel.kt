@@ -1,7 +1,7 @@
 package com.jakdor.labday.viewmodel
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import android.content.Context
 import android.util.Log
 import com.jakdor.labday.common.model.AppData

@@ -1,6 +1,6 @@
 package com.jakdor.labday.rx;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import static com.jakdor.labday.rx.RxStatus.ERROR;
 import static com.jakdor.labday.rx.RxStatus.LOGIN_ERROR;

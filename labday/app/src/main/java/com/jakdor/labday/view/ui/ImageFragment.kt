@@ -1,13 +1,12 @@
 package com.jakdor.labday.view.ui
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import butterknife.ButterKnife
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.jakdor.labday.R
 import com.jakdor.labday.utils.GlideApp
@@ -21,7 +20,6 @@ class ImageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view: View = layoutInflater.inflate(R.layout.fragment_img, container, false)
-        ButterKnife.bind(this, view)
 
         val animView = view.findViewById<ImageView>(R.id.image_loading_anim)
         val imgView = view.findViewById<ImageView>(R.id.image)

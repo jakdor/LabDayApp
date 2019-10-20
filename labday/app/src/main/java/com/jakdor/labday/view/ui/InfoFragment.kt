@@ -1,11 +1,11 @@
 package com.jakdor.labday.view.ui
 
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,37 +38,37 @@ class InfoFragment : Fragment() {
                 .load(getString(R.string.link_img_kuba))
                 .placeholder(R.drawable.placeholder)
                 .apply(RequestOptions.circleCropTransform())
-                .into(binding.authorKuba?.infoItemImg)
+                .into(binding.authorKuba.infoItemImg)
 
         GlideApp.with(this)
                 .load(getString(R.string.link_img_jan))
                 .placeholder(R.drawable.placeholder)
                 .apply(RequestOptions.circleCropTransform())
-                .into(binding.authorJan?.infoItemImg)
+                .into(binding.authorJan.infoItemImg)
 
         GlideApp.with(this)
                 .load(getString(R.string.link_img_org1))
                 .placeholder(R.drawable.placeholder)
                 .apply(RequestOptions.circleCropTransform())
-                .into(binding.org1?.infoItemImg)
+                .into(binding.org1.infoItemImg)
 
         GlideApp.with(this)
                 .load(getString(R.string.link_img_org2))
                 .placeholder(R.drawable.placeholder)
                 .apply(RequestOptions.circleCropTransform())
-                .into(binding.org2?.infoItemImg)
+                .into(binding.org2.infoItemImg)
 
         GlideApp.with(this)
                 .load(getString(R.string.link_img_org3))
                 .placeholder(R.drawable.placeholder)
                 .apply(RequestOptions.circleCropTransform())
-                .into(binding.org3?.infoItemImg)
+                .into(binding.org3.infoItemImg)
 
         binding.infoLogo.setOnClickListener { openWebsite(getString(R.string.link_asi)) }
-        binding.authorKuba?.infoItemGh?.setOnClickListener {
+        binding.authorKuba.infoItemGh.setOnClickListener {
             openWebsite(getString(R.string.link_gh_kuba))
         }
-        binding.authorJan?.infoItemGh?.setOnClickListener {
+        binding.authorJan.infoItemGh.setOnClickListener {
             openWebsite(getString(R.string.link_gh_jan))
         }
 

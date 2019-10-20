@@ -1,8 +1,7 @@
 package com.jakdor.labday.robolectric;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.content.Context;
-import android.support.v7.widget.CardView;
+import androidx.lifecycle.MutableLiveData;
+import androidx.cardview.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;

@@ -1,10 +1,10 @@
 package com.jakdor.labday.robolectric;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.lifecycle.MutableLiveData;
+import com.google.android.material.appbar.AppBarLayout;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 

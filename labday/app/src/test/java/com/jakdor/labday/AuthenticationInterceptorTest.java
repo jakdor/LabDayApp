@@ -1,6 +1,6 @@
 package com.jakdor.labday;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.jakdor.labday.common.network.AuthenticationInterceptor;
 

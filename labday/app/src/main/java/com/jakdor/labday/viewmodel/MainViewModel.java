@@ -1,7 +1,7 @@
 package com.jakdor.labday.viewmodel;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.jakdor.labday.common.repository.ProjectRepository;
 import com.jakdor.labday.rx.RxSchedulersFacade;
