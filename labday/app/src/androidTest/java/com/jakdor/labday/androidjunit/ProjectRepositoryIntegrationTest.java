@@ -34,7 +34,7 @@ import java.nio.charset.Charset;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.jakdor.labday.androidjunit.TestUtils.readAssetFile;
+import static com.jakdor.labday.TestUtils.readAssetFile;
 
 /**
  * {@link ProjectRepository} integration tests on local REST API mock
@@ -58,7 +58,7 @@ public class ProjectRepositoryIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        targetContext = ApplicationProvider.getApplicationContext(); //todo replace with mock, this is a real app context!
+        targetContext = ApplicationProvider.getApplicationContext();
         testContext = InstrumentationRegistry.getInstrumentation().getContext();
 
         SoLoader.init(targetContext, false);

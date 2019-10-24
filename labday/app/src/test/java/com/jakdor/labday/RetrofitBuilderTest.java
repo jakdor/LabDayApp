@@ -5,7 +5,6 @@ import com.jakdor.labday.common.network.AuthenticationInterceptor;
 import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -14,8 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
-import javax.annotation.Nullable;
 
 import io.reactivex.observers.TestObserver;
 import okhttp3.MediaType;
@@ -57,7 +54,6 @@ public class RetrofitBuilderTest {
                 .get().url(dummyApiUrl).build();
 
         ResponseBody dummyResponse = new ResponseBody() {
-            @Nullable
             @Override
             public MediaType contentType() {
                 return null;

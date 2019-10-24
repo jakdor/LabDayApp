@@ -22,7 +22,7 @@ import org.junit.rules.ExpectedException;
 
 import io.reactivex.observers.TestObserver;
 
-import static com.jakdor.labday.androidjunit.TestUtils.readAssetFile;
+import static com.jakdor.labday.TestUtils.readAssetFile;
 
 /**
  * {@link NetworkManager} integration tests on local REST API mock

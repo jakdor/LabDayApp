@@ -1,7 +1,9 @@
-package com.jakdor.labday.robolectric;
+package com.jakdor.labday.androidjunit;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.google.gson.Gson;
-import com.jakdor.labday.TestApp;
 import com.jakdor.labday.common.localdb.LocalDbHandler;
 import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.rx.RxResponse;
@@ -13,34 +15,24 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import io.reactivex.observers.TestObserver;
+
+import static com.jakdor.labday.TestUtils.readAssetFile;
 
 /**
  * local db integration tests
  */
-@RunWith(RobolectricTestRunner.class)
-@Config(application = TestApp.class)
 public class LocalDbIntegrationTests {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final String appDataJsonPath = "app/src/test/assets/api/app_data.json";
-
     private LocalDbHandler localDbHandler;
 
     @Before
     public void setUp() throws Exception{
-        localDbHandler = new LocalDbHandler(RuntimeEnvironment.application);
+        localDbHandler = new LocalDbHandler(ApplicationProvider.getApplicationContext());
     }
 
     @After
@@ -54,7 +46,8 @@ public class LocalDbIntegrationTests {
     @Test
     public void integrationTestSaveAndLoad() throws Exception{
         Gson gson = new Gson();
-        AppData appData = gson.fromJson(readFile(appDataJsonPath), AppData.class);
+        AppData appData = gson.fromJson(
+                readAssetFile(InstrumentationRegistry.getInstrumentation().getContext(), "api/app_data.json"), AppData.class);
 
         localDbHandler.pushAppDataToDb(appData);
 
@@ -82,14 +75,5 @@ public class LocalDbIntegrationTests {
         });
 
         testObserver.onComplete();
-    }
-
-    /**
-     * Reads file to string
-     * @return String
-     */
-    private String readFile(String filePath) throws Exception{
-        Path path = Paths.get(filePath);
-        return new String(Files.readAllBytes(path));
     }
 }

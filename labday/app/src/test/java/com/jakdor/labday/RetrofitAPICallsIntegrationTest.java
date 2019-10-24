@@ -27,11 +27,11 @@ public class RetrofitAPICallsIntegrationTest {
 
     RetrofitBuilder retrofitBuilder;
 
-    private final String appDataJsonPath = "app/src/test/assets/api/app_data.json";
-    private final String lastUpdateJsonPath = "app/src/test/assets/api/last_update.json";
-    private final String loginAccessTokenPath = "app/src/test/assets/api/login.json";
+    private final String appDataJsonPath = "src/test/assets/api/app_data.json";
+    private final String lastUpdateJsonPath = "src/test/assets/api/last_update.json";
+    private final String loginAccessTokenPath = "src/test/assets/api/login.json";
 
-    private final String dummyApiUrl = LabService.API_URL;
+    private final String dummyApiUrl = LabService.MOCK_API_URL;
     private final String dummyToken = "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6Ijk3IiwiaWF0IjoxNTUxMjA0MDc4LCJ1c2VybmFtZSI6InVzZXIyIn0.i_Ihq879bPQFeBFHM_FcqZZS-LQXn3ZRqjwN4RzQhLHGvs5diKSma2jGOu50pO2CdUeMfFmpJngBC91C1CEneQ";
     private final String dummyLogin = "user2";
     private final String dummyPassword = "user";
