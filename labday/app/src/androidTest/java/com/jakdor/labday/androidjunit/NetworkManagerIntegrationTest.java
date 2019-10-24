@@ -36,7 +36,7 @@ public class NetworkManagerIntegrationTest {
 
     private NetworkManager networkManager;
 
-    private final String dummyApiUrl = LabService.API_URL; //RESTMockServer.getUrl()
+    private final String dummyApiUrl = LabService.MOCK_API_URL; //RESTMockServer.getUrl()
     private final String dummyToken = "c6d74cec06f72f91b41666c9e289fc872a896e44";
     private final String dummyLogin = "test";
     private final String dummyPassword = "1234asdf";
@@ -46,7 +46,7 @@ public class NetworkManagerIntegrationTest {
      */
     @Before
     public void setUp() throws Exception {
-        testContext = InstrumentationRegistry.getContext();
+        testContext = InstrumentationRegistry.getInstrumentation().getContext();
         networkManager = new NetworkManager(new RetrofitBuilder());
     }
 
