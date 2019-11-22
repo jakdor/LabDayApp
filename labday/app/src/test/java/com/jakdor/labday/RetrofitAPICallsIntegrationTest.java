@@ -7,8 +7,6 @@ import com.jakdor.labday.common.model.LastUpdate;
 import com.jakdor.labday.common.network.LabService;
 import com.jakdor.labday.common.network.RetrofitBuilder;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,6 +17,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import io.reactivex.observers.TestObserver;
+
+import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class RetrofitAPICallsIntegrationTest {
 
@@ -56,8 +58,8 @@ public class RetrofitAPICallsIntegrationTest {
         testObserver.assertNoErrors();
 
         testObserver.assertValue(accessToken1 -> {
-            Assert.assertNotNull(accessToken1);
-            Assert.assertNotNull(accessToken1.getAccessToken());
+            assertNotNull(accessToken1);
+            assertNotNull(accessToken1.getAccessToken());
             return true;
         });
 
@@ -77,9 +79,9 @@ public class RetrofitAPICallsIntegrationTest {
         testObserver.assertNoErrors();
 
         testObserver.assertValue(s -> {
-            Assert.assertNotNull(s);
-            Assert.assertNotNull(s.getUpdatedAt());
-            Assert.assertFalse(s.getUpdatedAt().isEmpty());
+            assertNotNull(s);
+            assertNotNull(s.getUpdatedAt());
+            assertFalse(s.getUpdatedAt().isEmpty());
             return true;
         });
 
@@ -102,8 +104,8 @@ public class RetrofitAPICallsIntegrationTest {
         testObserver.assertNoErrors();
 
         testObserver.assertValue(appData1 -> {
-            Assert.assertEquals(appData, appData1);
-            Assert.assertEquals(appData.hashCode(), appData1.hashCode());
+            assertEquals(appData, appData1);
+            assertEquals(appData.hashCode(), appData1.hashCode());
             return true;
         });
 

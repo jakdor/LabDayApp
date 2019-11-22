@@ -50,8 +50,11 @@ public class RetrofitBuilderTest {
      */
     @Test
     public void createServiceWithInterceptor() throws Exception {
-        Request request = new Request.Builder().header("Authorization", dummyToken)
-                .get().url(dummyApiUrl).build();
+        Request request = new Request.Builder()
+                .header("Authorization", dummyToken)
+                .get()
+                .url(dummyApiUrl)
+                .build();
 
         ResponseBody dummyResponse = new ResponseBody() {
             @Override
@@ -71,17 +74,25 @@ public class RetrofitBuilderTest {
         };
 
         when(authenticationInterceptor.intercept(any())).thenReturn(
-                new Response.Builder().request(request).protocol(Protocol.HTTP_2).code(200)
-                .body(dummyResponse).message(message).build());
+                new Response.Builder()
+                        .request(request)
+                        .protocol(Protocol.HTTP_2)
+                        .code(200)
+                        .body(dummyResponse)
+                        .message(message)
+                        .build());
 
-        LabService labService = retrofitBuilder.createService(dummyApiUrl, LabService.class, dummyToken);
+        LabService labService = retrofitBuilder.createService(
+                dummyApiUrl, LabService.class, dummyToken);
 
         TestObserver<AppData> testObserver = labService.getAppData().test();
         testObserver.assertSubscribed();
         testObserver.onComplete();
 
         InOrder order = inOrder(authenticationInterceptor);
-        order.verify(authenticationInterceptor, calls(1)).setAuthToken(dummyToken);
-        order.verify(authenticationInterceptor, calls(1)).intercept(any());
+        order.verify(authenticationInterceptor, calls(1))
+                .setAuthToken(dummyToken);
+        order.verify(authenticationInterceptor, calls(1))
+                .intercept(any());
     }
 }
