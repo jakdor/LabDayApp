@@ -42,12 +42,6 @@ class InfoFragment : Fragment() {
                 .into(binding.authorKuba.infoItemImg)
 
         GlideApp.with(this)
-                .load(getString(R.string.link_img_jan))
-                .placeholder(R.drawable.placeholder)
-                .apply(RequestOptions.circleCropTransform())
-                .into(binding.authorJan.infoItemImg)
-
-        GlideApp.with(this)
                 .load(getString(R.string.link_img_org1))
                 .placeholder(R.drawable.placeholder)
                 .apply(RequestOptions.circleCropTransform())
@@ -68,9 +62,6 @@ class InfoFragment : Fragment() {
         binding.infoLogo.setOnClickListener { openWebsite(getString(R.string.link_asi)) }
         binding.authorKuba.infoItemGh.setOnClickListener {
             openWebsite(getString(R.string.link_gh_kuba))
-        }
-        binding.authorJan.infoItemGh.setOnClickListener {
-            openWebsite(getString(R.string.link_gh_jan))
         }
 
         return binding.root
