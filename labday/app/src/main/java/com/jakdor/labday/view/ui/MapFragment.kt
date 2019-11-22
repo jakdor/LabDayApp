@@ -1,19 +1,22 @@
 package com.jakdor.labday.view.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
-import com.jakdor.labday.R
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.TextView
+
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
+
+import com.jakdor.labday.R
 import com.jakdor.labday.common.model.maps.MapPath
 import com.jakdor.labday.di.InjectableFragment
 import com.jakdor.labday.rx.RxResponse
@@ -21,8 +24,7 @@ import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.viewmodel.MapViewModel
 
 import javax.inject.Inject
-import android.widget.FrameLayout
-import android.widget.TextView
+import timber.log.Timber
 
 /**
  * MapFragment extends [BaseMapFragment] - shows user location and path to position provided in
@@ -76,9 +78,9 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
         if(viewModel == null){
             viewModel = ViewModelProviders.of(this, viewModelFactory)
                     .get(MapViewModel::class.java)
-        }
 
-        observeData()
+            observeData()
+        }
     }
 
     /**
@@ -89,20 +91,20 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
             if(t != null){
                 processResponse(t)
             } else {
-                Log.e(CLASS_TAG, "RxResponse returned null")
+                Timber.e("RxResponse returned null")
             }
         })
     }
 
     private fun processResponse(response: RxResponse<MapPath>){
         if (response.status == RxStatus.SUCCESS) {
-            Log.i(CLASS_TAG, "MapPath received from api!")
+            Timber.i("MapPath received from api!")
             drawPath(response.data)
             setCamPathBounds(response.data)
             setInfoOverlay(response.data)
         } else {
             if (response.error != null) {
-                Log.e(CLASS_TAG, response.error.toString())
+                Timber.e(response.error.toString())
             }
         }
     }
@@ -112,18 +114,18 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
      */
     private fun drawPath(mapPath: MapPath?){
         if(mapPath == null){
-            Log.wtf(CLASS_TAG, "MapPath is null")
+            Timber.wtf("MapPath is null")
             return
         }
 
         if(mapPath.routes?.size == 0 || mapPath.routes?.get(0)?.legs?.size == 0){
-            Log.e(CLASS_TAG, "Unable to plot path")
+            Timber.e("Unable to plot path")
             return
         }
 
         val steps = mapPath.routes?.get(0)?.legs?.get(0)?.steps
         if(steps == null || !mapPath.status.equals("OK")){
-            Log.e(CLASS_TAG, "Unable to plot path")
+            Timber.e("Unable to plot path")
             return
         }
 
@@ -134,21 +136,21 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
         val startLat = steps[0].startLocation?.lat
         val startLong = steps[0].startLocation?.lng
         if(startLat == null || startLong == null){
-            Log.e(CLASS_TAG, "Unable to plot path")
+            Timber.e("Unable to plot path")
             return
         }
         points.add(LatLng(startLat, startLong))
 
         //add end points
-        steps.forEach({ step ->
+        steps.forEach { step ->
             val endLat = step.endLocation?.lat
             val endLong = step.endLocation?.lng
             if(endLat == null || endLong == null){
-                Log.e(CLASS_TAG, "Unable to plot path")
+                Timber.e("Unable to plot path")
                 return
             }
             points.add(LatLng(endLat, endLong))
-        })
+        }
 
         polylineOptions.addAll(points)
         polylineOptions.width(2.0f)
@@ -162,12 +164,12 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
      */
     private fun setCamPathBounds(mapPath: MapPath?){
         if(mapPath == null){
-            Log.wtf(CLASS_TAG, "MapPath is null")
+            Timber.wtf("MapPath is null")
             return
         }
 
         if(mapPath.routes?.size == 0){
-            Log.e(CLASS_TAG, "Routes are empty")
+            Timber.e("Routes are empty")
             return
         }
 
@@ -177,7 +179,7 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
         val swLong = mapPath.routes?.get(0)?.bounds?.southwest?.lng
 
         if(neLat == null || neLong == null || swLat == null || swLong == null){
-            Log.e(CLASS_TAG, "Unable to set cam bounds")
+            Timber.e("Unable to set cam bounds")
             return
         }
 
@@ -190,18 +192,18 @@ class MapFragment : BaseMapFragment(), InjectableFragment {
      */
     private fun setInfoOverlay(mapPath: MapPath?){
         if(mapPath == null){
-            Log.wtf(CLASS_TAG, "MapPath is null")
+            Timber.wtf("MapPath is null")
             return
         }
 
         if(mapPath.routes?.size == 0 || mapPath.routes?.get(0)?.legs?.size == 0){
-            Log.e(CLASS_TAG, "Unable to set info overlay")
+            Timber.e("Unable to set info overlay")
             return
         }
 
         var info = mapPath.routes?.get(0)?.legs?.get(0)?.distance?.text
         if(info == null){
-            Log.e(CLASS_TAG, "Unable to set info overlay")
+            Timber.e("Unable to set info overlay")
             return
         }
 

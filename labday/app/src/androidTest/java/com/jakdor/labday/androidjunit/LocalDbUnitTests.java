@@ -1,9 +1,11 @@
-package com.jakdor.labday.robolectric;
+package com.jakdor.labday.androidjunit;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.jakdor.labday.TestApp;
+import androidx.test.core.app.ApplicationProvider;
+
+import com.jakdor.labday.TestUtils;
 import com.jakdor.labday.common.dao.EventDao;
 import com.jakdor.labday.common.dao.MapOtherDao;
 import com.jakdor.labday.common.dao.PathDao;
@@ -22,10 +24,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +36,6 @@ import static android.database.sqlite.SQLiteDatabase.CONFLICT_FAIL;
 /**
  * Unit tests for local db
  */
-@RunWith(RobolectricTestRunner.class)
-@Config(application = TestApp.class)
 public class LocalDbUnitTests {
 
     @Rule
@@ -49,7 +45,7 @@ public class LocalDbUnitTests {
 
     @Before
     public void setUp() throws Exception{
-        localDbHandler = new LocalDbHandler(RuntimeEnvironment.application);
+        localDbHandler = new LocalDbHandler(ApplicationProvider.getApplicationContext());
     }
 
     @After
@@ -325,7 +321,7 @@ public class LocalDbUnitTests {
         Random random = new Random();
         for(int i = 0; i < random.nextInt(10) + 1; ++i){
             events.add(new Event(random.nextInt(100), TestUtils.randomString(),
-                    TestUtils.randomString(),TestUtils.randomString(), TestUtils.randomString(),
+                    TestUtils.randomString(), TestUtils.randomString(), TestUtils.randomString(),
                     TestUtils.randomString(), TestUtils.randomString(), random.nextInt(100),
                     TestUtils.randomString(), TestUtils.randomString(), TestUtils.randomString(),
                     TestUtils.randomString()));
@@ -362,7 +358,7 @@ public class LocalDbUnitTests {
         Random random = new Random();
         for(int i = 0; i < random.nextInt(10) + 1; ++i){
             events.add(new Event(random.nextInt(100), TestUtils.randomString(),
-                    TestUtils.randomString(),TestUtils.randomString(), TestUtils.randomString(),
+                    TestUtils.randomString(), TestUtils.randomString(), TestUtils.randomString(),
                     TestUtils.randomString(), TestUtils.randomString(), random.nextInt(100),
                     TestUtils.randomString(), TestUtils.randomString(), TestUtils.randomString(),
                     TestUtils.randomString()));

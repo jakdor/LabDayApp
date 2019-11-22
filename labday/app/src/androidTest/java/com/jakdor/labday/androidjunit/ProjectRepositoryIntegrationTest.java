@@ -2,7 +2,9 @@ package com.jakdor.labday.androidjunit;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.test.InstrumentationRegistry;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.facebook.soloader.SoLoader;
 import com.google.gson.Gson;
@@ -29,11 +31,10 @@ import org.junit.rules.ExpectedException;
 import java.io.FileOutputStream;
 import java.nio.charset.Charset;
 
-import io.appflate.restmock.RESTMockServer;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.jakdor.labday.androidjunit.TestUtils.readAssetFile;
+import static com.jakdor.labday.TestUtils.readAssetFile;
 
 /**
  * {@link ProjectRepository} integration tests on local REST API mock
@@ -49,7 +50,7 @@ public class ProjectRepositoryIntegrationTest {
     private ProjectRepository projectRepository;
     private LocalDbHandler localDbHandler;
 
-    private final String dummyApiUrl = LabService.API_URL; //RESTMockServer.getUrl()
+    private final String dummyApiUrl = LabService.MOCK_API_URL; //RESTMockServer.getUrl()
     private final String dummyApiBadUrl = "http://www.dummy.com/";
     private final String dummyLogin = "test";
     private final String dummyPassword = "1234asdf";
@@ -57,8 +58,8 @@ public class ProjectRepositoryIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        targetContext = InstrumentationRegistry.getTargetContext(); //todo replace with mock, this is a real app context!
-        testContext = InstrumentationRegistry.getContext();
+        targetContext = ApplicationProvider.getApplicationContext();
+        testContext = InstrumentationRegistry.getInstrumentation().getContext();
 
         SoLoader.init(targetContext, false);
 

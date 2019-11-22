@@ -1,28 +1,29 @@
 package com.jakdor.labday.view.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.RequestOptions
+
 import com.jakdor.labday.R
 import com.jakdor.labday.common.model.Event
 import com.jakdor.labday.common.model.Speaker
 import com.jakdor.labday.common.model.Timetable
 import com.jakdor.labday.databinding.FragmentEventBinding
-
 import com.jakdor.labday.di.InjectableFragment
 import com.jakdor.labday.rx.RxResponse
 import com.jakdor.labday.rx.RxStatus
 import com.jakdor.labday.utils.GlideApp
 import com.jakdor.labday.viewmodel.EventViewModel
+
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -66,9 +67,10 @@ class EventFragment : Fragment(), InjectableFragment {
         if(viewModel == null){
             viewModel = ViewModelProviders.of(this, viewModelFactory)
                     .get(EventViewModel::class.java)
+
+            observeData()
         }
 
-        observeData()
         viewModel?.loadAppData(context, timetable.eventId)
     }
 
@@ -126,7 +128,7 @@ class EventFragment : Fragment(), InjectableFragment {
                 .into(binding.imgToolbar)
 
         if(speaker.speakerName == "NaS"){ //Not-a-Speaker hide speaker view
-            binding.eventHostCard?.eventHostView?.visibility = View.GONE
+            binding.eventHostCard.eventHostView.visibility = View.GONE
         } else {
             GlideApp.with(this)
                     .load(speaker.speakerImg)
@@ -134,11 +136,11 @@ class EventFragment : Fragment(), InjectableFragment {
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.placeholder)
                     .apply(RequestOptions.circleCropTransform())
-                    .into(binding.eventHostCard?.eventHostImage)
+                    .into(binding.eventHostCard.eventHostImage)
         }
 
         if(event.dor1Img.isEmpty() && event.dor1Img.isEmpty()){
-            binding.eventDoorsCard?.eventDoorsView?.visibility = View.GONE
+            binding.eventDoorsCard.eventDoorsView.visibility = View.GONE
         } else {
             GlideApp.with(this)
                     .load(event.dor1Img)
@@ -146,7 +148,7 @@ class EventFragment : Fragment(), InjectableFragment {
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.placeholder)
                     .transition(withCrossFade())
-                    .into(binding.eventDoorsCard?.door1)
+                    .into(binding.eventDoorsCard.door1)
 
             GlideApp.with(this)
                     .load(event.dor2Img)
@@ -154,7 +156,7 @@ class EventFragment : Fragment(), InjectableFragment {
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.placeholder)
                     .transition(withCrossFade())
-                    .into(binding.eventDoorsCard?.door2)
+                    .into(binding.eventDoorsCard.door2)
         }
 
         val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.GERMAN)
@@ -164,23 +166,23 @@ class EventFragment : Fragment(), InjectableFragment {
 
         binding.time = simpleDateFormat.format(start) + " - " + simpleDateFormat.format(end)
 
-        if(!event.img.isEmpty())
+        if(event.img.isNotEmpty())
             binding.imgToolbar.setOnClickListener {
                 switchToImgFragment(event.img, event.name)
             }
 
-        if(!speaker.speakerImg.isEmpty())
-            binding.eventHostCard?.eventHostImage?.setOnClickListener { _ ->
+        if(speaker.speakerImg.isNotEmpty())
+            binding.eventHostCard.eventHostImage.setOnClickListener {
                 switchToImgFragment(speaker.speakerImg, speaker.speakerName)
             }
 
-        if(!event.dor1Img.isEmpty())
-            binding.eventDoorsCard?.doorCard1?.setOnClickListener { _ ->
+        if(event.dor1Img.isNotEmpty())
+            binding.eventDoorsCard.doorCard1.setOnClickListener { _ ->
                 switchToImgFragment(event.dor1Img, getString(R.string.entrence_info))
             }
 
-        if(!event.dor2Img.isEmpty())
-            binding.eventDoorsCard?.doorCard2?.setOnClickListener { _ ->
+        if(event.dor2Img.isNotEmpty())
+            binding.eventDoorsCard.doorCard2.setOnClickListener { _ ->
                 switchToImgFragment(event.dor2Img, getString(R.string.entrence_info))
             }
 
@@ -188,7 +190,7 @@ class EventFragment : Fragment(), InjectableFragment {
             switchToMapFragment(event.latitude, event.longitude, event.address)
         }
 
-        binding.eventAddressCard?.eventItem?.setOnClickListener { _ ->
+        binding.eventAddressCard.eventItem.setOnClickListener { _ ->
             switchToMapFragment(event.latitude, event.longitude, event.address)
         }
     }

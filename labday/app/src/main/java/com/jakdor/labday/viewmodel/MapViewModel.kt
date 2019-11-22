@@ -1,8 +1,8 @@
 package com.jakdor.labday.viewmodel
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.jakdor.labday.common.model.maps.MapPath
 import com.jakdor.labday.common.repository.ProjectRepository
 import com.jakdor.labday.rx.RxResponse

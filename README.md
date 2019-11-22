@@ -1,7 +1,7 @@
   # Lab Day App - project goal
   Guide Android App for Lab Day PWR Event. Application provides event map, timetable and other informations.
 
-  Current status: release 1.0.2
+  Current status: release 2.1.0
   https://play.google.com/store/apps/details?id=com.jakdor.labday
 
   v1 (2018) Backend repository
@@ -9,6 +9,9 @@
 
   v2 Backend repository
   https://github.com/asi-pwr/LabDayBackendSpring
+  
+  v3 Backend repository
+  https://github.com/jakdor/LabDayBackend
 
   ## Technology goals
   Use as many professionally used frameworks, libraries and project patterns as saintly possible.
@@ -30,26 +33,25 @@
   ### Android
   Name |  Version |
   | :--: | :---: |
-  | API level | 21-27 |
-  | Build tools | 27.0.3 |
-  | Support libs | 27.1.1 |
+  | API level | 21-29 |
+  | Build tools | 29.0.2 |
+  | AndroidX | 1.1.0 |
   | Java | 1.8 |
-  | Kotlin | 1.2 |
+  | Kotlin | 1.3 |
 
   ### Libs / frameworks
   Name |  Version |
   | :--: | :---: |
   | Retrofit2 | 2.3.0 |
   | OkHttp | 3.9.1 |
-  | Dagger2 | 2.13 |
+  | Dagger2 | 2.21 |
   | RxJava2 | 2.1.7 |
   | SQLBrite | 3.1.0 |
   | Conceal | 2.0.1 |
-  | Glide | 4.4.0 |
-  | GMSmaps | 15.0.1 |
-  | ButterKnife | 8.8.1 |
-  | Timber | 4.7.0 |
-  | Crashlytics | 2.9.2 |
+  | Glide | 4.9.0 |
+  | GMSmaps | 17.0.0 |
+  | Timber | 4.7.1 |
+  | Crashlytics | 2.10.1 |
   | ... | |
 
   ### Testing
@@ -58,5 +60,5 @@
   | Junit4 | 4.12 |
   | Mockito | 2.13.0 |
   | Espresso | 3.0.1 |
-  | Robolectric | 3.6.1 |
+  | LeakCanary | 1.6.3 |
   | RESTMock | 0.2.2 |

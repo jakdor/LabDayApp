@@ -5,26 +5,24 @@ import com.jakdor.labday.common.model.AppData;
 import com.jakdor.labday.common.model.LastUpdate;
 
 import io.reactivex.Observable;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Retrofit API endpoints
  */
 public interface LabService {
     //mock api address
-    String MOCK_API_URL = "https://1ec1fcc6-6966-422c-8a1e-409c926f4f3e.mock.pstmn.io/";
-    String API_URL = "http://104.248.37.1:8081/";
+    String MOCK_API_URL = "https://d27f1691-a7d0-44fe-b396-7d0e0af88757.mock.pstmn.io";
+    String API_URL = "http://tramwaj.asi.wroclaw.pl:5000/";
 
-    @GET("api/app-data")
+    @GET("api/app_data")
     Observable<AppData> getAppData();
 
-    @GET("api/last-update")
+    @GET("api/last_update")
     Observable<LastUpdate> getLastUpdate();
 
-    @FormUrlEncoded
     @POST("api/login")
-    Observable<AccessToken> getAccessToken(@Field("username") String user, @Field("password") String pass);
+    Observable<AccessToken> getAccessToken(@Query("username") String user, @Query("password") String pass);
 }

@@ -1,21 +1,23 @@
 package com.jakdor.labday.view.ui
 
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
-import android.support.v4.view.animation.FastOutLinearInInterpolator
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+
 import com.jakdor.labday.R
 import com.jakdor.labday.databinding.FragmentMediaBinding
 import com.jakdor.labday.utils.GlideApp
-import android.util.Log
+
+import timber.log.Timber
 
 /**
  * Displays LabDay connected media/social network channels
@@ -36,26 +38,26 @@ class MediaFragment : Fragment() {
                 .load(R.drawable.lab_day_logo_full)
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(binding.mediaSiteCard?.mediaItemImg)
+                .into(binding.mediaSiteCard.mediaItemImg)
 
         GlideApp.with(this)
                 .load(R.drawable.yt_logo)
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(binding.mediaYtCard?.mediaItemImg)
+                .into(binding.mediaYtCard.mediaItemImg)
 
         animateMenuItems()
 
-        binding.mediaSiteCard?.mediaCard?.setOnClickListener {
+        binding.mediaSiteCard.mediaCard.setOnClickListener {
             openWebsite(getString(R.string.link_lab_site))
         }
-        binding.mediaFbCard?.mediaCard?.setOnClickListener {
+        binding.mediaFbCard.mediaCard.setOnClickListener {
             openFacebook(getString(R.string.link_fb_user))
         }
-        binding.mediaInstagramCard?.mediaCard?.setOnClickListener {
+        binding.mediaInstagramCard.mediaCard.setOnClickListener {
             openInstagram(getString(R.string.link_intagram_user))
         }
-        binding.mediaYtCard?.mediaCard?.setOnClickListener {
+        binding.mediaYtCard.mediaCard.setOnClickListener {
             openYoutube(getString(R.string.link_yt_id))
         }
 
@@ -106,7 +108,7 @@ class MediaFragment : Fragment() {
         try {
             startActivity(appIntent)
         } catch (e: Exception) {
-            Log.i(CLASS_TAG, "Facebook app not installed")
+            Timber.i("Facebook app not installed")
             openWebsite("https://www.facebook.com/$user")
         }
     }
@@ -123,7 +125,7 @@ class MediaFragment : Fragment() {
         try {
             startActivity(likeIng)
         } catch (e: Exception) {
-            Log.i(CLASS_TAG, "Instagram app not found")
+            Timber.i("Instagram app not found")
             openWebsite("http://www.instagram.com/$user")
         }
     }
@@ -138,7 +140,7 @@ class MediaFragment : Fragment() {
         try {
             startActivity(appIntent)
         } catch (e: Exception) {
-            Log.i(CLASS_TAG, "Youtube app not found")
+            Timber.i("Youtube app not found")
             openWebsite("http://www.youtube.com/watch?v=$videoId")
         }
     }
@@ -147,10 +149,10 @@ class MediaFragment : Fragment() {
      * Animate items entry
      */
     private fun animateMenuItems() {
-        val menuItems = arrayOf(binding.mediaSiteCard?.root!!,
-                binding.mediaFbCard?.root!!,
-                binding.mediaInstagramCard?.root!!,
-                binding.mediaYtCard?.root!!)
+        val menuItems = arrayOf<View>(binding.mediaSiteCard.root,
+                binding.mediaFbCard.root,
+                binding.mediaInstagramCard.root,
+                binding.mediaYtCard.root)
 
         for (view in menuItems) {
             view.translationY = -50.0f

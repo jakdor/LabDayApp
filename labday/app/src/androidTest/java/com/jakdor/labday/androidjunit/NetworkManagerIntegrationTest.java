@@ -3,7 +3,7 @@ package com.jakdor.labday.androidjunit;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.google.gson.Gson;
 import com.jakdor.labday.common.model.AccessToken;
@@ -20,10 +20,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import io.appflate.restmock.RESTMockServer;
 import io.reactivex.observers.TestObserver;
 
-import static com.jakdor.labday.androidjunit.TestUtils.readAssetFile;
+import static com.jakdor.labday.TestUtils.readAssetFile;
 
 /**
  * {@link NetworkManager} integration tests on local REST API mock
@@ -37,7 +36,7 @@ public class NetworkManagerIntegrationTest {
 
     private NetworkManager networkManager;
 
-    private final String dummyApiUrl = LabService.API_URL; //RESTMockServer.getUrl()
+    private final String dummyApiUrl = LabService.MOCK_API_URL; //RESTMockServer.getUrl()
     private final String dummyToken = "c6d74cec06f72f91b41666c9e289fc872a896e44";
     private final String dummyLogin = "test";
     private final String dummyPassword = "1234asdf";
@@ -47,7 +46,7 @@ public class NetworkManagerIntegrationTest {
      */
     @Before
     public void setUp() throws Exception {
-        testContext = InstrumentationRegistry.getContext();
+        testContext = InstrumentationRegistry.getInstrumentation().getContext();
         networkManager = new NetworkManager(new RetrofitBuilder());
     }
 

@@ -3,23 +3,25 @@ package com.jakdor.labday.view.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.SupportMapFragment
-import com.jakdor.labday.R
 import android.content.pm.PackageManager
 import android.location.Location
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MarkerOptions
+
+import com.jakdor.labday.R
 import android.widget.Toast
 import android.location.LocationManager
 import android.content.Context.LOCATION_SERVICE
 import android.location.LocationListener
 import android.location.Criteria
+
 import timber.log.Timber
 
 /**
@@ -65,7 +67,7 @@ abstract class BaseMapFragment : SupportMapFragment(), OnMapReadyCallback, Locat
     }
 
     //load bar title from resources
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         barTitle = getString(R.string.map_fragment_bar)
     }

@@ -2,7 +2,8 @@ package com.jakdor.labday.automatedUITests;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.test.InstrumentationRegistry;
+
+import androidx.test.InstrumentationRegistry;
 
 import com.jakdor.labday.R;
 
@@ -36,5 +37,4 @@ public class EspressoTests {
         sharedPreferences.edit().putString(
                 targetContext.getString(R.string.pref_api_last_update_id), "0").apply();
     }
-
 }

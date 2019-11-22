@@ -19,7 +19,7 @@
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/media_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -46,7 +46,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.jakdor.labday.view.other.SquareCardView>
 

@@ -2,9 +2,9 @@ package com.jakdor.labday.view.other
 
 import android.app.Dialog
 import android.content.Context
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.FragmentActivity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.Window
@@ -31,8 +31,8 @@ class PlaceDialog(context: Context,
 
         binding.place = mapOther
         setContentView(binding.root)
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        window.setGravity(Gravity.CENTER)
+        window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        window?.setGravity(Gravity.CENTER)
 
         GlideApp.with(binding.root)
                 .load(mapOther.img)

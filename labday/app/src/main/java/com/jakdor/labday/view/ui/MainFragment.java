@@ -1,18 +1,18 @@
 package com.jakdor.labday.view.ui;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.animation.FastOutLinearInInterpolator;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,10 +94,11 @@ public class MainFragment extends Fragment implements InjectableFragment {
         if(viewModel == null) {
             viewModel = ViewModelProviders.of(this, viewModelFactory)
                     .get(MainViewModel.class);
+
+            observeAppData();
+            observeLoadingStatus();
         }
 
-        observeAppData();
-        observeLoadingStatus();
         viewModel.loadAppData(getContext());
     }
 

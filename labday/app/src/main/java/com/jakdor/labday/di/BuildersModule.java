@@ -1,6 +1,7 @@
 package com.jakdor.labday.di;
 
 import com.jakdor.labday.view.ui.MainActivity;
+import com.jakdor.labday.view.ui.TestActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -13,4 +14,7 @@ public abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = MainActivityFragmentBuilderModule.class)
     abstract MainActivity contributeMainActivity();
+
+    @ContributesAndroidInjector(modules = MainActivityFragmentBuilderModule.class)
+    abstract TestActivity contributeTestActivity();
 }

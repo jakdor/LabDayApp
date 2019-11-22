@@ -1,6 +1,6 @@
 package com.jakdor.labday;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.jakdor.labday.common.network.AuthenticationInterceptor;
 
@@ -13,8 +13,6 @@ import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Nullable;
 
 import okhttp3.Call;
 import okhttp3.Connection;
@@ -57,7 +55,6 @@ public class AuthenticationInterceptorTest {
                         .headers(request.headers()).message(message).build();
             }
 
-            @Nullable
             @Override
             public Connection connection() {
                 return null;
