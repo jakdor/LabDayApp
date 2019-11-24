@@ -339,7 +339,7 @@ public class ProjectRepository {
             final String origin, final String dest, final String apiKey){
         networkManager.configMapService(MapService.GOOGLE_API);
         return networkManager.getMapPath(origin, dest, apiKey)
-                .observeOn(rxSchedulersFacade.ui())
+                .observeOn(rxSchedulersFacade.io())
                 .subscribeOn(rxSchedulersFacade.io())
                 .map(RxResponse::success)
                 .onErrorReturn(throwable -> {

@@ -39,14 +39,14 @@ class MapViewModel : AndroidViewModel {
     fun makePathRequest(
             startLat: String, startLong: String, endLat: String, endLong: String, apiKey: String){
 
-        val origin = startLat + "," + startLong
-        val dest = endLat + "," + endLong
+        val origin = "$startLat,$startLong"
+        val dest = "$endLat,$endLong"
 
         disposable.add(projectRepository.mapPathRequest(origin, dest, apiKey)
                 .subscribeOn(rxSchedulersFacade.io())
-                .observeOn(rxSchedulersFacade.ui())
-                .doOnSubscribe({ _ -> loadingStatus.value = true })
-                .doAfterTerminate { loadingStatus.value = false }
-                .subscribe({ t -> mapPath.value = t }))
+                .observeOn(rxSchedulersFacade.io())
+                .doOnSubscribe { loadingStatus.postValue(true) }
+                .doAfterTerminate { loadingStatus.postValue(false) }
+                .subscribe { t -> mapPath.postValue(t) })
     }
 }
